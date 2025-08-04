@@ -1,0 +1,124 @@
+name: Security Testing Pipeline
+
+on:
+  push:
+    branches: [ main ]
+  workflow_dispatch:
+
+env:
+  CLUSTER_NAME: security-cluster
+  VULNERABLE_NS: vulnerable-${{ github.run_id }}
+  SECURITY_NS: security-${{ github.run_id }}
+  TARGET_SECURITY_APP: "http://dvwa:80"
+  TARGET_VULNERABLE_APP: "http://dvwa:80"
+  REPORT_DIR: "/reports"
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    
+    - name: Set up Helm
+      uses: azure/setup-helm@v3
+      with:
+        version: 'v3.12.0'
+
+    - name: Setup Kubernetes
+      uses: engineerd/setup-kind@v0.6.0
+      with:
+        version: "v0.20.0"
+        cluster_name: ${{ env.CLUSTER_NAME }}
+
+    - name: Create namespaces
+      run: |
+        kubectl create namespace ${{ env.VULNERABLE_NS }} || true
+        kubectl create namespace ${{ env.SECURITY_NS }} || true
+
+    - name: Deploy Vulnerable App
+      run: |
+        kubectl apply -f ./deploy/vulnerable-app/vulnerable-k8s.yaml \
+          -n ${{ env.VULNERABLE_NS }}
+
+    - name: Deploy Security App
+      run: |
+        helm upgrade --install security-app ./deploy/security-app \
+          -n ${{ env.SECURITY_NS }} --create-namespace \
+          --set websocket.port=8080
+
+  test:
+    needs: deploy
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Set up Go
+      uses: actions/setup-go@v4
+      with:
+        go-version: '1.21'
+
+    - name: Build Security Tester
+      run: |
+        cd cmd/security-tester
+        go build -o security-tester .
+
+    - name: Run Security Tests
+      run: |
+        kubectl create configmap security-tester --from-file=./cmd/security-tester/security-tester
+        
+        cat <<EOF | kubectl apply -f -
+        apiVersion: v1
+        kind: Pod
+        metadata:
+          name: security-tester
+        spec:
+          containers:
+          - name: tester
+            image: alpine:latest
+            command: ["/app/security-tester"]
+            env:
+            - name: TARGET_SECURITY_APP
+              value: "$TARGET_SECURITY_APP"
+            - name: TARGET_VULNERABLE_APP
+              value: "$TARGET_VULNERABLE_APP"
+            volumeMounts:
+            - name: security-tester-volume
+              mountPath: /app
+            - name: reports-volume
+              mountPath: "$REPORT_DIR"
+          volumes:
+          - name: security-tester-volume
+            configMap:
+              name: security-tester
+              defaultMode: 0777
+          - name: reports-volume
+            emptyDir: {}
+          restartPolicy: Never
+        EOF
+        
+        kubectl wait --for=condition=ready pod/security-tester --timeout=
+    
+    - name: Extract Reports
+      run: |
+        mkdir -p ./local-reports
+        kubectl cp security-tester:$REPORT_DIR/ ./local-reports/
+        
+    - name: Upload Reports
+      uses: actions/upload-artifact@v3
+      if: always()
+      with:
+        name: security-reports
+        path: ./local-reports/*
+
+  cleanup:
+    needs: [deploy, test]
+    if: always()
+    runs-on: ubuntu-latest
+    steps:
+    - name: Cleanup resources
+      run: |
+        helm uninstall security-app -n ${{ env.SECURITY_NS }} || true
+        helm uninstall vulnerable-app -n ${{ env.VULNERABLE_NS }} || true
+        kind delete cluster --name ${{ env.CLUSTER_NAME }}

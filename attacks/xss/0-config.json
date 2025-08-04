@@ -1,0 +1,12 @@
+{
+    "name": "Boolean-Based SQLi",
+    "description": "Detect SQL injection using boolean logic",
+    "method": "GET",
+    "endpoint": "/api/data",
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "parameters": {
+      "id": "1' OR '1'='1'--"
+    }
+  }
