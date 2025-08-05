@@ -1,4 +1,4 @@
-package HTTPAttack
+package httpAttack
 
 import (
 	"net/http"

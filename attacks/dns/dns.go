@@ -1,4 +1,4 @@
-package DNSAttack
+package dnsAttack
 
 import (
 	"github.com/by2waysprojects/coverage-ktd/model"
