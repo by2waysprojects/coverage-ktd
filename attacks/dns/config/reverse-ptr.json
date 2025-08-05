@@ -1,0 +1,11 @@
+{
+  "name": "dns-reverse-ptr",
+  "description": "PTR record query for reverse DNS lookup",
+  "method": "udp",
+  "endpoint": "",
+  "headers": {},
+  "parameters": {
+    "domain": "1.0.0.127.in-addr.arpa",
+    "type": "PTR"
+  }
+}

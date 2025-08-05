@@ -1,4 +1,4 @@
-package xss
+package HTTPAttack
 
 import (
 	"net/http"
@@ -7,15 +7,15 @@ import (
 	"github.com/by2waysprojects/coverage-ktd/model"
 )
 
-type XSSAttack struct {
+type HttpAttack struct {
 	config model.AttackConfig
 }
 
 func New(config model.AttackConfig) model.Attack {
-	return &XSSAttack{config: config}
+	return &HttpAttack{config: config}
 }
 
-func (a *XSSAttack) Execute(target string) error {
+func (a *HttpAttack) Execute(target string) error {
 	u, _ := url.Parse(target)
 	u.Path = a.config.Endpoint
 

@@ -1,0 +1,11 @@
+{
+  "name": "dns-simple-a",
+  "description": "Simple A record query to a DNS server",
+  "method": "udp",
+  "endpoint": "",
+  "headers": {},
+  "parameters": {
+    "domain": "example.com",
+    "type": "A"
+  }
+}

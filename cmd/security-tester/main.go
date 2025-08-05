@@ -9,6 +9,10 @@ import (
 	"github.com/by2waysprojects/coverage-ktd/pkg/client"
 )
 
+const (
+	attackConfigDir = "attacks"
+)
+
 func main() {
 	securityAppUri := os.Getenv("TARGET_SECURITY_APP")
 	vulnerableAppUri := os.Getenv("TARGET_VULNERABLE_APP")
@@ -18,7 +22,7 @@ func main() {
 	}
 
 	attackExecutor := attacks.NewAttackExecutor(vulnerableAppUri)
-	attackExecutor.LoadAttacks("attacks")
+	attackExecutor.LoadAttacks(attackConfigDir)
 	attacks := attackExecutor.GetAttacks()
 
 	reportData := model.ReportData{

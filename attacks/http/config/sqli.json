@@ -1,0 +1,11 @@
+{
+  "name": "dns-amplification",
+  "description": "ANY type query for DNS amplification (generates large responses)",
+  "method": "udp",
+  "endpoint": "",
+  "headers": {},
+  "parameters": {
+    "domain": "example.com",
+    "type": "ANY"
+  }
+}

@@ -1,0 +1,11 @@
+{
+  "name": "dns-txt-query",
+  "description": "TXT record query, often used for reconnaissance or data leakage detection",
+  "method": "udp",
+  "endpoint": "",
+  "headers": {},
+  "parameters": {
+    "domain": "example.com",
+    "type": "TXT"
+  }
+}
