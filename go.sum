@@ -1,5 +1,5 @@
-github.com/by2waysprojects/k-td-module v0.0.0-20250512164256-60d465faf25b h1:8uPYhODWVLgy5M5SaPg1OtpEFEdTKdfpSrv8y2mwRFs=
-github.com/by2waysprojects/k-td-module v0.0.0-20250512164256-60d465faf25b/go.mod h1:RbGSgK0V1d4cGu7CxxCdOYeDVsQqdTqjWgawPjNc2JQ=
+github.com/google/go-cmp v0.6.0 h1:ofyhxvXcZhMsU5ulbFiLKl/XBFqE1GSq7atu8tAmTRI=
+github.com/google/go-cmp v0.6.0/go.mod h1:17dUlkBOakJ0+DkrSSNjCkIjxS6bF9zb3elmeNGIjoY=
 github.com/gorilla/websocket v1.5.3 h1:saDtZ6Pbx/0u+bgYQ3q96pZgCzfhKXGPqt7kZ72aNNg=
 github.com/gorilla/websocket v1.5.3/go.mod h1:YR8l580nyteQvAITg2hZ9XVh4b55+EU/adAjf1fMHhE=
 github.com/miekg/dns v1.1.68 h1:jsSRkNozw7G/mnmXULynzMNIsgY2dHC8LO6U6Ij2JEA=
