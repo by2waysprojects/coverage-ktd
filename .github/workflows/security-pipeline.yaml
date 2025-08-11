@@ -1,122 +1,42 @@
-name: Security Testing Pipeline
+name: Security Attack Pipeline
 
 on:
   workflow_dispatch:
 
 env:
-  CLUSTER_NAME: security-cluster
-  VULNERABLE_NS: vulnerable-${{ github.run_id }}
-  SECURITY_NS: security-${{ github.run_id }}
-  TARGET_SECURITY_APP: "http://dvwa:80"
-  TARGET_VULNERABLE_APP: "http://dvwa:80"
-  REPORT_DIR: "/reports"
+  TARGET_SECURITY_APP: "http://dvwa-security:80"
+  TARGET_VULNERABLE_APP: "http://dvwa-vulnerable:80"
+  RESULTS_DIR: "/reports"
+  ATTACKER_IMAGE: "andres2000gb/coverage-ktd:latest"
 
 jobs:
-  deploy:
+  attack:
     runs-on: ubuntu-latest
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v4
-    
-    - name: Set up Helm
-      uses: azure/setup-helm@v3
-      with:
-        version: 'v3.12.0'
+      - name: Checkout code
+        uses: actions/checkout@v4
 
-    - name: Setup Kubernetes
-      uses: engineerd/setup-kind@v0.6.0
-      with:
-        version: "v0.20.0"
-        cluster_name: ${{ env.CLUSTER_NAME }}
+      - name: Set up Docker
+        uses: docker/setup-buildx-action@v3
 
-    - name: Create namespaces
-      run: |
-        kubectl create namespace ${{ env.VULNERABLE_NS }} || true
-        kubectl create namespace ${{ env.SECURITY_NS }} || true
+      - name: Pull Attacker Image
+        run: docker pull ${{ env.ATTACKER_IMAGE }}
 
-    - name: Deploy Vulnerable App
-      run: |
-        kubectl apply -f ./deploy/vulnerable-app/vulnerable-k8s.yaml \
-          -n ${{ env.VULNERABLE_NS }}
+      - name: Run Attacker
+        run: |
+          docker run --name attacker \
+            -e TARGET_SECURITY_APP="${{ env.TARGET_SECURITY_APP }}" \
+            -e TARGET_VULNERABLE_APP="${{ env.TARGET_VULNERABLE_APP }}" \
+            ${{ env.ATTACKER_IMAGE }}
 
-    - name: Deploy Security App
-      run: |
-        helm upgrade --install security-app ./deploy/security-app \
-          -n ${{ env.SECURITY_NS }} --create-namespace \
-          --set websocket.port=8080
+      - name: Copy results from container
+        run: |
+          mkdir -p ./local-results
+          docker cp attacker:${{ env.RESULTS_DIR }}/ ./local-results/
 
-  test:
-    needs: deploy
-    runs-on: ubuntu-latest
-    steps:
-    - name: Checkout code
-      uses: actions/checkout@v4
-
-    - name: Set up Go
-      uses: actions/setup-go@v4
-      with:
-        go-version: '1.21'
-
-    - name: Build Security Tester
-      run: |
-        cd cmd/security-tester
-        go build -o security-tester .
-
-    - name: Run Security Tests
-      run: |
-        kubectl create configmap security-tester --from-file=./cmd/security-tester/security-tester
-        
-        cat <<EOF | kubectl apply -f -
-        apiVersion: v1
-        kind: Pod
-        metadata:
-          name: security-tester
-        spec:
-          containers:
-          - name: tester
-            image: alpine:latest
-            command: ["/app/security-tester"]
-            env:
-            - name: TARGET_SECURITY_APP
-              value: "$TARGET_SECURITY_APP"
-            - name: TARGET_VULNERABLE_APP
-              value: "$TARGET_VULNERABLE_APP"
-            volumeMounts:
-            - name: security-tester-volume
-              mountPath: /app
-            - name: reports-volume
-              mountPath: "$REPORT_DIR"
-          volumes:
-          - name: security-tester-volume
-            configMap:
-              name: security-tester
-              defaultMode: 0777
-          - name: reports-volume
-            emptyDir: {}
-          restartPolicy: Never
-        EOF
-        
-        kubectl wait --for=condition=ready pod/security-tester --timeout=
-    
-    - name: Extract Reports
-      run: |
-        mkdir -p ./local-reports
-        kubectl cp security-tester:$REPORT_DIR/ ./local-reports/
-        
-    - name: Upload Reports
-      uses: actions/upload-artifact@v3
-      if: always()
-      with:
-        name: security-reports
-        path: ./local-reports/*
-
-  cleanup:
-    needs: [deploy, test]
-    if: always()
-    runs-on: ubuntu-latest
-    steps:
-    - name: Cleanup resources
-      run: |
-        helm uninstall security-app -n ${{ env.SECURITY_NS }} || true
-        helm uninstall vulnerable-app -n ${{ env.VULNERABLE_NS }} || true
-        kind delete cluster --name ${{ env.CLUSTER_NAME }}
+      - name: Upload Results
+        uses: actions/upload-artifact@v3
+        if: always()
+        with:
+          name: security-attack-results
+          path: ./local-results/*
