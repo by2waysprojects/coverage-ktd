@@ -10,7 +10,7 @@ import (
 )
 
 const (
-	attackConfigDir = "attacks"
+	attackConfigDir = "/attacks"
 )
 
 func main() {
