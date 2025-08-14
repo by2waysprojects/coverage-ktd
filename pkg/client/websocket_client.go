@@ -8,6 +8,7 @@ import (
 	"log"
 	"time"
 
+	agent "github.com/by2waysprojects/r-agent/model"
 	"github.com/gorilla/websocket"
 )
 
@@ -15,6 +16,7 @@ const (
 	defaultTimeout       = 30 * time.Second
 	reconnectInterval    = 5 * time.Second
 	maxReconnectAttempts = 3
+	testID               = "test-ID"
 )
 
 type WebSocketClient struct {
@@ -69,6 +71,20 @@ func (c *WebSocketClient) maintainConnection() {
 
 			c.conn = conn
 			c.reconnectAttempts = 0
+
+			msg := agent.AgentMessage{
+				ID:     testID,
+				Action: agent.Connect,
+			}
+
+			data, err := json.Marshal(msg)
+			if err != nil {
+				log.Fatalf("Error marshalling message: %v", err)
+			}
+
+			if err := conn.WriteMessage(websocket.TextMessage, data); err != nil {
+				log.Fatalf("Error sending connect message: %v", err)
+			}
 
 			c.handleMessages()
 		}

@@ -1,3 +1,5 @@
+github.com/by2waysprojects/r-agent v0.0.0-20250420074809-cdd2c8442765 h1:yl5PTRWjb5xoOtJgmQLX50YR2gEUaOjqKZ0w3dfbq2s=
+github.com/by2waysprojects/r-agent v0.0.0-20250420074809-cdd2c8442765/go.mod h1:yuYr1ojDW+sExWezyGdE3FvWLkJonXnkLiVKGa6pHaU=
 github.com/google/go-cmp v0.6.0 h1:ofyhxvXcZhMsU5ulbFiLKl/XBFqE1GSq7atu8tAmTRI=
 github.com/google/go-cmp v0.6.0/go.mod h1:17dUlkBOakJ0+DkrSSNjCkIjxS6bF9zb3elmeNGIjoY=
 github.com/gorilla/websocket v1.5.3 h1:saDtZ6Pbx/0u+bgYQ3q96pZgCzfhKXGPqt7kZ72aNNg=

@@ -37,6 +37,8 @@ func (c *SecurityClient) handleIncomingMessage(message []byte) error {
 		return err
 	}
 
+	fmt.Println("Received message:", response)
+
 	c.responseMutex.Lock()
 	defer c.responseMutex.Unlock()
 
