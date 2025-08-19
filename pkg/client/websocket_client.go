@@ -77,12 +77,7 @@ func (c *WebSocketClient) maintainConnection() {
 				Action: agent.Connect,
 			}
 
-			data, err := json.Marshal(msg)
-			if err != nil {
-				log.Fatalf("Error marshalling message: %v", err)
-			}
-
-			if err := conn.WriteMessage(websocket.TextMessage, data); err != nil {
+			if err := conn.WriteJSON(msg); err != nil {
 				log.Fatalf("Error sending connect message: %v", err)
 			}
 
