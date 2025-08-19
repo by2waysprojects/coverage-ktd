@@ -16,7 +16,7 @@ const (
 	defaultTimeout       = 30 * time.Second
 	reconnectInterval    = 5 * time.Second
 	maxReconnectAttempts = 3
-	testID               = "test-ID"
+	testID               = "test-cluster-6"
 )
 
 type WebSocketClient struct {
