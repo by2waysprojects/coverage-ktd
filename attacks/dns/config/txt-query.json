@@ -1,4 +1,4 @@
-{
+[{
   "name": "dns-txt-query",
   "description": "TXT record query, often used for reconnaissance or data leakage detection",
   "method": "udp",
@@ -8,4 +8,4 @@
     "domain": "example.com",
     "type": "TXT"
   }
-}
+}]

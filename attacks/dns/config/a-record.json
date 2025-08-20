@@ -1,4 +1,4 @@
-{
+[{
   "name": "dns-simple-a",
   "description": "Simple A record query to a DNS server",
   "method": "udp",
@@ -9,3 +9,4 @@
     "type": "A"
   }
 }
+]

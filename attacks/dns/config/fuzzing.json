@@ -1,4 +1,4 @@
-{
+[{
   "name": "dns-subdomain-fuzz",
   "description": "DNS A record lookup for subdomain enumeration",
   "method": "udp",
@@ -8,4 +8,4 @@
     "domain": "admin.example.com",
     "type": "A"
   }
-}
+}]

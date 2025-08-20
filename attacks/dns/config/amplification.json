@@ -1,4 +1,4 @@
-{
+[{
   "name": "dns-amplification",
   "description": "Consulta DNS ANY que genera una respuesta grande (posible amplificación)",
   "method": "udp",
@@ -8,4 +8,4 @@
     "domain": "example.com",
     "type": "ANY"
   }
-}
+}]

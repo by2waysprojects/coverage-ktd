@@ -61,13 +61,15 @@ func (e *AttackExecutor) loadAttackType(dir string) error {
 				log.Printf("Error loading attack config from %s: %v", configPath, err)
 				continue
 			}
-			switch attackType {
-			case model.HTTP:
-				e.attacks[config.Name] = HTTPAttack.New(config)
-			case model.DNS:
-				e.attacks[config.Name] = DNSAttack.New(config)
-			default:
-				log.Printf("Unknown attack type: %s", attackType)
+			for _, cfg := range config {
+				switch attackType {
+				case model.HTTP:
+					e.attacks[cfg.Name] = HTTPAttack.New(cfg)
+				case model.DNS:
+					e.attacks[cfg.Name] = DNSAttack.New(cfg)
+				default:
+					log.Printf("Unknown attack type: %s", attackType)
+				}
 			}
 		}
 	}
@@ -75,8 +77,8 @@ func (e *AttackExecutor) loadAttackType(dir string) error {
 	return nil
 }
 
-func loadAttackConfig(path string) (model.AttackConfig, error) {
-	var config model.AttackConfig
+func loadAttackConfig(path string) ([]model.AttackConfig, error) {
+	var config []model.AttackConfig
 	data, err := os.ReadFile(path)
 	if err != nil {
 		return config, err
