@@ -1,6 +1,7 @@
 package httpAttack
 
 import (
+	"fmt"
 	"net/http"
 	"net/url"
 
@@ -25,13 +26,18 @@ func (a *HttpAttack) Execute(target string) error {
 	}
 	u.RawQuery = q.Encode()
 
-	req, _ := http.NewRequest(a.config.Method, u.String(), nil)
+	req, err := http.NewRequest(a.config.Method, u.String(), nil)
+	if err != nil {
+		fmt.Println("Error creating HTTP request:", err)
+		return err
+	}
 	for k, v := range a.config.Headers {
 		req.Header.Add(k, v)
 	}
 
 	resp, err := http.DefaultClient.Do(req)
 	if err != nil {
+		fmt.Println("Error executing HTTP request:", err)
 		return err
 	}
 	defer resp.Body.Close()
